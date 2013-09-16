@@ -92,22 +92,22 @@ def fitDirect():
     #Load data
     savefile= open(savefile,'rb')
     data= pickle.load(savefile)
-    sR,svR,svT,sz,svz,sphi= *data
+    sR,svR,svT,sz,svz,sphi= data
     savefile.close()
     #Setup potential and DF grids
     vos= numpy.linspace(160.,280.,21)/_REFV0
-    qs= numpy.linsapce(0.6,1.4,21)
+    qs= numpy.linspace(0.6,1.4,21)
     sigvs= numpy.exp(numpy.linspace(numpy.log(1./_REFV0),
                                     numpy.log(1.),21))
     sigxs= numpy.exp(numpy.linspace(numpy.log(0.1/_REFR0),
                                     numpy.log(1.),21))
     #Load progenitor orbit
     progo= progenitorOrbit(V0=_REFV0,R0=_REFR0)
-    ts= numpy.linspace(0.,300.,1000)
+    ts= numpy.linspace(0.,300.,10000)
     outfilename= 'pal5GC_100_direct.sav'
     if not os.path.exists(outfilename):
         out= numpy.zeros((len(vos),len(qs),len(sigvs),len(sigxs)))
-        ii,jj= 0,0
+        ii,jj= 12,0
     else:
         outfile= open(outfilename,'rb')
         out= pickle.load(outfile)
@@ -115,22 +115,29 @@ def fitDirect():
         jj= pickle.load(outfile)
         outfile.close()
     while ii < len(vos):
+        progo= progenitorOrbit(V0=_REFV0*vos[ii],R0=_REFR0)
         while jj < len(qs):
+            print ii, jj
             #Setup some df
             if hasattr(progo,'orbit'): delattr(progo,'orbit')
             sdf= streamdf(sigvs[0],sigxs[0],
                           pot=potential.LogarithmicHaloPotential(normalize=1.,
                                                                  q=qs[jj]),
                           progenitor=progo,ts=ts)
-            sX,sY,sZ,svX,svY,svZ= sdf.prepData4Direct(sR,svR,svT,sz,svz,sphi)
+            sX,sY,sZ,svX,svY,svZ= sdf.prepData4Direct(sR,svR/vos[ii],svT/vos[ii],
+                                                      sz,svz/vos[ii],sphi)
             for kk in range(len(sigvs)):
                 for ll in range(len(sigxs)):
+                    sdf= streamdf(sigvs[kk],sigxs[ll],
+                                  pot=potential.LogarithmicHaloPotential(normalize=1.,
+                                                                         q=qs[jj]),
+                                  progenitor=progo,ts=ts)
                     out[ii,jj,kk,ll]= sdf(sX,sY,sZ,svX,svY,svZ,
                                           rect=True,log=True)
             jj+= 1
             if jj == len(qs):
                 jj= 0
                 ii+= 1
-            save_pickles(out,ii,jj)
-    save_pickles(out,ii,jj)
+            save_pickles(outfilename,out,ii,jj)
+    save_pickles(outfilename,out,ii,jj)
     return None
