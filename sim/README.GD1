@@ -1,0 +1,15 @@
+Simulated generated using
+
+mkking out=gd1.nemo nbody=10000 W0=2. mass=20000 r_t=0.07 WD_units=t 
+
+#In R0=8kpc,V0=220km/s units, 1 time unit = 35.55608077120739 Myr, so 5 Gyr = 140.62292276174884 time units, go to 140.93750000000003 time units for easy gyrfalcon output
+
+#In R0=1kpc,V0=1kms units, 1 time unit = 977.7922212082034, so 5 Gyr = 5.113560827699957 time units; go 5.125 time units for easy gyrfalcon output
+
+#Shift to 12.4,1.5,7.1,107.0,-243.0,-105.0 (kpc, km/s, today) = -11.63337239,-20.76235661,-10.631736273934635,-128.8281653,42.88727925,79.172383882274971 (kpc, km/s, ~5 Gyr ago)
+#Need to flip y and z to be able to use LogPot of gyrfalcon
+snapshift gd1.nemo gd1_shifted.nemo rshift=-11.63337239,-10.631736273934635,-20.76235661 vshift=-128.8281653,79.172383882274971,42.88727925
+
+gyrfalcON in=gd1_shifted.nemo out=gd1_evol.nemo tstop=5.125 eps=0.0015 step=0.125 kmax=6 Nlev=10 fac=0.01 accname=LogPot accpars=0,48400.,0.,1.0,0.9
+
+s2a gd1_evol.nemo gd1_evol.dat
