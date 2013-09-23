@@ -161,12 +161,6 @@ def make_sim_movie(proj='xz',comov=False,skippng=False,
                 pvec2[0,:]= px[ii*(2*npts-1):(ii+1)*(2*npts-1)]-numpy.median(x[ii*nx:(ii+1)*nx])
                 pvec2[1,:]= py[ii*(2*npts-1):(ii+1)*(2*npts-1)]-numpy.median(y[ii*nx:(ii+1)*nx])
                 pvec2= numpy.dot(T,pvec2)
-                #if numpy.mean(pvec2[1,:]) < 0.:
-                #    pvec2[1,:]*= -1.
-                #    tvec[1,:]*= -1.
-                #if numpy.mean(pvec2[0,:]) < 0.:
-                #    pvec2[0,:]*= -1.
-                #    tvec[0,:]*= -1.
             T[0,0]= numpy.cos(45./180.*numpy.pi)
             T[1,1]= numpy.cos(45./180.*numpy.pi)
             T[1,0]= numpy.sin(45./180.*numpy.pi)
@@ -181,8 +175,8 @@ def make_sim_movie(proj='xz',comov=False,skippng=False,
         if comov:
             basefilename+= 'comov_'
             moviefilename+= '_comov'
-            xrange=[-10.,10.]
-            yrange=[-8.,8.]           
+            xrange=[-13.,13.]
+            yrange=[-13.,13.]           
         else:
             xrange=[-30.,30.]
             yrange=[-15.,15.]           
