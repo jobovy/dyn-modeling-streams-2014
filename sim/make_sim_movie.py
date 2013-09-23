@@ -1,5 +1,6 @@
 import sys
 import os, os.path
+import glob
 import subprocess
 import numpy
 from numpy import linalg
@@ -221,5 +222,78 @@ def make_sim_movie(proj='xz',comov=False,skippng=False,
         print "'ffmpeg' failed"
     return None                           
 
+def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
+                      includeorbit=False):
+    #Directories
+    snapaadir= 'snaps_aas/'
+    savedirpng= './movies/gd1_aa/pngs/'
+    basefilename= 'gd1_evol_aa_'
+    moviefilename= 'gd1_evol_aa'
+    if proj.lower() == 'aaarazap':
+        basefilename+= 'arazap_'
+        moviefilename+= '_arazap'
+        xlabel=r'$\theta_R$'
+        ylabel=r'$\theta_Z$'
+        if comov:
+            xrange=[numpy.pi-1.,numpy.pi+1.]
+            yrange=[numpy.pi-1.,numpy.pi+1.]
+            zrange=[numpy.pi-.5,numpy.pi+.5]
+        else:
+            xrange=[-0.5,2.*numpy.pi+0.5]
+            yrange=[-0.5,2.*numpy.pi+0.5]
+            zrange=[-0.5,2.*numpy.pi+0.5]           
+    if not skippng:
+        nx= 10000
+        nt= len(glob.glob(os.path.join(snapaadir,
+                                       'gd1_evol_hitres_aa_*.dat')))
+        for ii in range(nt):
+            #Read data
+            data= numpy.loadtxt(os.path.join(snapaadir,
+                                       'gd1_evol_hitres_aa_%s.dat' % str(ii).zfill(5)),
+                                delimiter=',')
+            if proj.lower() == 'aaarazap':
+                plotx= data[:,6]
+                ploty= data[:,8]
+                plotz= data[:,7]
+                if comov:
+                    plotx= (numpy.pi+(plotx-numpy.median(plotx))) % (2.*numpy.pi)
+                    ploty= (numpy.pi+(ploty-numpy.median(ploty))) % (2.*numpy.pi)
+                    plotz= (numpy.pi+(plotz-numpy.median(plotz))) % (2.*numpy.pi)
+            bovy_plot.bovy_print()
+            bovy_plot.bovy_plot(plotx,ploty,c=plotz,scatter=True,
+                                edgecolor='none',s=2.,
+                                xlabel=xlabel,
+                                ylabel=ylabel,
+                                xrange=xrange,
+                                yrange=yrange,
+                                vmin=zrange[0],vmax=zrange[1])
+            if not comov:
+                bovy_plot.bovy_plot(numpy.median(plotx),numpy.median(ploty),
+                                    'bo',mec='none',overplot=True)
+            if includeorbit:
+                raise NotImplementedError("includeorbit plotting not implemented yet")
+                bovy_plot.bovy_plot(px[ii*(2*npts-1):(ii+1)*(2*npts-1)],
+                                    py[ii*(2*npts-1):(ii+1)*(2*npts-1)],
+                                    'b-',
+                                    overplot=True)
+            bovy_plot.bovy_end_print(os.path.join(savedirpng,basefilename+'%s.png' % str(ii).zfill(5)))
+    #Turn into movie
+    framerate= 25
+    bitrate= 1000000
+    try:
+        subprocess.check_call(['ffmpeg',
+                               '-i',
+                               os.path.join(savedirpng,basefilename+'%05d.png'),
+                               '-y',
+                               '-r',str(framerate),
+                               '-b', str(bitrate),
+                               moviefilename+'.mpg'])
+    except subprocess.CalledProcessError:
+        print "'ffmpeg' failed"
+    return None
+
 if __name__ == '__main__':
-    make_sim_movie(proj=sys.argv[1],comov=len(sys.argv) > 2)
+    if 'aa' in sys.argv[1].lower():
+        make_sim_movie_aa(proj=sys.argv[1],comov=len(sys.argv) > 2)
+    else:
+        make_sim_movie(proj=sys.argv[1],comov=len(sys.argv) > 2)
