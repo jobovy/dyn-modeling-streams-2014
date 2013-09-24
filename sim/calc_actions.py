@@ -3,6 +3,7 @@ import os, os.path
 import csv
 import glob
 import multiprocessing
+import subprocess
 import numpy
 from galpy import potential
 from galpy.util import bovy_coords, multi
@@ -56,34 +57,46 @@ def indiv_calc_actions(x,aA,snapdir,basefilename,snapaadir):
     #calculation actions, frequencies, and angles
     if isinstance(aA,actionAngleIsochroneApprox):
         #Processes in batches to not run out of memory
-        jr,lz,jz,Or,Op,Oz,ar,ap,az= [],[],[],[],[],[],[],[],[]
-        for ii in range(nx/20):
-            tR= R[ii*20:numpy.amin([(ii+1)*20,nx])]
-            tvR= vR[ii*20:numpy.amin([(ii+1)*20,nx])]
-            tvT= vT[ii*20:numpy.amin([(ii+1)*20,nx])]
-            tZ= Z[ii*20:numpy.amin([(ii+1)*20,nx])]
-            tvZ= vZ[ii*20:numpy.amin([(ii+1)*20,nx])]
-            tphi= phi[ii*20:numpy.amin([(ii+1)*20,nx])]
-            tacfs= aA.actionsFreqsAngles(tR,tvR,tvT,tZ,tvZ,tphi)
-            jr.extend(list(tacfs[0]))
-            lz.extend(list(tacfs[1]))
-            jz.extend(list(tacfs[2]))
-            Or.extend(list(tacfs[3]))
-            Op.extend(list(tacfs[4]))
-            Oz.extend(list(tacfs[5]))
-            ar.extend(list(tacfs[6]))
-            ap.extend(list(tacfs[7]))
-            az.extend(list(tacfs[8]))
-        acfs= (jr,lz,jz,Or,Op,Oz,ar,ap,az)
+        csvfilename= os.path.join(snapaadir,basefilename+'_aa_%s.dat' % str(x).zfill(5))
+        if os.path.exists(csvfilename):
+            #Don't recalculate those that have already been calculated
+            nstart= int(subprocess.check_output(['wc','-l',csvfilename]).split(' ')[0])
+            csvfile= open(csvfilename,'ab')
+        else:
+            csvfile= open(csvfilename,'wb')
+            nstart= 0
+        if nstart >= nx: return 1 #Done already
+        print "Starting from %i ..." % nstart
+        nx-= nstart
+        writer= csv.writer(csvfile,delimiter=',')
+        nbatch= 20
+        for ii in range(nx/nbatch+1):
+            tR= R[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
+            tvR= vR[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
+            tvT= vT[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
+            tZ= Z[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
+            tvZ= vZ[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
+            tphi= phi[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
+            try:
+                tacfs= aA.actionsFreqsAngles(tR,tvR,tvT,tZ,tvZ,tphi)
+            except numpy.linalg.linalg.LinAlgError:
+                print x,tR,tvR,tvT,tZ,tvZ,tphi
+                raise
+            for jj in range(len(tacfs[0])):
+                writer.writerow([tacfs[0][jj],tacfs[1][jj],tacfs[2][jj],
+                                 tacfs[3][jj],tacfs[4][jj],tacfs[5][jj],
+                                 tacfs[6][jj],tacfs[7][jj],tacfs[8][jj]])
+                csvfile.flush()
+        csvfile.close()
     else:
         acfs= aA.actionsFreqsAngles(R,vR,vT,Z,vZ,phi)
-    csvfile= open(os.path.join(snapaadir,basefilename+'_aa_%s.dat' % str(x).zfill(5)),'wb')
-    writer= csv.writer(csvfile,delimiter=',')
-    for jj in range(len(acfs[0])):
-        writer.writerow([acfs[0][jj],acfs[1][jj],acfs[2][jj],
-                         acfs[3][jj],acfs[4][jj],acfs[5][jj],
-                         acfs[6][jj],acfs[7][jj],acfs[8][jj]])
-    csvfile.close()
+        csvfile= open(os.path.join(snapaadir,basefilename+'_aa_%s.dat' % str(x).zfill(5)),'wb')
+        writer= csv.writer(csvfile,delimiter=',')
+        for jj in range(len(acfs[0])):
+            writer.writerow([acfs[0][jj],acfs[1][jj],acfs[2][jj],
+                             acfs[3][jj],acfs[4][jj],acfs[5][jj],
+                             acfs[6][jj],acfs[7][jj],acfs[8][jj]])
+        csvfile.close()
     print "Done with aa %i" % x
     return 1
 
