@@ -25,15 +25,16 @@ def calc_actions(snapfile=None):
         snapaadir= 'snaps_aai/'
     #Run each snapshot
     args= (aA,snapdir,basefilename,snapaadir)
+    print "Using %i cpus ..." % (numpy.amin([64,nsnap,
+                                             multiprocessing.cpu_count()]))
     dummy= multi.parallel_map((lambda x: indiv_calc_actions(x,
                                                             *args)),
-                                 range(nsnap),
-                                 numcores=numpy.amin([64,nsnap,
+                              range(nsnap),
+                              numcores=numpy.amin([64,nsnap,
                                                       multiprocessing.cpu_count()]))
     return None
 
 def indiv_calc_actions(x,aA,snapdir,basefilename,snapaadir):
-    print "Working on aa %i ..." % x
     #Read data
     data= numpy.loadtxt(os.path.join(snapdir,
                                      basefilename+'_%s.dat' % str(x).zfill(5)),
@@ -66,6 +67,7 @@ def indiv_calc_actions(x,aA,snapdir,basefilename,snapaadir):
             csvfile= open(csvfilename,'wb')
             nstart= 0
         if nstart >= nx: return 1 #Done already
+        print "Working on aa %i ..." % x
         print "Starting from %i ..." % nstart
         nx-= nstart
         writer= csv.writer(csvfile,delimiter=',')
