@@ -223,12 +223,21 @@ def make_sim_movie(proj='xz',comov=False,skippng=False,
     return None                           
 
 def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
-                      includeorbit=False):
+                      includeorbit=True,aas=True):
     #Directories
-    snapaadir= 'snaps_aas/'
+    if aas:
+        snapaadir= 'snaps_aas/'
+        aastr= 'aas'
+        progfile= 'gd1_evol_hitres_progaas.dat'
+    else:
+        snapaadir= 'snaps_aai/'
+        aastr= 'aai'
+        progfile= 'gd1_evol_hitres_progaai.dat'
     savedirpng= './movies/gd1_aa/pngs/'
-    basefilename= 'gd1_evol_aa_'
-    moviefilename= 'gd1_evol_aa'
+    basefilename= 'gd1_evol_%s_' % aastr
+    moviefilename= 'gd1_evol_%s' % aastr
+    if includeorbit: #Load actions etc. for progenitor
+        progaa= numpy.loadtxt(progfile,delimiter=',')
     if proj.lower() == 'aaarazap':
         basefilename+= 'arazap_'
         moviefilename+= '_arazap'
@@ -242,6 +251,18 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
             xrange=[-0.5,2.*numpy.pi+0.5]
             yrange=[-0.5,2.*numpy.pi+0.5]
             zrange=[-0.5,2.*numpy.pi+0.5]           
+    elif proj.lower() == 'aajrjzlz':
+        basefilename+= 'jrjzlz_'
+        moviefilename+= '_jrjzlz'
+        xlabel=r'$J_R\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
+        ylabel=r'$J_Z\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
+        if 'aai' in snapaadir:
+            xrange=[1.3,1.5]
+            yrange=[3.9,4.1]
+            zrange=[-14.6,-14.2]
+        elif 'aas' in snapaadir:
+            xrange=[1.1,1.5]
+            yrange=[3.85,4.3]
     if not skippng:
         nx= 10000
         nt= len(glob.glob(os.path.join(snapaadir,
@@ -259,6 +280,16 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
                     plotx= (numpy.pi+(plotx-numpy.median(plotx))) % (2.*numpy.pi)
                     ploty= (numpy.pi+(ploty-numpy.median(ploty))) % (2.*numpy.pi)
                     plotz= (numpy.pi+(plotz-numpy.median(plotz))) % (2.*numpy.pi)
+                else:
+                    plotx= plotx % (2.*numpy.pi)
+                    ploty= ploty % (2.*numpy.pi)
+                    plotz= plotz % (2.*numpy.pi)
+            elif proj.lower() == 'aajrjzlz':
+                plotx= data[:,0]*8.
+                ploty= data[:,2]*8.
+                plotz= data[:,1]*8.
+                if 'aas' in snapaadir:
+                    zrange=[numpy.amin(plotz)+0.05,numpy.amax(plotz)-0.05]
             bovy_plot.bovy_print()
             bovy_plot.bovy_plot(plotx,ploty,c=plotz,scatter=True,
                                 edgecolor='none',s=2.,
@@ -266,16 +297,24 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
                                 ylabel=ylabel,
                                 xrange=xrange,
                                 yrange=yrange,
-                                vmin=zrange[0],vmax=zrange[1])
-            if not comov:
-                bovy_plot.bovy_plot(numpy.median(plotx),numpy.median(ploty),
-                                    'bo',mec='none',overplot=True)
+                                vmin=zrange[0],vmax=zrange[1],zorder=2)
             if includeorbit:
-                raise NotImplementedError("includeorbit plotting not implemented yet")
-                bovy_plot.bovy_plot(px[ii*(2*npts-1):(ii+1)*(2*npts-1)],
-                                    py[ii*(2*npts-1):(ii+1)*(2*npts-1)],
-                                    'b-',
-                                    overplot=True)
+                if proj.lower() == 'aaarazap':
+                    px= progaa[ii,6]
+                    py= progaa[ii,8]
+                    if comov:
+                       #plot frequency line
+                        xs= numpy.array(xrange)
+                        ys= (xs-numpy.pi)*progaa[ii,5]/progaa[ii,3]+numpy.pi
+                        bovy_plot.bovy_plot(xs,ys,'k--',overplot=True,
+                                            zorder=0)
+                    else:
+                        px = px % (2.*numpy.pi)
+                        py = py % (2.*numpy.pi)
+                        bovy_plot.bovy_plot(px,py,'ko',overplot=True)
+                elif proj.lower() == 'aajrjzlz':
+                    bovy_plot.bovy_plot(8.*progaa[ii,0],8.*progaa[ii,2],'ko',
+                                        overplot=True,zorder=3)
             bovy_plot.bovy_end_print(os.path.join(savedirpng,basefilename+'%s.png' % str(ii).zfill(5)))
     #Turn into movie
     framerate= 25
