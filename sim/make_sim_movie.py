@@ -223,7 +223,7 @@ def make_sim_movie(proj='xz',comov=False,skippng=False,
     return None                           
 
 def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
-                      includeorbit=True,aas=True):
+                      includeorbit=True,aas=False):
     #Directories
     if aas:
         snapaadir= 'snaps_aas/'
@@ -257,9 +257,8 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
         xlabel=r'$J_R\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
         ylabel=r'$J_Z\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
         if 'aai' in snapaadir:
-            xrange=[1.3,1.5]
-            yrange=[3.9,4.1]
-            zrange=[-14.6,-14.2]
+            xrange=[1.1,1.5]
+            yrange=[3.85,4.3]
         elif 'aas' in snapaadir:
             xrange=[1.1,1.5]
             yrange=[3.85,4.3]
@@ -288,8 +287,7 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
                 plotx= data[:,0]*8.
                 ploty= data[:,2]*8.
                 plotz= data[:,1]*8.
-                if 'aas' in snapaadir:
-                    zrange=[numpy.amin(plotz)+0.05,numpy.amax(plotz)-0.05]
+                zrange=[numpy.amin(plotz)+0.05,numpy.amax(plotz)-0.05]
             bovy_plot.bovy_print()
             bovy_plot.bovy_plot(plotx,ploty,c=plotz,scatter=True,
                                 edgecolor='none',s=2.,
