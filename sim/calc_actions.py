@@ -24,12 +24,28 @@ def calc_actions(snapfile=None):
         aA= actionAngleIsochroneApprox(pot=lp,b=0.8)
         snapaadir= 'snaps_aai/'
     #Run each snapshot
+    if True:
+        calcThese= []
+        for ii in range(nsnap):
+            csvfilename= os.path.join(snapaadir,basefilename+'_aa_%s.dat' % str(ii).zfill(5))
+            if os.path.exists(csvfilename):
+                #Don't recalculate those that have already been calculated
+                nstart= int(subprocess.check_output(['wc','-l',csvfilename]).split(' ')[0])
+                if nstart < 10000:
+                    calcThese.append(ii)
+            else:
+                calcThese.append(ii)
+        nsnap= len(calcThese)
+    if len(calcThese) == 0:
+        print "All done with everything ..."
+        return None
     args= (aA,snapdir,basefilename,snapaadir)
     print "Using %i cpus ..." % (numpy.amin([64,nsnap,
                                              multiprocessing.cpu_count()]))
     dummy= multi.parallel_map((lambda x: indiv_calc_actions(x,
                                                             *args)),
-                              range(nsnap),
+                              calcThese,
+#                              range(nsnap),
                               numcores=numpy.amin([64,nsnap,
                                                       multiprocessing.cpu_count()]))
     return None
@@ -72,7 +88,7 @@ def indiv_calc_actions(x,aA,snapdir,basefilename,snapaadir):
         nx-= nstart
         writer= csv.writer(csvfile,delimiter=',')
         nbatch= 20
-        for ii in range(nx/nbatch+1):
+        for ii in range(nx/nbatch):
             tR= R[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
             tvR= vR[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
             tvT= vT[nstart+ii*nbatch:numpy.amin([nstart+(ii+1)*nbatch,nstart+nx])]
