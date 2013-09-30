@@ -1,7 +1,7 @@
 import sys
 import os, os.path
 import numpy
-from galpy.util import bovy_plot, bovy_coords
+from galpy.util import bovy_plot, bovy_coords, bovy_conversion
 from galpy import potential
 from galpy.orbit import Orbit
 _STREAMSNAPDIR= '../sim/snaps'
@@ -118,28 +118,110 @@ def plot_stream_aa(plotfilename):
         progfile= '../sim/gd1_evol_hitres_progaai.dat'
         progaa= numpy.loadtxt(progfile,delimiter=',')
     if 'araz' in plotfilename:
-        plotx= data[:,6]
-        ploty= data[:,8]
-        plotz= data[:,7]
-        plotx= (numpy.pi+(plotx-numpy.median(plotx))) % (2.*numpy.pi)
-        ploty= (numpy.pi+(ploty-numpy.median(ploty))) % (2.*numpy.pi)
-        plotz= (numpy.pi+(plotz-numpy.median(plotz))) % (2.*numpy.pi)
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        plotx= data[indx,6]
+        ploty= data[indx,8]
+        plotx= (numpy.pi+(plotx-numpy.median(data[:,6]))) % (2.*numpy.pi)
+        ploty= (numpy.pi+(ploty-numpy.median(data[:,8]))) % (2.*numpy.pi)
         xrange=[numpy.pi-1.,numpy.pi+1.]
         yrange=[numpy.pi-1.,numpy.pi+1.]
-        zrange=[numpy.pi-.5,numpy.pi+.5]
         xlabel=r'$\theta_R$'
         ylabel=r'$\theta_Z$'
+    elif 'arap' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        plotx= data[indx,6]
+        ploty= data[indx,7]
+        plotx= (numpy.pi+(plotx-numpy.median(data[:,6]))) % (2.*numpy.pi)
+        ploty= (numpy.pi+(ploty-numpy.median(data[:,7]))) % (2.*numpy.pi)
+        xrange=[numpy.pi-1.,numpy.pi+1.]
+        yrange=[numpy.pi-1.,numpy.pi+1.]
+        xlabel=r'$\theta_R$'
+        ylabel=r'$\theta_\phi$'
+    elif 'oroz' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        plotx= data[indx,3]*bovy_conversion.freq_in_Gyr(220.,8.)
+        ploty= data[indx,5]*bovy_conversion.freq_in_Gyr(220.,8.)
+        xrange=[15.45,15.95]
+        yrange=[11.7,12.05]
+        xlabel=r'$\Omega_R\,(\mathrm{Gyr}^{-1})$'
+        ylabel=r'$\Omega_Z\,(\mathrm{Gyr}^{-1})$'
+    elif 'orop' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        plotx= data[indx,3]*bovy_conversion.freq_in_Gyr(220.,8.)
+        ploty= data[indx,4]*bovy_conversion.freq_in_Gyr(220.,8.)
+        xrange=[15.45,15.95]
+        yrange=[-10.98,-10.65]
+        xlabel=r'$\Omega_R\,(\mathrm{Gyr}^{-1})$'
+        ylabel=r'$\Omega_\phi\,(\mathrm{Gyr}^{-1})$'
+    elif 'jrjz' in plotfilename:       
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        plotx= data[indx,0]*8.
+        ploty= data[indx,2]*8.
+        xrange=[1.2,1.42]
+        yrange=[3.98,4.18]
+        xlabel=r'$J_R\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
+        ylabel=r'$J_Z\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
+    elif 'jrjp' in plotfilename:       
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        plotx= data[indx,0]*8.
+        ploty= data[indx,1]*8.
+        xrange=[1.2,1.42]
+        yrange=[-14.64,-14.23]
+        xlabel=r'$J_R\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
+        ylabel=r'$L_Z\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
     bovy_plot.bovy_print()
     bovy_plot.bovy_plot(plotx,ploty,'k,',
                         xlabel=xlabel,
                         ylabel=ylabel,
                         xrange=xrange,
                         yrange=yrange)
-    if includeorbit:
+    if includeorbit and 'araz' in plotfilename:
         #plot frequency line
         xs= numpy.array(xrange)
         ys= (xs-numpy.pi)*progaa[-1,5]/progaa[-1,3]+numpy.pi
         bovy_plot.bovy_plot(xs,ys,'k--',overplot=True,
+                            zorder=0)
+    elif includeorbit and 'arap' in plotfilename:
+        #plot frequency line
+        xs= numpy.array(xrange)
+        ys= (xs-numpy.pi)*progaa[-1,4]/progaa[-1,3]+numpy.pi
+        bovy_plot.bovy_plot(xs,ys,'k--',overplot=True,
+                            zorder=0)
+    elif includeorbit and 'oroz' in plotfilename:
+        bovy_plot.bovy_plot(progaa[-1,3]*bovy_conversion.freq_in_Gyr(220.,8.),
+                            progaa[-1,5]*bovy_conversion.freq_in_Gyr(220.,8.),
+                            'o',overplot=True,color='0.5',
+                            mec='none',ms=8.,
+                            zorder=0)
+    elif includeorbit and 'orop' in plotfilename:
+        bovy_plot.bovy_plot(progaa[-1,3]*bovy_conversion.freq_in_Gyr(220.,8.),
+                            progaa[-1,4]*bovy_conversion.freq_in_Gyr(220.,8.),
+                            'o',overplot=True,color='0.5',
+                            mec='none',ms=8.,
+                            zorder=0)
+    elif includeorbit and 'jrjz' in plotfilename:
+        bovy_plot.bovy_plot(progaa[-1,0]*8.,
+                            progaa[-1,2]*8.,
+                            'o',overplot=True,color='0.5',
+                            mec='none',ms=8.,
+                            zorder=0)
+    elif includeorbit and 'jrjp' in plotfilename:
+        bovy_plot.bovy_plot(progaa[-1,0]*8.,
+                            progaa[-1,1]*8.,
+                            'o',overplot=True,color='0.5',
+                            mec='none',ms=8.,
                             zorder=0)
     bovy_plot.bovy_end_print(plotfilename)
 
