@@ -103,7 +103,7 @@ def fitDirect():
                                     numpy.log(1.),21))
     #Load progenitor orbit
     progo= progenitorOrbit(V0=_REFV0,R0=_REFR0)
-    ts= numpy.linspace(0.,300.,10000)
+    ts= numpy.linspace(0.,300.,1000)
     outfilename= 'pal5GC_100_direct.sav'
     if not os.path.exists(outfilename):
         out= numpy.zeros((len(vos),len(qs),len(sigvs),len(sigxs)))
@@ -113,6 +113,7 @@ def fitDirect():
         out= pickle.load(outfile)
         ii= pickle.load(outfile)
         jj= pickle.load(outfile)
+        ii, jj= 14,0
         outfile.close()
     while ii < len(vos):
         progo= progenitorOrbit(V0=_REFV0*vos[ii],R0=_REFR0)
@@ -133,11 +134,12 @@ def fitDirect():
                                                                          q=qs[jj]),
                                   progenitor=progo,ts=ts)
                     out[ii,jj,kk,ll]= sdf(sX,sY,sZ,svX,svY,svZ,
-                                          rect=True,log=True)
+                                          rect=True,log=True)-3.*len(sX)*numpy.log(vos[ii])
             jj+= 1
-            if jj == len(qs):
-                jj= 0
-                ii+= 1
             save_pickles(outfilename,out,ii,jj)
+        if ii != (len(vos)-1):
+            jj= 0
+        ii+= 1
+        save_pickles(outfilename,out,ii,jj)
     save_pickles(outfilename,out,ii,jj)
     return None
