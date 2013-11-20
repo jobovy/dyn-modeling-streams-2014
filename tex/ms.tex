@@ -107,6 +107,80 @@
 %BOVY: reference point
 
 
+\section{The dynamics of tidal streams}\label{sec:dynamics}
+
+The dynamics of tidal streams both in real (position--velocity) and
+action--angle space has been described by various previous authors
+\citep[\eg,][]{Helmi99a,Tremaine99a,SomeJohnstonPaper,Sanders13a}. I
+provide here a brief description of the dynamics of tidal streams that
+is relevant for what follows.
+
+In real space, a tidal stream forms as stars are stripped from a
+progenitor some time $\Delta t$ in the past and then evolve (largely)
+independently in a galaxy's host potential, moving away both in
+position and velocity from the progenitor object as time goes
+on. Thus, a star was offset by a small amount $(\Delta \vecx,\Delta
+\vecv)$ from the position of the progenitor $(\vecx^p,\vecv^p)(-\Delta
+t)$ at that time. Then the star orbited under the influence of the
+same gravitational potential $\Phi$ as the progenitor until the
+present day $(t=0)$, when it was observed: $(\vecx,\vecv)(t=0)$ =
+$\vech_{\Delta t}(\vecx^p(-\Delta t)+\Delta \vecx,\vecv^p(-\Delta
+t)+\Delta \vecv)$, where $\vech$ denotes the Hamiltonian flow from
+$t=-\Delta t$ to $t=0$ (see \citealt{binneytremaine}); this is simply
+the orbit of the star between these times. In phase-space this orbit
+can be calculated by solving Hamilton's equations: $\dot{\vecx} =
+\vecv; \dot{\vecv} = - \dd \Phi / \dd \vecx$.
+
+In action--angle space the dynamics of stream formation is much
+simpler. A star received an offset ($\Delta \vecj,\Delta \veca$) at
+time $-\Delta t$ from the action--angle coordinates of the progenitor
+$(\vecj^p,\veca^p)$, similar to the small offset ($\Delta \vecx,\Delta
+\vecv)$ in the real-space description. The offset in the actions
+corresponds to an offset in the frequencies $\Delta \veco$;
+ultimately, this offset is responsible for the spreading of the stream
+over long stretches on the sky. Because both the source's angles and
+the star's angles increase linearly with time, albeit at different
+frequencies, the difference in the angles also increases linearly in
+time. Therefore at time $t=0$ the difference in angles is
+\begin{equation}
+\Delta \veca(t=0) = \Delta \veca(-\Delta t) + \Delta \veco \Delta t\,,
+\end{equation}
+while the difference in actions is constant
+\begin{equation}
+\Delta \vecj(t=0) = \Delta \vecj(-\Delta t)\,.
+\end{equation}
+As the initial offset $\Delta \veca(-\Delta t$ in angles is small
+compared to the growth $\Delta\veco\Delta t$, $\Delta \veca(t=0)
+\approx \Delta \veco \Delta t$.
+
+Thus, in action--angle coordinates, the dynamics of tidal-stream
+formation is simplified to linear growth of small initial angle
+differences due to small action/frequency differences. The angle
+direction $\unitvec{\veco} \equiv \Delta \veco / | \Delta \veco|$
+along which a star moves away from the progenitor is related to the
+initial action offset by $\Delta \veco \approx (\partial^2 H
+/ \partial \vecj \partial \vecj) \Delta \vecj$, in the limit of small
+action offsets, as $\veco = \partial H / \partial \vecj$. For an
+approximately one-dimensional stream to form, the Hessian matrix
+$(\partial^2 H / \partial \vecj \partial \vecj)\large|_{\vecj^p}$ has
+to be dominated by a single large eigenvalue; in this case the angle
+difference of stars stripped from the stream at any time will fall
+along approximately the same direction $\unitvec\veco$, and the stream
+will essentially be one dimensional. In detail, because the
+distribution of initial offsets $\Delta \vecj$ is not isotropic, the
+direction $\unitvec \veco$ is not just determined by the potential
+(through $H$) and the progenitor orbit, but also by the distribution
+of $\Delta \vecj$, which is set through a combination of the internal
+dynamics of the progenitor and the stripping process (see discussion
+in \citealt{Sanders13a}). For dynamical modeling we can be agnostic
+about the relative importance of all of these contributors to
+$\unitvec \veco$ by flexible modeling of the distribution of $\Delta
+\vecj$.
+
+
+
+
+
 \section{Two equivalent generative models of tidal streams}\label{sec:method}
 
 In this Section, we describe two mathematically equivalent generative
