@@ -225,10 +225,98 @@ def plot_stream_aa(plotfilename):
                             zorder=0)
     bovy_plot.bovy_end_print(plotfilename)
 
+def plot_stream_times(plotfilename):
+    #Read stream
+    data= numpy.loadtxt(os.path.join(_STREAMSNAPAADIR,
+                                     'gd1_evol_hitres_aa_01312.dat'),
+                        delimiter=',')
+    #Calculate times at which stars were stripped, angles
+    thetar= data[:,6]
+    thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+    indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+    thetar= thetar[indx]
+    thetap= data[:,7]
+    thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+    thetap= thetap[indx]
+    thetaz= data[:,8]
+    thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+    thetaz= thetaz[indx]
+    #center around 0 (instead of pi)
+    thetar-= numpy.pi
+    thetap-= numpy.pi
+    thetaz-= numpy.pi
+    #Frequencies
+    Or= data[:,3]
+    Op= data[:,4]
+    Oz= data[:,5]
+    dOr= Or[indx]-numpy.median(Or)
+    dOp= Op[indx]-numpy.median(Op)
+    dOz= Oz[indx]-numpy.median(Oz)
+    #Times
+    dangle= numpy.vstack((thetar,thetap,thetaz))
+    dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+    dts= numpy.sum(dO*dangle,axis=0)/numpy.sum(dO**2.,axis=0)
+    if 'hist' in plotfilename:
+        bovy_plot.bovy_print()
+        bovy_plot.bovy_hist(dts,range=[0.,6.],bins=13,
+                            xlabel=r'$\Delta t\ (\mathrm{Gyr})$',
+                            histtype='step',color='k',normed=True,lw=2.)
+        bovy_plot.bovy_hist(dts,range=[0.,6.],bins=61,normed=True,
+                            overplot=True,ls='dotted',histtype='step',
+                            color='0.5',lw=2.)
+        includeorbit= False #bc pericenter passage doesn't seem to work
+        if includeorbit:
+            npts= 10001
+            pot= potential.LogarithmicHaloPotential(normalize=1.,q=0.9)
+            ts= numpy.linspace(0.,5./bovy_conversion.time_in_Gyr(220.,8.),
+                               npts)
+            #Calculate progenitor orbit around this point
+            pox= numpy.median(data[:,1])
+            poy= numpy.median(data[:,3])
+            poz= numpy.median(data[:,2])
+            povx= numpy.median(data[:,4])
+            povy= numpy.median(data[:,6])
+            povz= numpy.median(data[:,5])
+            pR,pphi,pZ= bovy_coords.rect_to_cyl(pox,poy,poz)
+            pvR,pvT,pvZ= bovy_coords.rect_to_cyl_vec(povx,povy,povz,pR,
+                                                     pphi,pZ,cyl=True)
+            o= Orbit([pR/8.,-pvR/220.,-pvT/220.,pZ/8.,-pvZ/220.,pphi])
+            o.integrate(ts,pot)
+            rs= numpy.sqrt(o.R(ts)**2.+o.z(ts)**2.)
+            #Find local minima
+            periIndx= numpy.r_[True, rs[1:] < rs[:-1]] & numpy.r_[rs[:-1] < rs[1:], True]
+            for ii in range(numpy.sum(periIndx)):
+                bovy_plot.bovy_plot([ts[periIndx][ii]*bovy_conversion.time_in_Gyr(220.,8.),
+                                     ts[periIndx][ii]*bovy_conversion.time_in_Gyr(220.,8.)],
+                                    [0.,1.],overplot=True,ls='--',lw=1.,
+                                    color='0.5')
+    elif 'dO' in plotfilename:
+        bovy_plot.bovy_print()
+        bovy_plot.bovy_plot(dts,
+                            numpy.sqrt(numpy.sum(dO**2.,axis=0)),
+                            'k.',
+                            xrange=[0.,6.],
+                            yrange=[0.1,0.35],
+                            xlabel=r'$\Delta t\ (\mathrm{Gyr})$',
+                            ylabel=r'$|\Delta \mathbf{\Omega}|\ (\mathrm{Gyr}^{-1})$')
+    elif 'da' in plotfilename:
+        bovy_plot.bovy_print()
+        bovy_plot.bovy_plot(dts,
+                            numpy.sqrt(numpy.sum(dangle**2.,axis=0)),
+                            'k.',
+                            xrange=[0.,6.],
+                            yrange=[0.,1.5],
+                            xlabel=r'$\Delta t\ (\mathrm{Gyr})$',
+                            ylabel=r'$|\Delta \boldsymbol\theta|$')
+    bovy_plot.bovy_end_print(plotfilename)
+    return None
+
 if __name__ == '__main__':
     if 'xz' in sys.argv[1]:
         plot_stream_xz(sys.argv[1])
     if 'lb' in sys.argv[1] or 'ld' in sys.argv[1]:
         plot_stream_lb(sys.argv[1])
+    elif 'times' in sys.argv[1]:
+        plot_stream_times(sys.argv[1])
     elif 'aa' in sys.argv[1]:
         plot_stream_aa(sys.argv[1])
