@@ -56,6 +56,11 @@ def plot_stream_lb(plotfilename):
     #Transform to (l,b)
     XYZ= bovy_coords.galcenrect_to_XYZ(data[:,1],data[:,3],data[:,2],Xsun=8.)
     lbd= bovy_coords.XYZ_to_lbd(XYZ[0],XYZ[1],XYZ[2],degree=True)
+    vXYZ= bovy_coords.galcenrect_to_vxvyvz(data[:,4],data[:,6],data[:,5],
+                                           vsun=[0.,30.24*8.,0.])
+    vlbd= bovy_coords.vxvyvz_to_vrpmllpmbb(vXYZ[0],vXYZ[1],vXYZ[2],
+                                           lbd[:,0],lbd[:,1],lbd[:,2],
+                                           degree=True)
     includeorbit= True
     if includeorbit:
         npts= 201
@@ -75,36 +80,64 @@ def plot_stream_lb(plotfilename):
         pno= Orbit([pR/8.,-pvR/220.,-pvT/220.,pZ/8.,-pvZ/220.,pphi])
         ppo.integrate(pts,pot)
         pno.integrate(pts,pot)
-        pvec= numpy.zeros((3,npts*2-1))
+        pvec= numpy.zeros((6,npts*2-1))
         pvec[0,:npts-1]= pno.x(pts)[::-1][:-1]
         pvec[1,:npts-1]= pno.z(pts)[::-1][:-1]
         pvec[2,:npts-1]= pno.y(pts)[::-1][:-1]
         pvec[0,npts-1:]= ppo.x(pts)
         pvec[1,npts-1:]= ppo.z(pts)
         pvec[2,npts-1:]= ppo.y(pts)
-        pvec*= 8.
+        pvec[3,:npts-1]= -pno.vx(pts)[::-1][:-1]
+        pvec[4,:npts-1]= -pno.vz(pts)[::-1][:-1]
+        pvec[5,:npts-1]= -pno.vy(pts)[::-1][:-1]
+        pvec[3,npts-1:]= ppo.vx(pts)
+        pvec[4,npts-1:]= ppo.vz(pts)
+        pvec[5,npts-1:]= ppo.vy(pts)
+        pvec[:3,:]*= 8.
+        pvec[3:,:]*= 220.
         pXYZ= bovy_coords.galcenrect_to_XYZ(pvec[0,:],pvec[2,:],pvec[1,:],
                                             Xsun=8.)
         plbd= bovy_coords.XYZ_to_lbd(pXYZ[0],pXYZ[1],pXYZ[2],degree=True)
+        pvXYZ= bovy_coords.galcenrect_to_vxvyvz(pvec[3,:],pvec[5,:],pvec[4,:],
+                                                vsun=[0.,30.24*8.,0.])
+        pvlbd= bovy_coords.vxvyvz_to_vrpmllpmbb(pvXYZ[0],pvXYZ[1],pvXYZ[2],
+                                                plbd[:,0],plbd[:,1],plbd[:,2],
+                                                degree=True)
     #Plot
     bovy_plot.bovy_print(fig_width=8.25,fig_height=3.5)
     if 'ld' in plotfilename:
         lbindx= 2
         ylabel=r'$\mathrm{Distance}\,(\mathrm{kpc})$'
         yrange=[0.,30.]
+    elif 'lvlos' in plotfilename:
+        lbindx= 0
+        ylabel=r'$V_\mathrm{los}\,(\mathrm{km\,s}^{-1})$'
+        yrange=[-500.,500.]
     else:
         lbindx= 1 
         yrange=[-10.,60.]
         ylabel=r'$\mathrm{Galactic\ latitude}\,(\mathrm{deg})$'
-    bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
-                        xlabel=r'$\mathrm{Galactic\ longitude}\,(\mathrm{deg})$',
-                        ylabel=ylabel,
-                        xrange=[0.,290.],
-                        yrange=yrange)
+    if 'vlos' in plotfilename:
+        bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
+                            xlabel=r'$\mathrm{Galactic\ longitude}\,(\mathrm{deg})$',
+                            ylabel=ylabel,
+                            xrange=[0.,290.],
+                            yrange=yrange)
+    else:
+        bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
+                            xlabel=r'$\mathrm{Galactic\ longitude}\,(\mathrm{deg})$',
+                            ylabel=ylabel,
+                            xrange=[0.,290.],
+                            yrange=yrange)
     if includeorbit:
-        bovy_plot.bovy_plot(plbd[npts,0],plbd[npts,lbindx],
-                            'o',color='0.5',mec='none',overplot=True,ms=8)
-        bovy_plot.bovy_plot(plbd[:,0],plbd[:,lbindx],'k--',overplot=True)
+        if 'vlos' in plotfilename:
+            bovy_plot.bovy_plot(plbd[npts,0],pvlbd[npts,lbindx],
+                                'o',color='0.5',mec='none',overplot=True,ms=8)
+            bovy_plot.bovy_plot(plbd[:,0],pvlbd[:,lbindx],'k--',overplot=True)
+        else:
+            bovy_plot.bovy_plot(plbd[npts,0],plbd[npts,lbindx],
+                                'o',color='0.5',mec='none',overplot=True,ms=8)
+            bovy_plot.bovy_plot(plbd[:,0],plbd[:,lbindx],'k--',overplot=True)
     bovy_plot.bovy_end_print(plotfilename)
 
 def plot_stream_aa(plotfilename):
@@ -314,7 +347,7 @@ def plot_stream_times(plotfilename):
 if __name__ == '__main__':
     if 'xz' in sys.argv[1]:
         plot_stream_xz(sys.argv[1])
-    if 'lb' in sys.argv[1] or 'ld' in sys.argv[1]:
+    if 'lb' in sys.argv[1] or 'ld' in sys.argv[1] or 'lvlos' in sys.argv[1]:
         plot_stream_lb(sys.argv[1])
     elif 'times' in sys.argv[1]:
         plot_stream_times(sys.argv[1])
