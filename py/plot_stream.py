@@ -1,6 +1,8 @@
 import sys
 import os, os.path
+import copy
 import numpy
+from scipy import optimize, special
 from galpy.util import bovy_plot, bovy_coords, bovy_conversion
 from galpy import potential
 from galpy.orbit import Orbit
@@ -214,6 +216,42 @@ def plot_stream_aa(plotfilename):
         yrange=[-14.64,-14.23]
         xlabel=r'$J_R\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
         ylabel=r'$L_Z\,(220\,\mathrm{km\,s}^{-1}\,\mathrm{kpc})$'
+    elif 'dohist' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        #Frequencies
+        Or= data[:,3]
+        Op= data[:,4]
+        Oz= data[:,5]
+        dOr= Or[indx]-numpy.median(Or)
+        dOp= Op[indx]-numpy.median(Op)
+        dOz= Oz[indx]-numpy.median(Oz)
+        dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+        dO4dir= copy.copy(dO)
+        dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+        dOdir= numpy.median(dO4dir,axis=1)
+        dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+        dO1d= numpy.dot(dOdir,dO)
+        dO1d[dO1d < 0.]*= -1.
+        bovy_plot.bovy_print()
+        bovy_plot.bovy_hist(dO1d,range=[0.,0.4],bins=61,
+                           normed=True,
+                           xlabel=r'$|\Delta \mathbf{\Omega}|\,(\mathrm{Gyr}^{-1})$',
+                            histtype='step',color='k',zorder=10)
+        #Overplot best-fit Gaussian
+        xs= numpy.linspace(0.,0.4,1001)
+        bovy_plot.bovy_plot(xs,1./numpy.sqrt(2.*numpy.pi)/numpy.std(dO1d)\
+                                *numpy.exp(-(xs-numpy.mean(dO1d))**2./2./numpy.var(dO1d)),
+                            '--',color='k',overplot=True,lw=2.,zorder=0)
+        bestfit= optimize.fmin_powell(gausstimesvalue,
+                                      numpy.array([numpy.log(numpy.mean(dO1d)*2.),
+                                                   numpy.log(numpy.std(dO1d))]),
+                                      args=(dO1d,))
+        bovy_plot.bovy_plot(xs,gausstimesvalue(bestfit,xs,nologsum=True),
+                            '-',color='0.4',overplot=True,lw=2.,zorder=0)
+        bovy_plot.bovy_end_print(plotfilename)
+        return None
     bovy_plot.bovy_print()
     bovy_plot.bovy_plot(plotx,ploty,'k,',
                         xlabel=xlabel,
@@ -343,6 +381,15 @@ def plot_stream_times(plotfilename):
                             ylabel=r'$|\Delta \boldsymbol\theta|$')
     bovy_plot.bovy_end_print(plotfilename)
     return None
+
+def gausstimesvalue(params,vals,nologsum=False):
+    tmean= numpy.exp(params[0])
+    tsig= numpy.exp(params[1])
+    norm= tsig**2.*numpy.exp(-tmean**2./2./tsig**2.)+tsig*numpy.sqrt(numpy.pi/2.)*tmean*(1.+special.erf(tmean/numpy.sqrt(2.)/tsig))
+    if nologsum:
+        return numpy.fabs(vals)/norm*numpy.exp(-(vals-tmean)**2./2./tsig**2.)
+    else:
+        return -numpy.sum(numpy.log(numpy.fabs(vals)/norm*numpy.exp(-(vals-tmean)**2./2./tsig**2.)))
 
 if __name__ == '__main__':
     if 'xz' in sys.argv[1]:
