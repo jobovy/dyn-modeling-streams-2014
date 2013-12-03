@@ -252,6 +252,66 @@ def plot_stream_aa(plotfilename):
                             '-',color='0.4',overplot=True,lw=2.,zorder=0)
         bovy_plot.bovy_end_print(plotfilename)
         return None
+    elif 'dahist' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        thetar= thetar[indx]
+        thetap= data[:,7]
+        thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+        thetap= thetap[indx]
+        thetaz= data[:,8]
+        thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+        thetaz= thetaz[indx]
+        #center around 0 (instead of pi)
+        thetar-= numpy.pi
+        thetap-= numpy.pi
+        thetaz-= numpy.pi
+        #Frequencies
+        Or= data[:,3]
+        Op= data[:,4]
+        Oz= data[:,5]
+        dOr= Or[indx]-numpy.median(Or)
+        dOp= Op[indx]-numpy.median(Op)
+        dOz= Oz[indx]-numpy.median(Oz)
+        dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+        #Direction in which the stream spreads
+        dO4dir= copy.copy(dO)
+        dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+        dOdir= numpy.median(dO4dir,axis=1)
+        dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+        #Gram-Schmidt to get the perpendicular directions
+        v2= numpy.array([1.,0.,0.])
+        v3= numpy.array([0.,1.,0.])
+        u2= v2-numpy.sum(dOdir*v2)*dOdir
+        u2/= numpy.sqrt(numpy.sum(u2**2.))
+        u3= v3-numpy.sum(dOdir*v3)*dOdir-numpy.sum(u2*v3)*u2
+        #Times
+        dangle= numpy.vstack((thetar,thetap,thetaz))
+        dts= numpy.sum(dO*dangle,axis=0)/numpy.sum(dO**2.,axis=0)
+        #Rewind angles
+        dangle-= dO*dts
+        newdangle= numpy.empty_like(dangle)
+        newdangle[0,:]= numpy.dot(dOdir,dangle)
+        newdangle[1,:]= numpy.dot(u2,dangle)
+        newdangle[2,:]= numpy.dot(u3,dangle)
+        bovy_plot.bovy_print()
+        xmin= -0.015
+        bovy_plot.bovy_hist(newdangle[2,:].flatten(),range=[xmin,-xmin],bins=61,
+                            xlabel=r'$|\Delta \mathbf{\theta}|$',
+                            normed=True,lw=2.,
+                            color='k',zorder=10,
+                            histtype='step')
+        #Overplot best-fit Gaussian
+        xs= numpy.linspace(xmin,-xmin,1001)
+        bovy_plot.bovy_plot(xs,1./numpy.sqrt(2.*numpy.pi)/numpy.std(newdangle[1:,:])\
+                                *numpy.exp(-(xs-numpy.mean(newdangle[1:,:]))**2./2./numpy.var(newdangle[1:,:])),
+                            '--',color='k',overplot=True,lw=2.,zorder=0)
+        print "along", numpy.mean(newdangle[0,:]), numpy.std(newdangle[0,:])
+        print "perpendicular 1", numpy.mean(newdangle[1,:]), numpy.std(newdangle[1,:])
+        print "perpendicular 2", numpy.mean(newdangle[2,:]), numpy.std(newdangle[2,:])
+        bovy_plot.bovy_end_print(plotfilename)
+        return None
     bovy_plot.bovy_print()
     bovy_plot.bovy_plot(plotx,ploty,'k,',
                         xlabel=xlabel,
