@@ -424,7 +424,7 @@ def plot_stream_aa(plotfilename):
         xrange=[0.,1.3]
         yrange=[0.,0.03]
         xlabel= r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$'
-        ylabel= r'$\Large|\Delta \mathbf{\theta}_\perp\Large|\,(\mathrm{Gyr}^{-1})$'
+        ylabel= r'$\Large|\Delta \mathbf{\theta}_\perp\Large|$'
         fmt= 'k.'
     elif 'apartime' in plotfilename:
         thetar= data[:,6]
