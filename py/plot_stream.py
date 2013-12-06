@@ -148,6 +148,7 @@ def plot_stream_aa(plotfilename):
                                      'gd1_evol_hitres_aa_01312.dat'),
                         delimiter=',')
     includeorbit= True
+    fmt= 'k,'
     if includeorbit:
         #Read progenitor actions
         progfile= '../sim/gd1_evol_hitres_progaai.dat'
@@ -164,7 +165,7 @@ def plot_stream_aa(plotfilename):
         yrange=[numpy.pi-1.,numpy.pi+1.]
         xlabel=r'$\theta_R$'
         ylabel=r'$\theta_Z$'
-    elif 'arap' in plotfilename:
+    elif 'arap' in plotfilename and not 'aparaperp' in plotfilename:
         thetar= data[:,6]
         thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
         indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
@@ -312,8 +313,159 @@ def plot_stream_aa(plotfilename):
         print "perpendicular 2", numpy.mean(newdangle[2,:]), numpy.std(newdangle[2,:])
         bovy_plot.bovy_end_print(plotfilename)
         return None
+    elif 'aparopar' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        thetar= thetar[indx]
+        thetap= data[:,7]
+        thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+        thetap= thetap[indx]
+        thetaz= data[:,8]
+        thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+        thetaz= thetaz[indx]
+        #center around 0 (instead of pi)
+        thetar-= numpy.pi
+        thetap-= numpy.pi
+        thetaz-= numpy.pi
+        #Frequencies
+        Or= data[:,3]
+        Op= data[:,4]
+        Oz= data[:,5]
+        dOr= Or[indx]-numpy.median(Or)
+        dOp= Op[indx]-numpy.median(Op)
+        dOz= Oz[indx]-numpy.median(Oz)
+        dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+        #Direction in which the stream spreads
+        dO4dir= copy.copy(dO)
+        dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+        dOdir= numpy.median(dO4dir,axis=1)
+        dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+        #Times
+        dangle= numpy.vstack((thetar,thetap,thetaz))
+        plotx= numpy.fabs(numpy.dot(dangle.T,dOdir))
+        ploty= numpy.fabs(numpy.dot(dO.T,dOdir))
+        xrange=[0.,1.3]
+        yrange=[0.1,0.3]
+        xlabel= r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$'
+        ylabel= r'$\Large|\Delta \mathbf{\Omega}_\parallel\Large|\,(\mathrm{Gyr}^{-1})$'
+        fmt= 'k.'
+    elif 'aparoperp' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        thetar= thetar[indx]
+        thetap= data[:,7]
+        thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+        thetap= thetap[indx]
+        thetaz= data[:,8]
+        thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+        thetaz= thetaz[indx]
+        #center around 0 (instead of pi)
+        thetar-= numpy.pi
+        thetap-= numpy.pi
+        thetaz-= numpy.pi
+        #Frequencies
+        Or= data[:,3]
+        Op= data[:,4]
+        Oz= data[:,5]
+        dOr= Or[indx]-numpy.median(Or)
+        dOp= Op[indx]-numpy.median(Op)
+        dOz= Oz[indx]-numpy.median(Oz)
+        dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+        #Direction in which the stream spreads
+        dO4dir= copy.copy(dO)
+        dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+        dOdir= numpy.median(dO4dir,axis=1)
+        dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+        #Times
+        dangle= numpy.vstack((thetar,thetap,thetaz))
+        plotx= numpy.fabs(numpy.dot(dangle.T,dOdir))
+        ploty= numpy.sqrt(numpy.sum(dO**2.,axis=0)\
+                              -(numpy.dot(dO.T,dOdir))**2.)
+        xrange=[0.,1.3]
+        yrange=[0.,0.005]
+        xlabel= r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$'
+        ylabel= r'$\Large|\Delta \mathbf{\Omega}_\perp\Large|\,(\mathrm{Gyr}^{-1})$'
+        fmt= 'k.'
+    elif 'aparaperp' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        thetar= thetar[indx]
+        thetap= data[:,7]
+        thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+        thetap= thetap[indx]
+        thetaz= data[:,8]
+        thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+        thetaz= thetaz[indx]
+        #center around 0 (instead of pi)
+        thetar-= numpy.pi
+        thetap-= numpy.pi
+        thetaz-= numpy.pi
+        #Frequencies
+        Or= data[:,3]
+        Op= data[:,4]
+        Oz= data[:,5]
+        dOr= Or[indx]-numpy.median(Or)
+        dOp= Op[indx]-numpy.median(Op)
+        dOz= Oz[indx]-numpy.median(Oz)
+        dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+        #Direction in which the stream spreads
+        dO4dir= copy.copy(dO)
+        dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+        dOdir= numpy.median(dO4dir,axis=1)
+        dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+        #Times
+        dangle= numpy.vstack((thetar,thetap,thetaz))
+        plotx= numpy.fabs(numpy.dot(dangle.T,dOdir))
+        ploty= numpy.sqrt(numpy.sum(dangle**2.,axis=0)\
+                              -(numpy.dot(dangle.T,dOdir))**2.)
+        xrange=[0.,1.3]
+        yrange=[0.,0.03]
+        xlabel= r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$'
+        ylabel= r'$\Large|\Delta \mathbf{\theta}_\perp\Large|\,(\mathrm{Gyr}^{-1})$'
+        fmt= 'k.'
+    elif 'apartime' in plotfilename:
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        thetar= thetar[indx]
+        thetap= data[:,7]
+        thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+        thetap= thetap[indx]
+        thetaz= data[:,8]
+        thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+        thetaz= thetaz[indx]
+        #center around 0 (instead of pi)
+        thetar-= numpy.pi
+        thetap-= numpy.pi
+        thetaz-= numpy.pi
+        #Frequencies
+        Or= data[:,3]
+        Op= data[:,4]
+        Oz= data[:,5]
+        dOr= Or[indx]-numpy.median(Or)
+        dOp= Op[indx]-numpy.median(Op)
+        dOz= Oz[indx]-numpy.median(Oz)
+        dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+        #Direction in which the stream spreads
+        dO4dir= copy.copy(dO)
+        dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+        dOdir= numpy.median(dO4dir,axis=1)
+        dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+        #Times
+        dangle= numpy.vstack((thetar,thetap,thetaz))
+        dts= numpy.sum(dO*dangle,axis=0)/numpy.sum(dO**2.,axis=0)
+        plotx= numpy.fabs(numpy.dot(dangle.T,dOdir))
+        ploty= dts
+        xrange=[0.,1.3]
+        yrange=[0.,5.]
+        xlabel= r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$'
+        ylabel= r'$\Delta t\,(\mathrm{Gyr})$'
+        fmt= 'k.'
     bovy_plot.bovy_print()
-    bovy_plot.bovy_plot(plotx,ploty,'k,',
+    bovy_plot.bovy_plot(plotx,ploty,fmt,
                         xlabel=xlabel,
                         ylabel=ylabel,
                         xrange=xrange,
