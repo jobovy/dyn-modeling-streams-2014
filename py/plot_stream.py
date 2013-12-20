@@ -6,8 +6,14 @@ from scipy import optimize, special
 from galpy.util import bovy_plot, bovy_coords, bovy_conversion
 from galpy import potential
 from galpy.orbit import Orbit
+from galpy.actionAngle_src.actionAngleIsochroneApprox\
+    import actionAngleIsochroneApprox
+from galpy.df_src.streamdf import streamdf
+from matplotlib import pyplot
+from matplotlib.ticker import NullFormatter
 _STREAMSNAPDIR= '../sim/snaps'
 _STREAMSNAPAADIR= '../sim/snaps_aai'
+_NTRACKCHUNKS= 4
 def plot_stream_xz(plotfilename):
     #Read stream
     data= numpy.loadtxt(os.path.join(_STREAMSNAPDIR,'gd1_evol_hitres_01312.dat'),
@@ -39,16 +45,60 @@ def plot_stream_xz(plotfilename):
         pvec[1,npts-1:]= ppo.z(pts)
         pvec[2,npts-1:]= ppo.y(pts)
         pvec*= 8.
+    includetrack= True
+    if includetrack:
+        #Setup stream model
+        lp= potential.LogarithmicHaloPotential(q=0.9,normalize=1.)
+        aAI= actionAngleIsochroneApprox(b=0.8,pot=lp)
+        obs= numpy.array([1.56148083,0.35081535,-1.15481504,
+                          0.88719443,-0.47713334,0.12019596])
+        sdf= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                      leading=True,nTrackChunks=_NTRACKCHUNKS)
+        sdft= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                       leading=False,nTrackChunks=_NTRACKCHUNKS)
     #Plot
     bovy_plot.bovy_print()
     bovy_plot.bovy_plot(data[:,1],data[:,2],'k,',
                         xlabel=r'$X\,(\mathrm{kpc})$',
                         ylabel=r'$Z\,(\mathrm{kpc})$',
                         xrange=[0.,16.],
-                        yrange=[-0.5,12.])
+                        yrange=[-0.5,11.])
     if includeorbit:
         bovy_plot.bovy_plot(pox,poz,'o',color='0.5',mec='none',overplot=True,ms=8)
-        bovy_plot.bovy_plot(pvec[0,:],pvec[1,:],'k--',overplot=True)
+        bovy_plot.bovy_plot(pvec[0,:],pvec[1,:],'k--',overplot=True,lw=1.)
+    if includetrack:
+        d1= 'x'
+        d2= 'z'
+        sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                      overplot=True,lw=1.,scaleToPhysical=True)
+        sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                       overplot=True,lw=1.,scaleToPhysical=True)
+        #Also create inset
+        pyplot.plot([12.,12.],[0.5,7.5],'k-')
+        pyplot.plot([14.5,14.5],[0.5,7.5],'k-')
+        pyplot.plot([12.,14.5],[0.5,0.5],'k-')
+        pyplot.plot([12.,14.5],[7.5,7.5],'k-')
+        pyplot.plot([12.,8.8],[7.5,7.69],'k:')
+        pyplot.plot([12.,8.8],[0.5,-0.21],'k:')
+        insetAxes= pyplot.axes([0.15,0.12,0.4,0.55])
+        pyplot.sca(insetAxes)
+        bovy_plot.bovy_plot(data[:,1],data[:,2],'k,',
+                            overplot=True)
+        bovy_plot.bovy_plot(pvec[0,:],pvec[1,:],'k--',overplot=True,lw=1.)
+        sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                      overplot=True,lw=1.,scaleToPhysical=True)
+        nullfmt   = NullFormatter()         # no labels
+        insetAxes.xaxis.set_major_formatter(nullfmt)
+        insetAxes.yaxis.set_major_formatter(nullfmt)
+        insetAxes.set_xlim(12.,14.5)
+        insetAxes.set_ylim(.5,7.5)
+        pyplot.tick_params(\
+            axis='both',          # changes apply to the x-axis
+            which='both',      # both major and minor ticks are affected
+            bottom='off',      # ticks along the bottom edge are off
+            top='off',         # ticks along the top edge are off
+            left='off',      # ticks along the bottom edge are off
+            right='off')         # ticks along the top edge are off
     bovy_plot.bovy_end_print(plotfilename)
 
 def plot_stream_lb(plotfilename):
@@ -593,6 +643,63 @@ def plot_stream_times(plotfilename):
                             ylabel=r'$|\Delta \boldsymbol\theta|$')
     bovy_plot.bovy_end_print(plotfilename)
     return None
+
+def readaA():
+    """Read the action angle data for the stream, and process it"""
+    #Read stream
+    data= numpy.loadtxt(os.path.join(_STREAMSNAPAADIR,
+                                     'gd1_evol_hitres_aa_01312.dat'),
+                        delimiter=',')
+    thetar= data[:,6]
+    print "Median angles:", numpy.median(thetar), numpy.median(data[:,7]),\
+        numpy.median(data[:,8])
+    thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+    indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+    thetar= thetar[indx]
+    thetap= data[:,7]
+    thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+    thetap= thetap[indx]
+    thetaz= data[:,8]
+    thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+    thetaz= thetaz[indx]
+    #center around 0 (instead of pi)
+    thetar-= numpy.pi
+    thetap-= numpy.pi
+    thetaz-= numpy.pi
+    #Frequencies
+    Or= data[:,3]
+    Op= data[:,4]
+    Oz= data[:,5]
+    dOr= Or[indx]-numpy.median(Or)
+    dOp= Op[indx]-numpy.median(Op)
+    dOz= Oz[indx]-numpy.median(Oz)
+    dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+    #Direction in which the stream spreads
+    dO4dir= copy.copy(dO)
+    dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+    dOdir= numpy.median(dO4dir,axis=1)
+    dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+    dOpar= numpy.dot(dOdir,dO)
+    #Gram-Schmidt to get the perpendicular directions
+    v2= numpy.array([1.,0.,0.])
+    v3= numpy.array([0.,1.,0.])
+    u2= v2-numpy.sum(dOdir*v2)*dOdir
+    u2/= numpy.sqrt(numpy.sum(u2**2.))
+    u3= v3-numpy.sum(dOdir*v3)*dOdir-numpy.sum(u2*v3)*u2
+    dOperp1= numpy.dot(u2,dO)
+    dOperp2= numpy.dot(u3,dO)
+    #Times
+    dangle= numpy.vstack((thetar,thetap,thetaz))
+    dts= numpy.sum(dO*dangle,axis=0)/numpy.sum(dO**2.,axis=0)
+    #Rewind angles
+    dangle-= dO*dts
+    newdangle= numpy.empty_like(dangle)
+    newdangle[0,:]= numpy.dot(dOdir,dangle)
+    newdangle[1,:]= numpy.dot(u2,dangle)
+    newdangle[2,:]= numpy.dot(u3,dangle)
+    return (thetar,thetap,thetaz,Or[indx],Op[indx],Oz[indx],\
+                dO,dangle,
+            dOpar,dOperp1,dOperp2,newdangle,Or,Op,Oz)
 
 def gausstimesvalue(params,vals,nologsum=False):
     tmean= numpy.exp(params[0])
