@@ -13,7 +13,7 @@ from matplotlib import pyplot
 from matplotlib.ticker import NullFormatter
 _STREAMSNAPDIR= '../sim/snaps'
 _STREAMSNAPAADIR= '../sim/snaps_aai'
-_NTRACKCHUNKS= 4
+_NTRACKCHUNKS= 11
 def plot_stream_xz(plotfilename):
     #Read stream
     data= numpy.loadtxt(os.path.join(_STREAMSNAPDIR,'gd1_evol_hitres_01312.dat'),
