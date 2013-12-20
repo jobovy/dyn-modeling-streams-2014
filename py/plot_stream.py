@@ -13,7 +13,7 @@ from matplotlib import pyplot
 from matplotlib.ticker import NullFormatter
 _STREAMSNAPDIR= '../sim/snaps'
 _STREAMSNAPAADIR= '../sim/snaps_aai'
-_NTRACKCHUNKS= 4
+_NTRACKCHUNKS= 11
 def plot_stream_xz(plotfilename):
     #Read stream
     data= numpy.loadtxt(os.path.join(_STREAMSNAPDIR,'gd1_evol_hitres_01312.dat'),
@@ -178,11 +178,19 @@ def plot_stream_lb(plotfilename):
         lbindx= 0
         ylabel=r'$V_\mathrm{los}\,(\mathrm{km\,s}^{-1})$'
         yrange=[-500.,500.]
+    elif 'lpmll' in plotfilename:
+        lbindx= 1
+        ylabel=r'$\mu_{l}\cos b\,(\mathrm{mas\,yr}^{-1})$'
+        yrange=[-2.,13.5]
+    elif 'lpmbb' in plotfilename:
+        lbindx= 2
+        ylabel=r'$\mu_{b}\,(\mathrm{mas\,yr}^{-1})$'
+        yrange=[-8.,7.]
     else:
         lbindx= 1 
         yrange=[-10.,60.]
         ylabel=r'$\mathrm{Galactic\ latitude}\,(\mathrm{deg})$'
-    if 'vlos' in plotfilename:
+    if 'vlos' in plotfilename or 'pm' in plotfilename:
         bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
                             xlabel=r'$\mathrm{Galactic\ longitude}\,(\mathrm{deg})$',
                             ylabel=ylabel,
@@ -195,7 +203,7 @@ def plot_stream_lb(plotfilename):
                             xrange=[0.,290.],
                             yrange=yrange)
     if includeorbit:
-        if 'vlos' in plotfilename:
+        if 'vlos' in plotfilename or 'pm' in plotfilename:
             bovy_plot.bovy_plot(plbd[npts,0],pvlbd[npts,lbindx],
                                 'o',color='0.5',mec='none',overplot=True,ms=8)
             bovy_plot.bovy_plot(plbd[:,0],pvlbd[:,lbindx],'k--',overplot=True)
@@ -207,6 +215,10 @@ def plot_stream_lb(plotfilename):
         d1= 'll'
         if 'vlos' in plotfilename:
             d2= 'vlos'
+        elif 'pmll' in plotfilename:
+            d2= 'pmll'
+        elif 'pmbb' in plotfilename:
+            d2= 'pmbb'
         elif 'ld'  in plotfilename:
             d2= 'dist'
         else:
@@ -238,6 +250,80 @@ def plot_stream_lb(plotfilename):
             insetAxes.yaxis.set_major_formatter(nullfmt)
             insetAxes.set_xlim(xmin,xmax)
             insetAxes.set_ylim(ymin,ymax)
+        elif 'pmll' in plotfilename:
+            xmin, xmax= 158.,205.
+            ymin, ymax= 10.5, 13.
+            pyplot.plot([xmin,xmin],[ymin,ymax],'k-')
+            pyplot.plot([xmax,xmax],[ymin,ymax],'k-')
+            pyplot.plot([xmin,xmax],[ymin,ymin],'k-')
+            pyplot.plot([xmin,xmax],[ymax,ymax],'k-')
+            pyplot.plot([xmin,113.],[ymin,6.1],'k:')
+            pyplot.plot([xmax,227.],[ymin,6.1],'k:')
+            insetAxes= pyplot.axes([0.43,0.12,0.3,0.4])
+            pyplot.sca(insetAxes)
+            bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
+                                overplot=True)
+            sdf.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
+                                overplot=True)
+            sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                           overplot=True,lw=1.)
+            nullfmt   = NullFormatter()         # no labels
+            insetAxes.xaxis.set_major_formatter(nullfmt)
+            insetAxes.yaxis.set_major_formatter(nullfmt)
+            insetAxes.set_xlim(xmin,xmax)
+            insetAxes.set_ylim(ymin,ymax)
+        elif 'pmbb' in plotfilename:
+            xmin, xmax= 185., 230.
+            ymin, ymax= -7.4, -4.7
+            pyplot.plot([xmin,xmin],[ymin,ymax],'k-')
+            pyplot.plot([xmax,xmax],[ymin,ymax],'k-')
+            pyplot.plot([xmin,xmax],[ymin,ymin],'k-')
+            pyplot.plot([xmin,xmax],[ymax,ymax],'k-')
+            pyplot.plot([xmin,159.],[ymax,1.],'k:')
+            pyplot.plot([xmax,287.],[ymax,1.],'k:')
+            #2nd inset
+            xmin2, xmax2= 80., 125.
+            ymin2, ymax2= 4.2, 5.8
+            pyplot.plot([xmin2,xmin2],[ymin2,ymax2],'k-')
+            pyplot.plot([xmax2,xmax2],[ymin2,ymax2],'k-')
+            pyplot.plot([xmin2,xmax2],[ymin2,ymin2],'k-')
+            pyplot.plot([xmin2,xmax2],[ymax2,ymax2],'k-')
+            pyplot.plot([xmin2,8.],[ymin2,-1.],'k:')
+            pyplot.plot([xmax2,155.],[ymin2,-1.],'k:')
+            insetAxes= pyplot.axes([0.55,0.57,0.34,0.3])
+            pyplot.sca(insetAxes)
+            bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
+                                overplot=True)
+            sdf.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
+                                overplot=True)
+            sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                           overplot=True,lw=1.)
+            nullfmt   = NullFormatter()         # no labels
+            insetAxes.xaxis.set_major_formatter(nullfmt)
+            insetAxes.yaxis.set_major_formatter(nullfmt)
+            insetAxes.set_xlim(xmin,xmax)
+            insetAxes.set_ylim(ymin,ymax)
+            pyplot.tick_params(\
+                axis='both',          # changes apply to the x-axis
+                which='both',      # both major and minor ticks are affected
+                bottom='off',      # ticks along the bottom edge are off
+                top='off',         # ticks along the top edge are off
+                left='off',      # ticks along the bottom edge are off
+                right='off')         # ticks along the top edge are off
+            #Also make second inset
+            insetAxes= pyplot.axes([0.14,0.12,0.4,0.35])
+            pyplot.sca(insetAxes)
+            bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
+                                overplot=True)
+            sdft.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
+                                overplot=True)
+            sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                           overplot=True,lw=1.)
+            nullfmt   = NullFormatter()         # no labels
+            insetAxes.xaxis.set_major_formatter(nullfmt)
+            insetAxes.yaxis.set_major_formatter(nullfmt)
+            insetAxes.set_xlim(xmin2,xmax2)
+            insetAxes.set_ylim(ymin2,ymax2)
         elif 'ld' in plotfilename:
             xmin, xmax= 158., 227.
             ymin, ymax= 7.7,9.5
@@ -842,7 +928,8 @@ def gausstimesvalue(params,vals,nologsum=False):
 if __name__ == '__main__':
     if 'xz' in sys.argv[1]:
         plot_stream_xz(sys.argv[1])
-    if 'lb' in sys.argv[1] or 'ld' in sys.argv[1] or 'lvlos' in sys.argv[1]:
+    if 'lb' in sys.argv[1] or 'ld' in sys.argv[1] or 'lvlos' in sys.argv[1] \
+            or 'lpm' in sys.argv[1]:
         plot_stream_lb(sys.argv[1])
     elif 'times' in sys.argv[1]:
         plot_stream_times(sys.argv[1])
