@@ -217,7 +217,57 @@ def plot_stream_lb(plotfilename):
         if 'vlos' in plotfilename:
             pass
         elif 'ld' in plotfilename:
-            pass
+            xmin, xmax= 158., 227.
+            ymin, ymax= 7.7,9.5
+            pyplot.plot([xmin,xmin],[ymin,ymax],'k-')
+            pyplot.plot([xmax,xmax],[ymin,ymax],'k-')
+            pyplot.plot([xmin,xmax],[ymin,ymin],'k-')
+            pyplot.plot([xmin,xmax],[ymax,ymax],'k-')
+            pyplot.plot([xmin,70.],[ymax,18.5],'k:')
+            pyplot.plot([xmax,248.],[ymax,18.5],'k:')
+            #2nd inset
+            xmin2, xmax2= 72.,100.
+            ymin2, ymax2= 11.5, 16.1
+            pyplot.plot([xmin2,xmin2],[ymin2,ymax2],'k-')
+            pyplot.plot([xmax2,xmax2],[ymin2,ymax2],'k-')
+            pyplot.plot([xmin2,xmax2],[ymin2,ymin2],'k-')
+            pyplot.plot([xmin2,xmax2],[ymax2,ymax2],'k-')
+            pyplot.plot([xmin2,66.5],[ymax2,15.85],'k:')
+            pyplot.plot([xmin2,66.5],[ymin2,0.5],'k:')
+            insetAxes= pyplot.axes([0.31,0.6,0.48,0.27])
+            pyplot.sca(insetAxes)
+            bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
+                                overplot=True)
+            sdf.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
+                                overplot=True)
+            sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                           overplot=True,lw=1.)
+            nullfmt   = NullFormatter()         # no labels
+            insetAxes.xaxis.set_major_formatter(nullfmt)
+            insetAxes.yaxis.set_major_formatter(nullfmt)
+            insetAxes.set_xlim(xmin,xmax)
+            insetAxes.set_ylim(ymin,ymax)
+            pyplot.tick_params(\
+                axis='both',          # changes apply to the x-axis
+                which='both',      # both major and minor ticks are affected
+                bottom='off',      # ticks along the bottom edge are off
+                top='off',         # ticks along the top edge are off
+                left='off',      # ticks along the bottom edge are off
+                right='off')         # ticks along the top edge are off
+            #Also make second inset
+            insetAxes= pyplot.axes([0.13,0.12,0.17,0.4])
+            pyplot.sca(insetAxes)
+            bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
+                                overplot=True)
+            sdft.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
+                                overplot=True)
+            sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                           overplot=True,lw=1.)
+            nullfmt   = NullFormatter()         # no labels
+            insetAxes.xaxis.set_major_formatter(nullfmt)
+            insetAxes.yaxis.set_major_formatter(nullfmt)
+            insetAxes.set_xlim(xmin2,xmax2)
+            insetAxes.set_ylim(ymin2,ymax2)
         else:
             xmin, xmax= 90., 165.
             ymin, ymax= 47., 59.
@@ -240,13 +290,13 @@ def plot_stream_lb(plotfilename):
             insetAxes.yaxis.set_major_formatter(nullfmt)
             insetAxes.set_xlim(xmin,xmax)
             insetAxes.set_ylim(ymin,ymax)
-            pyplot.tick_params(\
-                axis='both',          # changes apply to the x-axis
-                which='both',      # both major and minor ticks are affected
-                bottom='off',      # ticks along the bottom edge are off
-                top='off',         # ticks along the top edge are off
-                left='off',      # ticks along the bottom edge are off
-                right='off')         # ticks along the top edge are off
+        pyplot.tick_params(\
+            axis='both',          # changes apply to the x-axis
+            which='both',      # both major and minor ticks are affected
+            bottom='off',      # ticks along the bottom edge are off
+            top='off',         # ticks along the top edge are off
+            left='off',      # ticks along the bottom edge are off
+            right='off')         # ticks along the top edge are off
     bovy_plot.bovy_end_print(plotfilename)
 
 def plot_stream_aa(plotfilename):
