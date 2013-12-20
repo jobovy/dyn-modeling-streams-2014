@@ -795,7 +795,10 @@ def plot_stream_aa(plotfilename):
                             '-',color='0.75',lw=2.,overplot=True,zorder=10)
         pyplot.fill_between(das,(dOs+sOs)*bovy_conversion.freq_in_Gyr(220.,8),
                             (dOs-sOs)*bovy_conversion.freq_in_Gyr(220.,8),
-                            color='0.6',zorder=0)
+                            color='0.6',zorder=1)
+        pyplot.fill_between(das,(dOs+2*sOs)*bovy_conversion.freq_in_Gyr(220.,8),
+                            (dOs-2*sOs)*bovy_conversion.freq_in_Gyr(220.,8),
+                            color='0.8',zorder=0)
     elif includetrack and 'apartime' in plotfilename:
         das= numpy.linspace(0.01,1.3,101)
         mts= numpy.array([sdf.meantdAngle(da) for da in das])
@@ -809,7 +812,7 @@ def plot_stream_aa(plotfilename):
                             (mts-sts)*bovy_conversion.time_in_Gyr(220.,8),
                             color='0.6',zorder=1)
     elif includetrack and 'aparaperp' in plotfilename:
-        das= numpy.linspace(0.01,1.3,11)
+        das= numpy.linspace(0.01,1.3,101)
         sas= numpy.array([sdf.sigangledAngle(da) for da in das])
         sass= numpy.array([sdf.sigangledAngle(da,simple=True) for da in das])
         pyplot.fill_between(das,0.,
