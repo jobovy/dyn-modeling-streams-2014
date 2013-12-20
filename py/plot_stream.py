@@ -13,7 +13,7 @@ from matplotlib import pyplot
 from matplotlib.ticker import NullFormatter
 _STREAMSNAPDIR= '../sim/snaps'
 _STREAMSNAPAADIR= '../sim/snaps_aai'
-_NTRACKCHUNKS= 11
+_NTRACKCHUNKS= 4
 def plot_stream_xz(plotfilename):
     #Read stream
     data= numpy.loadtxt(os.path.join(_STREAMSNAPDIR,'gd1_evol_hitres_01312.dat'),
@@ -163,9 +163,11 @@ def plot_stream_lb(plotfilename):
         obs= numpy.array([1.56148083,0.35081535,-1.15481504,
                           0.88719443,-0.47713334,0.12019596])
         sdf= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
-                      leading=True,nTrackChunks=_NTRACKCHUNKS)
+                      leading=True,nTrackChunks=_NTRACKCHUNKS,
+                      vsun=[0.,30.24*8.,0.])
         sdft= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
-                       leading=False,nTrackChunks=_NTRACKCHUNKS)
+                       leading=False,nTrackChunks=_NTRACKCHUNKS,
+                       vsun=[0.,30.24*8.,0.])
     #Plot
     bovy_plot.bovy_print(fig_width=8.25,fig_height=3.5)
     if 'ld' in plotfilename:
@@ -215,7 +217,27 @@ def plot_stream_lb(plotfilename):
                        overplot=True,lw=1.)
         #Insets
         if 'vlos' in plotfilename:
-            pass
+            xmin, xmax= 220., 250.
+            ymin, ymax= 230., 390.
+            pyplot.plot([xmin,xmin],[ymin,ymax],'k-')
+            pyplot.plot([xmax,xmax],[ymin,ymax],'k-')
+            pyplot.plot([xmin,xmax],[ymin,ymin],'k-')
+            pyplot.plot([xmin,xmax],[ymax,ymax],'k-')
+            pyplot.plot([xmin,152.],[ymin,-100.],'k:')
+            pyplot.plot([xmin,152.],[ymax,460.],'k:')
+            insetAxes= pyplot.axes([0.15,0.42,0.38,0.45])
+            pyplot.sca(insetAxes)
+            bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
+                                overplot=True)
+            sdf.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
+                                overplot=True)
+            sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                           overplot=True,lw=1.)
+            nullfmt   = NullFormatter()         # no labels
+            insetAxes.xaxis.set_major_formatter(nullfmt)
+            insetAxes.yaxis.set_major_formatter(nullfmt)
+            insetAxes.set_xlim(xmin,xmax)
+            insetAxes.set_ylim(ymin,ymax)
         elif 'ld' in plotfilename:
             xmin, xmax= 158., 227.
             ymin, ymax= 7.7,9.5
