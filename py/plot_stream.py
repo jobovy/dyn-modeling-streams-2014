@@ -14,6 +14,7 @@ from matplotlib.ticker import NullFormatter
 _STREAMSNAPDIR= '../sim/snaps'
 _STREAMSNAPAADIR= '../sim/snaps_aai'
 _NTRACKCHUNKS= 11
+_SIGV=0.365
 def plot_stream_xz(plotfilename):
     #Read stream
     data= numpy.loadtxt(os.path.join(_STREAMSNAPDIR,'gd1_evol_hitres_01312.dat'),
@@ -52,10 +53,12 @@ def plot_stream_xz(plotfilename):
         aAI= actionAngleIsochroneApprox(b=0.8,pot=lp)
         obs= numpy.array([1.56148083,0.35081535,-1.15481504,
                           0.88719443,-0.47713334,0.12019596])
-        sdf= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
-                      leading=True,nTrackChunks=_NTRACKCHUNKS)
-        sdft= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
-                       leading=False,nTrackChunks=_NTRACKCHUNKS)
+        sdf= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                      leading=True,nTrackChunks=_NTRACKCHUNKS,
+                      tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.))
+        sdft= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                       leading=False,nTrackChunks=_NTRACKCHUNKS,
+                       tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.))
     #Plot
     bovy_plot.bovy_print()
     bovy_plot.bovy_plot(data[:,1],data[:,2],'k,',
@@ -162,12 +165,14 @@ def plot_stream_lb(plotfilename):
         aAI= actionAngleIsochroneApprox(b=0.8,pot=lp)
         obs= numpy.array([1.56148083,0.35081535,-1.15481504,
                           0.88719443,-0.47713334,0.12019596])
-        sdf= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+        sdf= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
                       leading=True,nTrackChunks=_NTRACKCHUNKS,
-                      vsun=[0.,30.24*8.,0.])
-        sdft= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                      vsun=[0.,30.24*8.,0.],
+                      tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.))
+        sdft= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
                        leading=False,nTrackChunks=_NTRACKCHUNKS,
-                       vsun=[0.,30.24*8.,0.])
+                       vsun=[0.,30.24*8.,0.],
+                       tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.))
     #Plot
     bovy_plot.bovy_print(fig_width=8.25,fig_height=3.5)
     if 'ld' in plotfilename:
@@ -413,11 +418,21 @@ def plot_stream_aa(plotfilename):
                                      'gd1_evol_hitres_aa_01312.dat'),
                         delimiter=',')
     includeorbit= True
+    includetrack= True
     fmt= 'k,'
     if includeorbit:
         #Read progenitor actions
         progfile= '../sim/gd1_evol_hitres_progaai.dat'
         progaa= numpy.loadtxt(progfile,delimiter=',')
+    if includetrack:
+        #Setup stream model
+        lp= potential.LogarithmicHaloPotential(q=0.9,normalize=1.)
+        aAI= actionAngleIsochroneApprox(b=0.8,pot=lp)
+        obs= numpy.array([1.56148083,0.35081535,-1.15481504,
+                          0.88719443,-0.47713334,0.12019596])
+        sdf= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                      leading=True,nosetup=True,
+                      tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.))
     if 'araz' in plotfilename:
         thetar= data[:,6]
         thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
@@ -734,7 +749,7 @@ def plot_stream_aa(plotfilename):
                         xlabel=xlabel,
                         ylabel=ylabel,
                         xrange=xrange,
-                        yrange=yrange)
+                        yrange=yrange,zorder=5)
     if includeorbit and 'araz' in plotfilename:
         #plot frequency line
         xs= numpy.array(xrange)
@@ -771,6 +786,39 @@ def plot_stream_aa(plotfilename):
                             'o',overplot=True,color='0.5',
                             mec='none',ms=8.,
                             zorder=0)
+    if includetrack and 'aparopar' in plotfilename:
+        #Calculate mean and std of Omegapar as a function of anglepar
+        das= numpy.linspace(0.,1.3,1001)
+        dOs= numpy.array([sdf.meanOmega(da,oned=True) for da in das])
+        sOs= numpy.array([sdf.sigOmega(da) for da in das])
+        bovy_plot.bovy_plot(das,dOs*bovy_conversion.freq_in_Gyr(220.,8),
+                            '-',color='0.75',lw=2.,overplot=True,zorder=10)
+        pyplot.fill_between(das,(dOs+sOs)*bovy_conversion.freq_in_Gyr(220.,8),
+                            (dOs-sOs)*bovy_conversion.freq_in_Gyr(220.,8),
+                            color='0.6',zorder=0)
+    elif includetrack and 'apartime' in plotfilename:
+        das= numpy.linspace(0.01,1.3,101)
+        mts= numpy.array([sdf.meantdAngle(da) for da in das])
+        sts= numpy.array([sdf.sigtdAngle(da) for da in das])
+        bovy_plot.bovy_plot(das,mts*bovy_conversion.time_in_Gyr(220.,8),
+                            '-',color='0.75',lw=2.,overplot=True,zorder=10)
+        pyplot.fill_between(das,(mts+2*sts)*bovy_conversion.time_in_Gyr(220.,8),
+                            (mts-2*sts)*bovy_conversion.time_in_Gyr(220.,8),
+                            color='0.8',zorder=0)
+        pyplot.fill_between(das,(mts+sts)*bovy_conversion.time_in_Gyr(220.,8),
+                            (mts-sts)*bovy_conversion.time_in_Gyr(220.,8),
+                            color='0.6',zorder=1)
+    elif includetrack and 'aparaperp' in plotfilename:
+        das= numpy.linspace(0.01,1.3,11)
+        sas= numpy.array([sdf.sigangledAngle(da) for da in das])
+        sass= numpy.array([sdf.sigangledAngle(da,simple=True) for da in das])
+        pyplot.fill_between(das,0.,
+                            (2*sas),
+                            color='0.8',zorder=0)
+        pyplot.fill_between(das,0.,
+                            (sas),
+                            color='0.6',zorder=1)
+        pyplot.plot(das,sass,'--',color='w',zorder=7,lw=2.)
     bovy_plot.bovy_end_print(plotfilename)
 
 def plot_stream_times(plotfilename):
