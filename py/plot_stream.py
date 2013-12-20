@@ -155,6 +155,17 @@ def plot_stream_lb(plotfilename):
         pvlbd= bovy_coords.vxvyvz_to_vrpmllpmbb(pvXYZ[0],pvXYZ[1],pvXYZ[2],
                                                 plbd[:,0],plbd[:,1],plbd[:,2],
                                                 degree=True)
+    includetrack= True
+    if includetrack:
+        #Setup stream model
+        lp= potential.LogarithmicHaloPotential(q=0.9,normalize=1.)
+        aAI= actionAngleIsochroneApprox(b=0.8,pot=lp)
+        obs= numpy.array([1.56148083,0.35081535,-1.15481504,
+                          0.88719443,-0.47713334,0.12019596])
+        sdf= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                      leading=True,nTrackChunks=_NTRACKCHUNKS)
+        sdft= streamdf(0.3/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
+                       leading=False,nTrackChunks=_NTRACKCHUNKS)
     #Plot
     bovy_plot.bovy_print(fig_width=8.25,fig_height=3.5)
     if 'ld' in plotfilename:
@@ -190,6 +201,52 @@ def plot_stream_lb(plotfilename):
             bovy_plot.bovy_plot(plbd[npts,0],plbd[npts,lbindx],
                                 'o',color='0.5',mec='none',overplot=True,ms=8)
             bovy_plot.bovy_plot(plbd[:,0],plbd[:,lbindx],'k--',overplot=True)
+    if includetrack:
+        d1= 'll'
+        if 'vlos' in plotfilename:
+            d2= 'vlos'
+        elif 'ld'  in plotfilename:
+            d2= 'dist'
+        else:
+            d2= 'bb'
+        sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                      overplot=True,lw=1.)
+        sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                       overplot=True,lw=1.)
+        #Insets
+        if 'vlos' in plotfilename:
+            pass
+        elif 'ld' in plotfilename:
+            pass
+        else:
+            xmin, xmax= 90., 165.
+            ymin, ymax= 47., 59.
+            pyplot.plot([xmin,xmin],[ymin,ymax],'k-')
+            pyplot.plot([xmax,xmax],[ymin,ymax],'k-')
+            pyplot.plot([xmin,xmax],[ymin,ymin],'k-')
+            pyplot.plot([xmin,xmax],[ymax,ymax],'k-')
+            pyplot.plot([xmin,70.],[ymin,31.],'k:')
+            pyplot.plot([xmax,213.],[ymin,31.],'k:')
+            insetAxes= pyplot.axes([0.31,0.12,0.38,0.45])
+            pyplot.sca(insetAxes)
+            bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
+                                overplot=True)
+            sdft.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
+                                overplot=True)
+            sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
+                           overplot=True,lw=1.)
+            nullfmt   = NullFormatter()         # no labels
+            insetAxes.xaxis.set_major_formatter(nullfmt)
+            insetAxes.yaxis.set_major_formatter(nullfmt)
+            insetAxes.set_xlim(xmin,xmax)
+            insetAxes.set_ylim(ymin,ymax)
+            pyplot.tick_params(\
+                axis='both',          # changes apply to the x-axis
+                which='both',      # both major and minor ticks are affected
+                bottom='off',      # ticks along the bottom edge are off
+                top='off',         # ticks along the top edge are off
+                left='off',      # ticks along the bottom edge are off
+                right='off')         # ticks along the top edge are off
     bovy_plot.bovy_end_print(plotfilename)
 
 def plot_stream_aa(plotfilename):
