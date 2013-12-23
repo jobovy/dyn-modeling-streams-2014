@@ -11,7 +11,7 @@ from matplotlib import pyplot
 from matplotlib.ticker import NullFormatter
 _STREAMSNAPDIR= '../sim/snaps'
 _STREAMSNAPAADIR= '../sim/snaps_aai'
-_NTRACKCHUNKS= 4
+_NTRACKCHUNKS= 11
 _SIGV=0.365
 def plot_stream_xz(plotfilename):
     #Read stream
@@ -22,7 +22,10 @@ def plot_stream_xz(plotfilename):
                         delimiter=',')
     thetar= aadata[:,6]
     thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
-    sindx= numpy.fabs(thetar-numpy.pi) > (1.5*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+    if 'sim' in plotfilename:
+        sindx= numpy.fabs(thetar-numpy.pi) > (4.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+    else:
+        sindx= numpy.fabs(thetar-numpy.pi) > (1.5*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
     includeorbit= True
     if includeorbit:
         npts= 201
@@ -107,6 +110,12 @@ def plot_stream_xz(plotfilename):
     if includeorbit:
         bovy_plot.bovy_plot(pox,poz,'o',color='0.5',mec='none',overplot=True,ms=8)
         bovy_plot.bovy_plot(pvec[0,:],pvec[1,:],'k--',overplot=True,lw=1.)
+    if 'sim' in plotfilename:
+        bovy_plot.bovy_text(r'$\mathrm{simulated\ stream}$',
+                            bottom_left=True,size=16.)
+    else:
+        bovy_plot.bovy_text(r'$N\!\!-\!\!\mathrm{body\ stream}$',
+                            bottom_left=True,size=16.)
     if includetrack:
         d1= 'x'
         d2= 'z'
