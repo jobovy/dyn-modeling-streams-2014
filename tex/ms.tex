@@ -77,28 +77,57 @@
 \begin{document}
 
 \title{Dynamical modeling of tidal streams}
-\author{Jo~Bovy\altaffilmark{1,2,3} \etal}
-%  Hans-Walter~Rix\altaffilmark{4}}
-\altaffiltext{\theaddress}{\label{IAS}\stepcounter{address} Institute
-  for Advanced Study, Einstein Drive, Princeton, NJ 08540, USA}
-\altaffiltext{\theaddress}{\label{Hubble}\stepcounter{address} Hubble
-  fellow}
-\altaffiltext{\theaddress}{\label{email}\stepcounter{address}
-  Correspondence should be addressed to bovy@ias.edu~.}
-%\altaffiltext{\theaddress}{\label{MPIA}\stepcounter{address}
-%  Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117
-%  Heidelberg, Germany}
+\author{Jo~Bovy\altaffilmark{\ref{Hubble}}}
+\affil{Institute for Advanced Study, Einstein Drive, Princeton, NJ 08540, USA}
+\email{bovy@ias.edu}
+\altaffiltext{\theaddress}{\label{Hubble}\stepcounter{address} Hubble fellow}
 
 \begin{abstract} 
-  We present a generative, dynamical model for a tidal stream.
+  I present a new framework for modeling the dynamics of cold tidal
+  streams that is useful for constraining the gravitational host
+  potential and progenitor properties from observed tidal-stream data
+  and for quickly generating mock tidal streams. The framework
+  consists of simple models for the initial action--angle distribution
+  of tidal debris as a function of time, which can be
+  straightforwardly evolved forward in time. Taking advantage of the
+  essentially one-dimensional nature of cold tidal streams, the
+  transformation to position--velocity coordinates can be linearized
+  and interpolated near a small number of points along the progenitor
+  orbit, thus allowing for efficient computations of a stream's
+  properties in observable quantities. I illustrate how to calculate
+  the stream's track in different coordinate systems, how to quickly
+  estimate the dispersion perpendicular to the track, and how to draw
+  mock stream data. As a generative model, this framework allows one
+  to compute the full probability distribution function and
+  marginalize over or condition it on certain phase--space dimensions
+  as well as convolve it with observational uncertainties. This will
+  be instrumental in proper data analysis of stream data. In addition
+  to providing a computationally-efficient practical tool for modeling
+  the dynamics of tidal streams, the action--angle nature of the
+  framework helps elucidate exactly in what manner streams do not
+  follow single orbits, how the observed width of the stream relates
+  to the velocity dispersion or mass of the progenitor, and how the
+  progenitor of ``orphan'' streams could be located.
+
+  The practical usefulness of the proposed framework crucially depends
+  on the ability to calculate action--angle variables for any orbit in
+  any gravitational potential. A novel method for calculating actions,
+  frequencies, and angles in any static potential using a single orbit
+  integration is described in an Appendix.
 \end{abstract}
 
 \keywords{
-	Galaxy: fundamental parameters
+        dark matter
+        ---
+	Galaxy: halo
 	---
         Galaxy: kinematics and dynamics
         ---
 	Galaxy: structure
+        ---
+        galaxies: interactions
+        ---
+        stellar dynamics
 }
 
 
