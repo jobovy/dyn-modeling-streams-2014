@@ -43,6 +43,7 @@
 \newcommand{\vech}{\ensuremath{\vec{H}}}
 \newcommand{\vecj}{\ensuremath{\vec{J}}}
 \newcommand{\vecp}{\ensuremath{\vec{p}}}
+\newcommand{\vecn}{\ensuremath{\vec{n}}}
 \newcommand{\veco}{\ensuremath{\vec{\Omega}}}
 \newcommand{\veca}{\ensuremath{\boldsymbol\theta}}
 \newcommand{\df}{\ensuremath{f}}
@@ -54,6 +55,7 @@
 \newcommand{\DF}{\df}
 \newcommand{\dff}{\ensuremath{\mathbf{f}}}
 \newcommand{\dex}{\ensuremath{\,\mathrm{dex}}}
+\newcommand{\Myr}{\ensuremath{\,\mathrm{Myr}}}
 \newcommand{\Gyr}{\ensuremath{\,\mathrm{Gyr}}}
 \newcommand{\kpc}{\ensuremath{\,\mathrm{kpc}}}
 \newcommand{\pc}{\ensuremath{\,\mathrm{pc}}}
@@ -944,17 +946,170 @@ and assistance. J.B. was supported by NASA through Hubble Fellowship
 grant HST-HF-51285.01 from the Space Telescope Science Institute,
 which is operated by the Association of Universities for Research in
 Astronomy, Incorporated, under NASA contract NAS5-26555. J.B.
-%and H.-W.R  (BOVY: ALSO ACKNOWLEDGE WITHOUT S)
-acknowledges support from SFB 881 (A3) funded by the German
-Research Foundation DFG.
+acknowledges support from SFB 881 (A3) funded by the German Research
+Foundation DFG.
 
 
 \appendix
 
 \section{An efficient, general method for calculating action-angle coordinates using orbit integration}\label{sec:aa}
 
+The wide-spread use of action--angle coordinates, in many ways the
+natural coordinates for studying the orbital structure of galaxies, in
+dynamical modeling has been frustrated by the difficulty in
+calculating the transformation to and from these coordinates,
+$(\vecx,\vecv) \leftrightarrow (\vecj,\veca)$. The most general method
+for calculating the transformation $(\vecj,\veca) \rightarrow
+(\vecx,\vecv)$ is provided by torus modeling \citep{McGill90a}. In the
+context of modeling observational data, computing the transformation
+$(\vecx,\vecv) \rightarrow (\vecj,\veca)$ is more important and the
+most general method consists of iteratively inverting the torus
+modeling \citep{McMillan08a}, which is computationally
+expensive. Recently, progress has been made in computing
+$(\vecx,\vecv) \rightarrow (\vecj,\veca)$ for Milky-Way-like
+potentials by either implicitly or explicitly approximating the
+gravitational potential as a St\"{a}ckel potential
+\citep{Binney12a,Sanders12a}, which allows action--angle coordinates
+to be computed with percent-level errors for moderately eccentric
+orbits. However, these methods break down for orbits with radial
+and/or vertical actions of a similar magnitude as the angular
+momentum---that is, orbits that feel the gravitational potential over
+a volume large enough that the St\"{a}ckel approximation fails. This
+is especially problematic for the orbits of stars in tidal streams, as
+the progenitors of tidal streams are typically on quite eccentric
+orbits \citep[\eg,][]{Sanders13a}.
 
-\section{Dynamical modeling of two-star streams}\label{sec:twostar}
+Recently, Fox \& Binney, 2014, in preparation, have suggested a new
+method for calculating $\vecj(\vecx,\vecv)$ inspired by torus
+modeling. This method requires only a single orbit integration and
+allows the actions to be calculated accurately and as precisely as
+desired (that is, a convergence criterion can be applied and
+convergence can be attained). I describe this method briefly here and
+then show how to extend it to also calculate the frequencies and
+angles: $(\vecx,\vecv) \rightarrow (\veco,\veca)$.
+
+As in torus modeling, the Fox \& Binney method uses a auxiliary
+isochrone potential $\Phi^A$ that should be close to the target
+potential $\Phi$ for which the action--angle coordinates should be
+calculated (a precise definition of ``close'' will be given
+below). Actions and angles $(\vecj^A,\veca^A)$ calculated in the
+auxiliary potential can be related to those in the target potential
+$(\vecj,\veca)$ by a generating function that can be written as
+\citep{McGill90a}
+\begin{equation}
+  S(\veca^A,\vecj) = \veca^A\cdot\vecj+2\sum_{\vecn > 0} S_{\vecn}(\vecj)\sin(\vecn\cdot\veca^A)\,,
+\end{equation}
+where the $\vecn > 0$ sum is over the integer two-dimensional
+half-plane that excludes the origin (two- rather than
+three-dimensional, as the azimuthal angle is perfectly correlated with
+the vertical angle in the auxiliary isochrone potential;
+\citealt{binneytremaine}), and the $S_{\vecn}$ are functions of the
+target actions that are to be determined. The canonical transformation
+corresponding to this generating function is
+\begin{equation}\label{eq:jjt}
+  \vecj^A = \frac{\partial S(\veca^A,\vecj)}{\partial \veca^A} = \vecj + 2\sum_{\vecn > 0} \vecn\,S_{\vecn}(\vecj)\cos(\vecn\cdot\veca^A)\,,
+\end{equation}
+and
+\begin{equation}\label{eq:aat}
+  \veca = \frac{\partial S(\veca^A,\vecj)}{\partial \vecj} = \veca^A +2\sum_{\vecn > 0} \frac{\partial S_{\vecn}(\vecj)}{\partial \vecj}\,\sin(\vecn\cdot\veca^A)\,.
+\end{equation}
+
+The Fox \& Binney method consists of averaging \eqnname~(\ref{eq:jjt})
+over the auxiliary angle along the path of the orbit, such that the
+oscillating cosine behavior cancels and the target action is obtained
+as the auxiliary-angle-averaged auxilary action. That is,
+\begin{equation}\label{eq:jjtint}
+  \int \dd \theta_i^A J_i^A = \int \dd \theta_i^A J_i + 2 \sum_{\vecn > 0} \vecn\,S_{\vecn}(J_i)\int \dd \theta_i^A\cos(\vecn\cdot\veca^A)\,,
+\end{equation}
+where the integral is over auxiliary angles calculated on the path of
+the orbit in the target potential. The factor $\vecn\,S_{\vecn}(J_i)$
+comes out of the integral as the target actions are conserved along
+the orbit. In this Equation, we integrate over the angle coordinate
+$\theta_i^A$ associated with the action $J_i$ that we want to compute
+(that is, $\theta_R$ for $J_R$ and so on). This is because of the
+factor $\vecn$: the condition $\vecn > 0$ means that when calculating
+$J_R$ there are terms with $\vecn = (n_R,0)$, which would not cancel
+according to the argument below when integrating over $\theta_Z$. For
+non-resonant orbits and after a long-enough orbit integration, the
+angles can be considered to be independent (that is, the orbit ``fills
+its torus''), such that we can write (for example, for $\theta_R$)
+\begin{equation}
+  \int \dd \theta_R^A\cos(\vecn\cdot\veca^A) = \mathrm{Re}\left[\int \dd \theta_R^A\,\exp(-i\vecn\cdot\veca^A)\right] = \mathrm{Re}\left[\exp(-i\,n_Z\,\theta^A_Z)\int \dd \theta_R^A\,\exp(-i\,n_R\,\theta^A_R)\right]\,.
+\end{equation}
+As long as the auxiliary angle $\theta_R$ goes through the full range
+$0$ to $2\pi$ along the orbit, the oscillatory behavior integrates to
+zero and \eqnname~(\ref{eq:jjtint}) simplifies to
+\begin{equation}\label{eq:aAIJ}
+  J_i = \frac{\int \dd \theta_i^A J_i^A}{\int \dd \theta_i^A}\,,
+\end{equation}
+that is, the target action is obtained by averaging the auxiliary
+action over the auxiliary angle.
+
+The left panel of \figurename~\ref{fig:aAI} shows a running average of
+the radial action calculated using \eqnname~(\ref{eq:aAIJ}) along the
+orbit of the progenitor in the simulation used in the main body of
+this paper. The time in this figure is in units of $35.56\Myr$, so the
+orbit is integrated for a total of $7.11\Gyr$. After a few radial
+periods, the radial action quickly converges with a remaining
+oscillatory behavior that is primarily a function of the radial angle,
+but that becomes smaller over time. With longer integrations and
+shorter time-steps, the radial action can converge to any desired
+tolerance. The duration of the orbit integration shown in this figure
+is what is typically used in this paper and gives a precision of
+$\approx2\,\%$ in the actions.
+
+Given the orbit integration already performed for calculating the
+actions, we can use \equationname~(\ref{eq:aat}) to calculate the
+frequencies and angles corresponding to the point $(\vecx,\vecv)$
+(this procedure is similar to that used in \citealt{McMillan08a}). We
+first re-write \equationname~(\ref{eq:aat}) in terms of the angle at
+time zero and the frequencies
+\begin{equation}\label{eq:aat2}
+  \veca = \veca(t=0) + \veco(\vecj) \,t = \veca^A +2\sum_{\vecn > 0} \frac{\partial S_{\vecn}(\vecj)}{\partial \vecj}\,\sin(\vecn\cdot\veca^A)\,.
+\end{equation}
+This a linear system of equations for each point along the orbit with
+unknowns $\veca(t=0)$, $\veco(\vecj)$, and the functions
+$\frac{\partial S_{\vecn}(\vecj)}{\partial \vecj}$. For a finely
+integrated orbit, this system is highly over-constrained (at least
+when the number of expansion terms is small) and its solution can be
+found by simple linear algebra for any desired number of expansion
+terms $\sin(\vecn\cdot\veca^A)$. For extra stability, we integrate the
+orbit both forward and backward in time, such that the desired angle
+$\veca(t=0)$ is at the center of the dependent variable $t$.
+
+The right panel of \figurename~\ref{fig:aAI} shows the auxiliary
+radial angle versus the auxiliary vertical angle along the orbit for
+the progenitor used in the main body of this paper. The periodic
+behavior in the angles is removed before the linear fit described in
+the previous paragraph, which is shown in this figure. It is clear
+that the contribution of the oscillatory terms
+$\sin(\vecn\cdot\veca^A)$ is small, such that a small number of
+expansion terms is sufficient (we limit the terms to $n_R < 4$ and
+$n_Z < 4$).
+
+The method described here is completely general, but the only obstacle
+to using it is that a sufficiently close isochrone potential has to be
+supplied. Sufficiently close means specifically that both the
+auxiliary radial and vertical angle have to go through the full range
+of $0$ to $2\pi$ along the orbit in the target potential. Whether they
+do or not is easy to check and I have found that with limited trial
+and error a good enough isochrone potential can be determined quickly
+for Milky-Way-like axisymmetric potentials, although it remains to be
+checked whether this holds for triaxial potentials as well. For
+analyzing stream data, the necessity of this trial-and-error
+determinition of the auxiliary potential does not pose a practical
+problem, as all of the stream stars are on very similar
+orbits. Therefore, the same auxiliary potential can be used for all
+action--angle calculations for a given potential and for different
+potentials as well, as long as they are not too different. More
+widespread use of this technique may require automated methods for
+determining a good auxiliary potential. In the unlikely circumstance
+that no good auxiliary isochrone potential can be found, the method
+discussed here can also be used with other auxiliary potentials for
+which the actions and angles can be calculated, such as other
+spherical potentials or the family of St\"{a}ckel potentials. This
+will, however, add a non-negligible amount of computation for the
+necessary numerical integrations.
 
 %BOVY: reference point
 
@@ -964,6 +1119,8 @@ Research Foundation DFG.
   Binney,~J. \& Tremaine,~S. 2008, Galactic Dynamics: Second Edition
 \bibitem[Binney(2008)]{Binney08a}
   Binney,~J. 2008, \mnras, 386, L47
+\bibitem[Binney(2012)]{Binney12a}
+  Binney,~J. 2012, \mnras, 426, 1324
 \bibitem[Carlberg(2009)]{Carlberg09a}
   Carlberg,~R.~G. 2009, \apj, 705, L223
 \bibitem[Carlberg(2012)]{Carlberg12a}
@@ -976,6 +1133,10 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Johnston,~K.~V., Zhao,~H., Spergel,~D.~N., \& Hernquist,~L. 1999, \apj, 512, L109
 \bibitem[Koposov \etal(2010)]{Koposov10a}
   Koposov,~S.~E., Rix,~H.-W., \& Hogg,~D.~W. 2010, \apj, 712, 260
+\bibitem[McGill \& Binney(1990)]{McGill90a}
+  McGill,~C. \& Binney,~J. 1990, \mnras, 244, 634
+\bibitem[McMillan \& Binney(2008)]{McMillan08a}
+  McMillan,~P.~J. \& Binney,~J.~J. 2008, \mnras, 390, 429
 \bibitem[Ngan \& Carlberg(2014)]{Ngan14a}
   Ngan,~W.~H.~W. \& Carlberg,~R.~G. 2014, \apj, submitted
 \bibitem[Pe{\~n}arrubia \etal(2012)]{Penarrubia12a}
