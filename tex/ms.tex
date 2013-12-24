@@ -84,27 +84,24 @@
 
 \begin{abstract} 
   I present a new framework for modeling the dynamics of cold tidal
-  streams that is useful for constraining the gravitational host
-  potential and progenitor properties from observed tidal-stream data
-  and for quickly generating mock tidal streams. The framework
-  consists of simple models for the initial action--angle distribution
-  of tidal debris as a function of time, which can be
-  straightforwardly evolved forward in time. Taking advantage of the
-  essentially one-dimensional nature of cold tidal streams, the
-  transformation to position--velocity coordinates can be linearized
-  and interpolated near a small number of points along the progenitor
-  orbit, thus allowing for efficient computations of a stream's
-  properties in observable quantities. I illustrate how to calculate
-  the stream's track in different coordinate systems, how to quickly
-  estimate the dispersion perpendicular to the track, and how to draw
-  mock stream data. As a generative model, this framework allows one
-  to compute the full probability distribution function and
+  streams. The framework consists of simple models for the initial
+  action--angle distribution of tidal debris as a function of time,
+  which can be straightforwardly evolved forward in time. Taking
+  advantage of the essentially one-dimensional nature of cold tidal
+  streams, the transformation to position--velocity coordinates can be
+  linearized and interpolated near a small number of points along the
+  progenitor orbit, thus allowing for efficient computations of a
+  stream's properties in observable quantities. I illustrate how to
+  calculate the stream's track in different coordinate systems, how to
+  quickly estimate the dispersion perpendicular to the track, and how
+  to draw mock stream data. As a generative model, this framework
+  allows one to compute the full probability distribution function and
   marginalize over or condition it on certain phase--space dimensions
   as well as convolve it with observational uncertainties. This will
   be instrumental in proper data analysis of stream data. In addition
   to providing a computationally-efficient practical tool for modeling
   the dynamics of tidal streams, the action--angle nature of the
-  framework helps elucidate exactly in what manner streams do not
+  framework helps elucidate in exactly what manner streams do not
   follow single orbits, how the observed width of the stream relates
   to the velocity dispersion or mass of the progenitor, and how the
   progenitor of ``orphan'' streams could be located.
@@ -133,6 +130,110 @@
 
 \section{Introduction}
 
+Tidal streams hold enormous promise as probes of both the large-scale
+structure of the Milky Way halo's density distribution
+\citep[\eg,][]{Johnston99a,Koposov10a} and its small-scale
+fluctuations \citep{Carlberg09a,Carlberg12a}. However, two factors
+have hampered the practical use of tidal streams as constraints on the
+gravitational potential. First, streams do not trace a single orbit,
+which has led to confusion over how problematic the single-orbit
+approximation really is \citep{Eyre11a,Sanders13a}. Second, approaches
+that go beyond the single-orbit assumption encounter practical
+difficulties of computational cost and observational data quality
+\citep{Sanders13b,PriceWhelan13a}. Similarly, spurious underdensities
+created by the dynamics of stream stars hinder our ability to use
+underdensities in star counts along a tidal stream in order to
+constrain the number of encounters with dark satellites and their
+masses \citep{Ngan14a}. Fast, generative models of tidal streams would
+greatly benefit both of these applications.
+
+It has long been clear that the dynamics of tidal streams is most
+simply described in terms of action--angle coordinates
+\citep{Tremaine99a,Helmi99a}. Once a star has been tidally stripped
+from the progenitor, the self-gravity of the stream can be neglected
+and the orbital actions of a stream member are conserved while the
+angles increase linearly with time. The action--angle structure of a
+stream is therefore characterized by strong but straightforward
+correlations between the actions and angles of stream members, the
+exploitation of which is crucial for using streams to measure the host
+gravitational potential \citep{Sanders13b}. The description of a
+stream in action--angle coordinates also makes the connection between
+the orbit and velocity dispersion (or mass) of the progenitor and the
+action distribution of the tidal debris clear \citep{Eyre11a},
+allowing simple physical models of the stream to be specified.
+
+However, streams are observed in position--velocity coordinates and
+for action--angle descriptions to be useful, we must be able to
+calculate the transformation between these coordinate systems
+efficiently. Until now this has required accurate phase--space data
+\citep{Sanders13b} and specialized algorithms to calculate
+action--angle coordinates that break down for the eccentric orbits on
+which tidal-stream progenitors are typically found
+\citep{Sanders12a}. However, even with Gaia, stream data in the future
+will typically have large uncertainties compared to the intrinsic
+dispersion of the stream and in particular the line-of-sight
+velocities of the faintest stream members will not be observed for
+many stars. Additionally, streams are superimposed on a non-negligible
+background of field stars and background contamination cannot be
+easily taken into account in any of the current stream-fitting
+methods.
+
+In this paper, I present a new method for modeling cold tidal streams
+that fundamentally lives in frequency--angle space, because after
+specifying the time at which a star was stripped, the stream
+distribution function is essentially one-dimensional in this
+space. While many of the results of this paper are more generally
+valid, the fiducial stream model in this paper consists of a
+three-dimensional (close to) Gaussian distribution of frequencies in
+the stream, a three-dimensional Gaussian distribution of initial angle
+offsets between stream members and the progenitor, and a uniform
+distribution of stripping times; the frequency and angle distributions
+are independent of stripping time. While this model oversimplifies the
+real stripping process, it is argued that at least for constraining
+the gravitational potential with stream data, this simple model is
+likely unbiased. For detailed mock stream data, more elaborate models
+of the stripping process as a function of time might be necessary and
+I discuss how these could easily be incorporated into the proposed
+framework.
+
+To evaluate the model in position--velocity coordinates, the
+transformation to and from action--angle coordinates is computed using
+a novel method for calculating action--angle coordinates presented in
+Appendix~\ref{sec:aa} and this transformation is linearized at a small
+number of points along the progenitor orbit that span the width of the
+stream. For cold streams, the separation between the stream track and
+the progenitor orbit as well as the internal differences within the
+stream are small, such that this linear approximation is accurate
+enough. The linear approximation allows for fast evaluation of the
+average stream position in position--velocity coordinates and
+efficient mock data generation. For a uniform distribution of
+stripping times, an observed stream member's phase--space probability
+distribution function (PDF) can be analytically marginalized over
+stripping time, such that using the linear approximation any
+evaluation of the PDF is extremely rapid. This clears the way for
+proper probabilistic inference of the Milky Way halo's gravitational
+potential and progenitor properties using stream data for individual
+stars.
+
+This paper is outlined as follows. In \sectionname~\ref{sec:dynamics}
+I briefly summarize the dynamics of tidal streams in terms of
+action--angle coordinates. A generative model of a tidal stream in
+frequency--angle coordinates is given in
+\sectionname~\ref{sec:generative}. \sectionname~\ref{sec:track}
+describes how to compute the stream's properties as a function of
+angle along the stream, both in action--angle coordinates and in
+poition--velocity coordinates. \sectionname~\ref{sec:mock} discusses
+how to generate mock stream data using the generative model of a tidal
+stream and in \sectionname~\ref{sec:pdf} I show how to calculate the
+stream PDF for individual stream members as well as its
+marginalization and convolution over missing and noisy directions. A
+discussion and outlook is presented in
+\sectionname~\ref{sec:discussion} and I conclude in
+\sectionname~\ref{sec:conclusion}. In Appendix
+\sectionname~\ref{sec:aa} a novel method for calculating actions,
+frequencies, and angles for any orbit in any static gravitational
+potential is presented.
+
 
 %BOVY: reference point
 
@@ -141,7 +242,7 @@
 
 The dynamics of tidal streams both in real (position--velocity) and
 action--angle space has been described by various previous authors
-\citep[\eg,][]{Helmi99a,Tremaine99a,SomeJohnstonPaper,Sanders13a}. I
+\citep[\eg,][]{Helmi99a,Tremaine99a,SomeJohnstonPaper,Sanders13b}. I
 provide here a brief description of the dynamics of tidal streams that
 is relevant for what follows.
 
@@ -202,7 +303,7 @@ direction $\unitvec \veco$ is not just determined by the potential
 (through $H$) and the progenitor orbit, but also by the distribution
 of $\Delta \vecj$, which is set through a combination of the internal
 dynamics of the progenitor and the stripping process (see discussion
-in \citealt{Sanders13a}). For dynamical modeling we can be agnostic
+in \citealt{Sanders13b}). For dynamical modeling we can be agnostic
 about the relative importance of all of these contributors to
 $\unitvec \veco$ by flexible modeling of the distribution of $\Delta
 \vecj$.
@@ -823,7 +924,7 @@ through the frequencies) and only use $f_{\vecj}(\Delta
 minimizes the spread in actions optimizes $f_{\vecj}(\Delta
 \vecj_i|\paramsdiff)$. Recently, a method was proposed that only uses
 the correlation between the actions and the angles, expressed by the
-exponential in \eqnname~(\ref{eq:aadfsimple}) \citep{Sanders13a}; this
+exponential in \eqnname~(\ref{eq:aadfsimple}) \citep{Sanders13b}; this
 method does not use the fact that the spread in actions in a tidal
 stream is small (expressed by $f_{\vecj}(\Delta
 \vecj_i|\paramsdiff)$).
@@ -856,12 +957,32 @@ Research Foundation DFG.
   Binney,~J. \& Tremaine,~S. 2008, Galactic Dynamics: Second Edition
 \bibitem[Binney(2008)]{Binney08a}
   Binney,~J. 2008, \mnras, 386, L47
+\bibitem[Carlberg(2009)]{Carlberg09a}
+  Carlberg,~R.~G. 2009, \apj, 705, L223
+\bibitem[Carlberg(2012)]{Carlberg12a}
+Carlberg,~R.~G. 2012, \apj, 748, 20
 \bibitem[Eyre \& Binney(2011)]{Eyre11a}
   Eyre,~A. \& Binney,~J. 2011, \mnras, 413, 1852
+\bibitem[Helmi \& White(1999)]{Helmi99a}
+  Helmi,~A. \& White,~S.~D.~M. 1999, \mnras, 307, 495
+\bibitem[Johnston \etal(1999)]{Johnston99a}
+  Johnston,~K.~V., Zhao,~H., Spergel,~D.~N., \& Hernquist,~L. 1999, \apj, 512, L109
+\bibitem[Koposov \etal(2010)]{Koposov10a}
+  Koposov,~S.~E., Rix,~H.-W., \& Hogg,~D.~W. 2010, \apj, 712, 260
+\bibitem[Ngan \& Carlberg(2014)]{Ngan14a}
+  Ngan,~W.~H.~W. \& Carlberg,~R.~G. 2014, \apj, submitted
 \bibitem[Pe{\~n}arrubia \etal(2012)]{Penarrubia12a}
   Pe{\~n}arrubia, J., Koposov,~S.~E., \& Walker,~M.~G. 2012, \apj, 760, 2
-\bibitem[Sanders \& Binney(2013)]{Sanders13a}
-  Sanders,~J. \& Binney,~J. 2013, \mnras, 433, 1826
+\bibitem[Price-Whelan \& Johnston(2013)]{PriceWhelan13a}
+  Price-Whelan,~A.~M. \& Johnston,~K.~V.~2013, \apj, 778, L12
+\bibitem[Sanders(2012)]{Sanders12a}
+  Sanders,~J. 2012, \mnras, 426, 128
+\bibitem[Sanders \& Binney(2013a)]{Sanders13a}
+  Sanders,~J. \& Binney,~J. 2013a, \mnras, 433, 1813
+\bibitem[Sanders \& Binney(2013b)]{Sanders13b}
+  Sanders,~J. \& Binney,~J. 2013b, \mnras, 433, 1826
+\bibitem[Tremaine(1999)]{Tremaine99a}
+  Tremaine,~S. 1999, \mnras, 307, 877
 \end{thebibliography}
 
 
