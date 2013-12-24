@@ -131,21 +131,25 @@
 \section{Introduction}
 
 Tidal streams hold enormous promise as probes of both the large-scale
-structure of the Milky Way halo's density distribution
+structure of the Milky Way (MW) halo's density distribution
 \citep[\eg,][]{Johnston99a,Koposov10a} and its small-scale
 fluctuations \citep{Carlberg09a,Carlberg12a}. However, two factors
-have hampered the practical use of tidal streams as constraints on the
-gravitational potential. First, streams do not trace a single orbit,
-which has led to confusion over how problematic the single-orbit
-approximation really is \citep{Eyre11a,Sanders13a}. Second, approaches
-that go beyond the single-orbit assumption encounter practical
-difficulties of computational cost and observational data quality
-\citep{Sanders13b,PriceWhelan13a}. Similarly, spurious underdensities
-created by the dynamics of stream stars hinder our ability to use
-underdensities in star counts along a tidal stream in order to
-constrain the number of encounters with dark satellites and their
-masses \citep{Ngan14a}. Fast, generative models of tidal streams would
-greatly benefit both of these applications.
+have hampered the practical use of tidal streams in obtaining
+constraints on the MW gravitational potential. First, streams do not
+trace a single orbit, which has led to confusion over how to best fit
+streams and over how problematic the single-orbit approximation really
+is \citep{Eyre11a,Sanders13a}. Second, approaches that go beyond the
+single-orbit assumption encounter practical difficulties of
+computational cost and observational data quality making many of these
+approaches impractical for real, noisy data
+\citep{Sanders13b,PriceWhelan13a}. Observed gaps in tidal streams may
+be due to interactions with dark--matter subhalos \citep{Yoon11a}, but
+spurious underdensities could be created by the dynamics of stream
+stars. This hinders our ability to use underdensities in star counts
+along a tidal stream in order to constrain the number of encounters
+with dark satellites and their masses \citep{Ngan14a}. Fast,
+generative models of tidal streams would greatly benefit both of these
+applications.
 
 It has long been clear that the dynamics of tidal streams is most
 simply described in terms of action--angle coordinates
@@ -157,10 +161,11 @@ stream is therefore characterized by strong but straightforward
 correlations between the actions and angles of stream members, the
 exploitation of which is crucial for using streams to measure the host
 gravitational potential \citep{Sanders13b}. The description of a
-stream in action--angle coordinates also makes the connection between
-the orbit and velocity dispersion (or mass) of the progenitor and the
-action distribution of the tidal debris clear \citep{Eyre11a},
-allowing simple physical models of the stream to be specified.
+stream in action--angle coordinates also elucidates the connection
+between the orbit and velocity dispersion (or mass) of the progenitor
+and the action distribution of the tidal debris \citep{Eyre11a},
+allowing simple physical models of the stream to be used and
+constrained by observational data.
 
 However, streams are observed in position--velocity coordinates and
 for action--angle descriptions to be useful, we must be able to
@@ -168,8 +173,9 @@ calculate the transformation between these coordinate systems
 efficiently. Until now this has required accurate phase--space data
 \citep{Sanders13b} and specialized algorithms to calculate
 action--angle coordinates that break down for the eccentric orbits on
-which tidal-stream progenitors are typically found
-\citep{Sanders12a}. However, even with Gaia, stream data in the future
+which tidal-stream progenitors are typically found (that is, radial
+and/or vertical actions of similar size as the angular momentum;
+\citealt{Sanders12a}). However, even with Gaia, future stream data
 will typically have large uncertainties compared to the intrinsic
 dispersion of the stream and in particular the line-of-sight
 velocities of the faintest stream members will not be observed for
@@ -199,21 +205,22 @@ framework.
 To evaluate the model in position--velocity coordinates, the
 transformation to and from action--angle coordinates is computed using
 a novel method for calculating action--angle coordinates presented in
-Appendix~\ref{sec:aa} and this transformation is linearized at a small
+Appendix~\ref{sec:aa}. This transformation is linearized at a small
 number of points along the progenitor orbit that span the width of the
 stream. For cold streams, the separation between the stream track and
 the progenitor orbit as well as the internal differences within the
 stream are small, such that this linear approximation is accurate
 enough. The linear approximation allows for fast evaluation of the
-average stream position in position--velocity coordinates and
-efficient mock data generation. For a uniform distribution of
-stripping times, an observed stream member's phase--space probability
-distribution function (PDF) can be analytically marginalized over
-stripping time, such that using the linear approximation any
-evaluation of the PDF is extremely rapid. This clears the way for
-proper probabilistic inference of the Milky Way halo's gravitational
-potential and progenitor properties using stream data for individual
-stars.
+average stream location (the stream ``track'') in position--velocity
+coordinates and efficient mock data generation. For a uniform
+distribution of stripping times, an observed stream member's
+phase--space probability distribution function (PDF) can be
+analytically marginalized over stripping time, such that using the
+linear approximation any evaluation---including marginalization and
+uncertainty convolution---of the PDF is extremely rapid. This clears
+the way for proper probabilistic inference of the Milky Way halo's
+gravitational potential and progenitor properties using stream data
+for individual stars.
 
 This paper is outlined as follows. In \sectionname~\ref{sec:dynamics}
 I briefly summarize the dynamics of tidal streams in terms of
@@ -983,6 +990,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Sanders,~J. \& Binney,~J. 2013b, \mnras, 433, 1826
 \bibitem[Tremaine(1999)]{Tremaine99a}
   Tremaine,~S. 1999, \mnras, 307, 877
+\bibitem[Yoon \etal(2011)]{Yoon11a}
+  Yoon,~J.~H., Johnston,~K.~V., \& Hogg,~D.~W. 2011, \apj, 731, 58
 \end{thebibliography}
 
 
