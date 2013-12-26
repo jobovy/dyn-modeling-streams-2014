@@ -111,7 +111,7 @@ def plot_stream_xz(plotfilename):
         bovy_plot.bovy_plot(pox,poz,'o',color='0.5',mec='none',overplot=True,ms=8)
         bovy_plot.bovy_plot(pvec[0,:],pvec[1,:],'k--',overplot=True,lw=1.)
     if 'sim' in plotfilename:
-        bovy_plot.bovy_text(r'$\mathrm{simulated\ stream}$',
+        bovy_plot.bovy_text(r'$\mathrm{mock\ stream}$',
                             bottom_left=True,size=16.)
     else:
         bovy_plot.bovy_text(r'$N\!\!-\!\!\mathrm{body\ stream}$',
