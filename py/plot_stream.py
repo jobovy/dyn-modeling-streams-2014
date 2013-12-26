@@ -518,11 +518,12 @@ def plot_stream_aa(plotfilename):
         dO1d[dO1d < 0.]*= -1.
         bovy_plot.bovy_print()
         bovy_plot.bovy_hist(dO1d,range=[0.,0.4],bins=61,
-                           normed=True,
-                           xlabel=r'$|\Delta \mathbf{\Omega}|\,(\mathrm{Gyr}^{-1})$',
+                            normed=True,
+                            xlabel=r'$\Large|\Delta \mathbf{\Omega}_\parallel\Large|\,(\mathrm{Gyr}^{-1})$',
                             histtype='step',color='k',zorder=10)
         #Overplot best-fit Gaussian
         xs= numpy.linspace(0.,0.4,1001)
+        print numpy.mean(dO1d), numpy.std(dO1d)
         bovy_plot.bovy_plot(xs,1./numpy.sqrt(2.*numpy.pi)/numpy.std(dO1d)\
                                 *numpy.exp(-(xs-numpy.mean(dO1d))**2./2./numpy.var(dO1d)),
                             '--',color='k',overplot=True,lw=2.,zorder=0)
@@ -530,6 +531,7 @@ def plot_stream_aa(plotfilename):
                                       numpy.array([numpy.log(numpy.mean(dO1d)*2.),
                                                    numpy.log(numpy.std(dO1d))]),
                                       args=(dO1d,))
+        print numpy.exp(bestfit)
         bovy_plot.bovy_plot(xs,gausstimesvalue(bestfit,xs,nologsum=True),
                             '-',color='0.4',overplot=True,lw=2.,zorder=0)
         bovy_plot.bovy_end_print(plotfilename)
@@ -664,6 +666,7 @@ def plot_stream_aa(plotfilename):
         plotx= numpy.fabs(numpy.dot(dangle.T,dOdir))
         ploty= numpy.sqrt(numpy.sum(dO**2.,axis=0)\
                               -(numpy.dot(dO.T,dOdir))**2.)
+        print numpy.std(ploty)
         xrange=[0.,1.3]
         yrange=[0.,0.005]
         xlabel= r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$'
