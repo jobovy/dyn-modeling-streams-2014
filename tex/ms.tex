@@ -323,14 +323,14 @@ $\unitvec \veco$ by flexible modeling of the distribution of $\Delta
 
 I illustrate the theoretical considerations set forth in this paper by
 using a simulated tidal stream. This stream is set up similarly to
-that used in \citep{Sanders13b}. The stream is constructed by running
+that used in \citet{Sanders13b}. The stream is constructed by running
 an $N$-body simulation of a King cluster on an orbit similar to that
 of the GD-1 stream \citep{Koposov10a}. Specifically, a King cluster
 with a mass of $2\times10^4\msun$, a tidal radius of $0.07\kpc$, and a
 ratio of the central potential to the velocity dispersion squared of
 $2.0$ is sampled using $10^4$ particles. The cluster is evolved in an
 external logarithmic host potential with $V_c = 220\kms$ and a
-flattening $q=0.9$ ($\Phi = V_c^2 \ln (R^2 + z^2/q^2)$) using the
+flattening $q=0.9$ ($\Phi = V_c^2 \ln [R^2 + z^2/q^2]$) using the
 gyrfalcon code \citep{Dehnen00a,Dehnen02a} with a softening of
 $1.5\pc$ in the NEMO toolkit \citep{Teuben95a}. The cluster is evolved
 for $5.011\Gyr$ ($=5.125\kpc/[\kms]$) from the initial condition
@@ -380,7 +380,8 @@ direction of largest variance can be well-modeled as a Gaussian
 parameters can all be easily estimated from the velocity dispersion of
 the progenitor, the orbit of the progenitor, and the gravitational
 potential, as discussed below. Therefore, we will model tidal streams
-in frequency--angle space.
+in frequency--angle space. Because the leading and trailing arm are
+well-separated in frequency space, we model each arm individually.
 
 A generative model of a tidal stream in frequency--angle space
 requires three ingredients: (a) a model for the distribution of times
@@ -485,11 +486,14 @@ structure of the stream will be fine. For using tidal streams to
 constrain the gravitational potential, large arcs are most important,
 such that this simple model will be adequate for such inferences.
 
-The distribution of frequencies is three dimensional. A general
-description in terms of a Gaussian distribution would have nine free
-parameters. However, we can model it with fewer free parameters as
-follows. First, following \citet{Eyre11a}, we approximate the
-\emph{action} distribution as a Gaussian with standard deviations
+The distribution of frequencies is three dimensional. Because we model
+the leading and the trailing arm separately, a single-peaked
+distribution suffices to describe the frequency distribution. A
+general description in terms of a Gaussian distribution would have
+nine free parameters. However, we can model it with fewer free
+parameters as follows. First, following \citet{Eyre11a}, we
+approximate the \emph{action} distribution as a Gaussian with standard
+deviations
 \begin{equation}
   \sigma_{J_R} = \frac{1}{\pi}\,\sigv\,\left(r_{\mathrm{apo}}-r_{\mathrm{peri}}\right)\,,\quad 
   \sigma_{L_Z} = \sigv\,r_{\mathrm{peri}}\,,\quad 
@@ -522,12 +526,13 @@ misalignment would be $1.28^circ$.
 We then further constrain the mean frequency offset to lie along the
 principal eigenvector of $V_\veco$. This mean frequency offset can be
 described in terms of a parameter $\mu_\Omega = \Delta \Omega^m /
-\sigma_{\Omega,1}$, where $\sigma_{\Omega,1}$ is the square root of the
-largest eigenvalue of $V_\veco$ and $\Delta \Omega^m$ is the mean
-frequency offset. \figurename~\ref{fig:gd1_dohist} shows the
-distribution frequency offsets in the direction of the median
-frequency offset in the stream. The dashed line is a Gaussian fit to
-this distribution, while the solid line is a fit of the form
+\sigma_{\Omega,1}$, where $\sigma_{\Omega,1}$ is the square root of
+the largest eigenvalue of $V_\veco$ and $\Delta \Omega^m$ is the mean
+frequency offset. The sign of this parameter sets whether we are
+modeling a leading or a trailing arm. \figurename~\ref{fig:gd1_dohist}
+shows the distribution frequency offsets in the direction of the
+median frequency offset in the stream. The dashed line is a Gaussian
+fit to this distribution, while the solid line is a fit of the form
 \begin{equation}\label{eq:do}
   p(|\Delta \veco|_\parallel) = |\Delta \veco|_\parallel\,\mathcal{N}\left(|\Delta \veco|_\parallel|\Delta \Omega^m,\sigma_{\Omega,1}^2\right)\,,
 \end{equation}
@@ -588,96 +593,6 @@ pursued here further.
 \section{Conclusion}\label{sec:conclusion}
 
 
-The discussions of the dynamics of stream formation in the previous
-section directly give rise of a generative model of a tidal stream. A
-star in a tidal stream is \emph{generated} through being stripped a
-time $\Delta t$ ago from a progenitor $(\vecx^p,\vecv^p) \equiv
-(\vecj^p,\veca^p)$ by receiving a small offset $(\Delta \vecx,\Delta
-\vecv) \equiv (\Delta \vecj,\Delta \veca)$. The offset then evolves
-using the dynamical equations given in the previous section and the
-star is observed at time $t=0$ (\ie, today). Because phase-space
-density is conserved by Liousville's theorem, a probabilistic model
-results by relating the likelihood $p(\vecx,\vecv|\vecp)$ (where
-$\vecp$ denotes the set of all model parameters; see below) for the
-observed phase-space position today to the distribution of initial
-offsets. This probabilistic model can be marginalized over missing
-observational data or extended to include a model for outliers.
-
-\subsection{Real--space modeling}
-
-In more detail, in the real--space approach the model can be specified
-by: (a) the gravitational potential $\Phi$, (b) the current
-phase-space position of the progenitor $(\vecx_p,\vecv_p)(t=0)$, which
-can be integrated backwards in time by reversing the Hamiltonian flow
-defined by $\Phi$, (c) the time $\Delta t_i$ at which each star was
-removed from the progenitor, and (d) the distribution $f(\Delta
-\vecx,\Delta \vecv|\paramsdiff)$, characterized by some parameters
-$\paramsdiff$, of initial phase-space offsets from which the actual
-offsets $(\Delta \vecx_i,\Delta \vecv_i)$ are drawn. In practice, $f$
-can be taken to be a Gaussian, characterized by a width in position
-$\sigma_x$ and in velocity $\sigma_v$, related to the tidal radius and
-escape velocity of the progenitor, respectively. However, more
-complicated models for the initial phase-space distribution of the
-debris can be used here as well.
-
-The probability for observing a star today at $(\vecx,\vecv)$ given
-items (a) through (d) is then
-\begin{align}\label{eq:realdft}
-  p(\vecx_i,\vecv_i | \Phi,\vecx_p,\vecv_p,\Delta t_i,\paramsdiff) 
-  & = p(\vecx_i(-\Delta t),\vecv_i(-\Delta t) | \Phi,\vecx_p,\vecv_p,\Delta t_i,\paramsdiff) \,,\nonumber\\
-  & = p([\vecx_i-\vecx_p](-\Delta t),[\vecv_i-\vecv_p](-\Delta t) | \Phi,\vecx_p,\vecv_p,\Delta t_i,\paramsdiff) \,\nonumber\\
-  & = p(\Delta\vecx_i(-\Delta t),\Delta\vecv_i(-\Delta t) | \Phi,\vecx_p,\vecv_p,\Delta t_i,\paramsdiff)\,,\\
-  & = f(\Delta\vecx_i(-\Delta t),\Delta\vecv_i(-\Delta t) | \Phi,\vecx_p,\vecv_p,\Delta t_i,\paramsdiff)\, ,\nonumber
-\end{align}
-where the first equality holds because the Hamiltonian flow is unique
-and conserves phase-space volume by Liousville's theorem and the
-second one because the Jacobian of the transformation
-$(\vecx_i,\vecv_i)(-\Delta t) \rightarrow (\vecx_i,\vecv_i)(-\Delta t)
-- (\vecx_p,\vecv_p)(-\Delta t)$ is one. The final probability can be
-evaluated using the parameters $\paramsdiff$ following (d).
-
-The time $\Delta t_i$ at which a star was removed is unobservable and
-the probability in \eqnname~(\ref{eq:realdft}) should therefore be
-integrated over this time using a prior $p(\Delta t_i|\ldots)$, where
-$\ldots$ indicates that this prior could depend on other factors such
-as the potential and the progenitor orbit\footnote{For example, one
-  could insist that stars are removed around pericenter
-  passages.}. For simplicity, we can assume a uniform prior for the
-times $\Delta t$. The probability for a single star then becomes
-\begin{align}\label{eq:realdf}
-  p(\vecx_i,\vecv_i | \Phi,\vecx_p,\vecv_p,\paramsdiff) & = \int \dd
-  \Delta t_i \,p(\vecx_i,\vecv_i | \Phi,\vecx_p,\vecv_p,\Delta t_i,
-  \paramsdiff)\,.
-\end{align}
-If the progenitor's current phase-space position is unknown, then this
-probability should be further marginalized over $(\vecx_p,\vecv_p)$;
-for multiple stars, this marginalization is done after multiplying the
-individual-star likelihoods in \eqnname~(\ref{eq:realdf}).
-
-In practice, the likelihood in \eqnname~(\ref{eq:realdf}) can be
-calculated as follows: for a given potential $\Phi$ and progenitor
-$(\vecx_p,\vecv_p)$, we (a) integrate the orbits of all stars
-$(\vecx_i,\vecv_i)$ and (b) that of the progenitor backward in time for
-many Gyr and record the phase-space positions over time on a grid $j$
-in $\Delta^j_i$; (c) we evaluate $f(\Delta \vecx_i,\Delta
-\vecv_i)(\Delta t^j_i)$ for all stars $i$ and times $j$; (d) $f(\Delta
-\vecx_i,\Delta \vecv_i)(\Delta t^j_i)$ is then summed over $j$ and the
-logarithm of that is summed over $i$. The most computationally
-expensive part of this calculation is the integration of the various
-orbits. The evaluation of the likelihood for different parameters
-\paramsdiff\ of $f$ can be efficiently computed by caching the orbit
-integrations of (a) and (b); different progenitor orbits
-$(\vecx_p,\vecv_p)$ can also make use of the stored orbits in (a).
-
-The approach outlined in this section is straightforward, but very
-computationally expensive, as it requires large numbers of orbit
-integrations to explore all plausible removal times $\Delta t$,
-progenitor orbits, and potentials. Moreover, when the data have large
-uncertainties, more orbit integrations are necessary to explore each
-data points uncertainty range. While it might be possible to speed up
-the computation through linear approximations for nearby orbits, the
-action--angle formalism allows for significant and elegant
-simplifications and I consider the real--space approach further.
 
 \subsection{Action--angle stream modeling}
 
@@ -1438,7 +1353,7 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
 \begin{figure}[t!]
   \includegraphics[width=0.5\textwidth,clip=]{gd1_evol_xz.ps}
   \caption{Mock tidal stream simulated as described in
-    \sectionname~\ref{sec:sim} after $5.01\Gyr$ of evolution in
+    \sectionname~\ref{sec:sim} after $5.011\Gyr$ of evolution in
     Galactocentric $X$ and $Z$ coordinates. The grey dot shows the
     current position of the progenitor cluster and the dashed line
     shows its orbit. The solid line gives the stream track, calculated
@@ -1457,7 +1372,7 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaorop.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaarap.ps}
   \caption{Simulated tidal stream from \sectionname~\ref{sec:sim}
-    after $5.01\Gyr$ of evolution in action--frequency--angle
+    after $5.011\Gyr$ of evolution in action--frequency--angle
     coordinates. The top row displays projections of the actions
     (left), frequencies (middle), and angles (right) in the $R$ and
     $Z$ directions; the bottom panels shows the same for $R$ and
@@ -1554,7 +1469,7 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
 \begin{figure}[t!]
   \includegraphics[width=\textwidth,clip=]{gd1_evol_lb.ps}
   \includegraphics[width=\textwidth,clip=]{gd1_evol_ld.ps}
-  \caption{Simulated stream after $5.01\Gyr$ as a function of Galactic
+  \caption{Simulated stream after $5.011\Gyr$ as a function of Galactic
     longitude. The top panel shows the stream in Galactic latitude and
     the bottom panel shows the distance from the Sun. The progenitor
     is shown as the large gray dot and its orbit as the dashed
