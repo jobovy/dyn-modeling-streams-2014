@@ -318,7 +318,7 @@ $\unitvec \veco$ by flexible modeling of the distribution of $\Delta
 
 \section{Generative models of tidal streams}\label{sec:generative}
 
-\subsection{A simulation}\label{eq:sim}
+\subsection{A simulation}\label{sec:sim}
 
 I illustrate the theoretical considerations set forth in this paper by
 using a simulated tidal stream. This stream is set up similarly to
@@ -1220,7 +1220,15 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
 
 \begin{figure}[t!]
   \includegraphics[width=0.5\textwidth,clip=]{gd1_evol_xz.ps}
-  \caption{}\label{fig:gd1_xy}
+  \caption{Mock tidal stream simulated as described in
+    \sectionname~\ref{sec:sim} after $5.01\Gyr$ of evolution in
+    Galactocentric $X$ and $Z$ coordinates. The grey dot shows the
+    current position of the progenitor cluster and the dashed line
+    shows its orbit. The solid line gives the stream track, calculated
+    using the method described in \sectionname~\ref{sec:track}. The
+    inset shows a zoomed-in version of part of the leading stream that
+    more clearly shows the offset between the stream track and the
+    progenitor orbit.}\label{fig:gd1_xy}
 %python plot_stream.py ../tex/gd1_evol_xz.ps
 \end{figure}
 
@@ -1231,7 +1239,19 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aajrjp.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaorop.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaarap.ps}
-  \caption{}\label{fig:gd1_jt}
+  \caption{Simulated tidal stream from \sectionname~\ref{sec:sim}
+    after $5.01\Gyr$ of evolution in action--frequency--angle
+    coordinates. The top row displays projections of the actions
+    (left), frequencies (middle), and angles (right) in the $R$ and
+    $Z$ directions; the bottom panels shows the same for $R$ and
+    $\phi$. While the action distribution has a quite complicated
+    form, the frequency distribution is close to one-dimensional and
+    the leading and trailing parts of the stream clearly separate. In
+    the right panels, the angles of the progenitor have each been
+    shifted to $\pi$ and the dashed lines show the direction of the
+    progenitor's frequency vector. The misalignment between the
+    progenitor's frequency vector and the mean frequency vector of the
+    debris is $0.18^\circ$.}\label{fig:gd1_jt}
 %python plot_stream.py ../tex/gd1_evol_aajrjz.ps
 %python plot_stream.py ../tex/gd1_evol_aaoroz.ps
 %python plot_stream.py ../tex/gd1_evol_aaaraz.ps
@@ -1244,7 +1264,27 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timeshist.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesdO.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesda.ps}
-  \caption{}\label{fig:gd1_times}
+  \caption{Properties of the simulated tidal stream of
+    \sectionname~\ref{sec:sim} as a function of time. Stripping times
+    are calculated by linear regression of the angle difference
+    between a stream particle and the progenitor versus the equivalent
+    frequency difference. The distribution of stripping times is shown
+    in the left panel.  While the stripping process happens in bursts
+    with a period of roughly $40\Myr$ (the radial period of the
+    progenitor), it can be approximated as constant (more
+    coarsely-binned solid histogram). The magnitude of the frequency
+    offset between stream particles and the progenitor is shown in the
+    middle panel. While particles stripped at pericenter have larger
+    frequency offsets than those between pericenter passages, there is
+    no secular trend and the typical frequency offset (averaged over a
+    radial period) can be considered constant with time. The right
+    panel shows the magnitude of the angle offset between stream
+    particles and the progenitor as a function of stripping
+    time. There is a spread in the angle offset at all stripping times
+    because of the dispersion in frequency offsets, but typically
+    stars that have been stripped earlier reach larger angle
+    offsets. That is, self-sorting happens only to a small
+    degree.}\label{fig:gd1_times}
 %python plot_stream.py ../tex/gd1_evol_timeshist.ps
 %python plot_stream.py ../tex/gd1_evol_timesdO.ps
 %python plot_stream.py ../tex/gd1_evol_timesda.ps
