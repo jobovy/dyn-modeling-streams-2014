@@ -51,6 +51,7 @@
 \newcommand{\paramsdiff}{\ensuremath{\vec{p}_\Delta}}
 \newcommand{\paramsdf}{\ensuremath{\vec{p}_{\mathrm{DF}}}}
 \newcommand{\paramspot}{\ensuremath{\vec{p}_\Phi}}
+\newcommand{\sigv}{\ensuremath{\sigma_v}}
 
 \newcommand{\DF}{\df}
 \newcommand{\dff}{\ensuremath{\mathbf{f}}}
@@ -329,7 +330,7 @@ with a mass of $2\times10^4\msun$, a tidal radius of $0.07\kpc$, and a
 ratio of the central potential to the velocity dispersion squared of
 $2.0$ is sampled using $10^4$ particles. The cluster is evolved in an
 external logarithmic host potential with $V_c = 220\kms$ and a
-flattening $q=0.9$ ($\Phi = V_c^2 \ln (R^2 + z^2/q^2$) using the
+flattening $q=0.9$ ($\Phi = V_c^2 \ln (R^2 + z^2/q^2)$) using the
 gyrfalcon code \citep{Dehnen00a,Dehnen02a} with a softening of
 $1.5\pc$ in the NEMO toolkit \citep{Teuben95a}. The cluster is evolved
 for $5.011\Gyr$ ($=5.125\kpc/[\kms]$) from the initial condition
@@ -345,7 +346,7 @@ actions of the progenitor are $(J_R,L_Z,J_Z) =
 $(\Omega_R,\Omega_\phi,\Omega_Z) = (15.7,-10.8,11.9)\Gyr\inv$.
 
 The final position of the stream in $(X,Z)$ is shown in
-\figurename~\ref{fig:gd1_xy}. \figurename~\ref{fig:gd1_jt} shows the
+\figurename~\ref{fig:gd1_xz}. \figurename~\ref{fig:gd1_jt} shows the
 final position of the stream in action--frequency--angle coordinates,
 calculated using the algorithm described in
 \appendixname~\ref{sec:aa}. As described in
@@ -361,7 +362,222 @@ dimensional as well.
 
 \subsection{A model in frequency--action space}\label{sec:modeloa}
 
+The action and frequency distributions shown in
+\figurename~\ref{fig:gd1_jt} combined with the knowledge that for
+\emph{any} tidal stream the Hessian $(\partial^2 H / \partial \vecj
+\partial \vecj)\large|_{\vecj^p}$ must be strongly dominated by a
+single large eigenvalue leads us to propose that frequency--angle
+space is a better coordinate system than action--angle space for
+modeling tidal streams. That is, the distribution of actions in a
+tidal stream has a complicated structure that is hard to capture using
+a simple, analytic form (see also the discussion in
+\citealt{Eyre11a}). Especially the ``bowtie'' structure in $(J_R,L_Z)$
+and the overlapping leading- and trailing-arm distributions in
+($J_R,J_Z$) are hard to model with a simple distribution function. The
+distribution of frequencies, however, is close-to one dimensional, its
+direction of largest variance can be well-modeled as a Gaussian
+(although below we will model it slightly differently), and its
+parameters can all be easily estimated from the velocity dispersion of
+the progenitor, the orbit of the progenitor, and the gravitational
+potential, as discussed below. Therefore, we will model tidal streams
+in frequency--angle space.
+
+A generative model of a tidal stream in frequency--angle space
+requires three ingredients: (a) a model for the distribution of times
+at which stars are stripped from the progenitor, (b) a prescription
+for the distribution of frequency offsets from the progenitor at every
+given stripping time, and (c) a description of the angle offsets for
+any given frequency offset and stripping time. Having specified these
+ingredients, we can then generate tidal debris at any given stripping
+time and evolve it forward using the simple linear dynamics in
+frequency--angle space discussed in
+\sectionname~\ref{sec:dynamics}. The initial angle offsets are small
+enough that they are likely unobservable even with futuristic data
+(especially in the direction of the frequency offset, where the
+initial angle offset is quickly overwhelmed by the subsequent
+dynamical evolution; for the simulated stream used here this happens
+after approximately $20\Myr$). For that reason, we will assume that
+the initial angle offsets are independent of both stripping time and
+frequency offset. In what follows, we will model them using a simple
+isotropic Gaussian distribution.
+
+Ingredients (a) and (b) require more careful modeling. The right panel
+of \figurename~\ref{fig:gd1_times} shows the distribution of times at
+which stream particles are stripped from the progenitor. These
+stripping times are calculated from the final snapshot by linear
+regression of a particle's angle offset $\Delta \veca$ from the
+progenitor, versus the frequency offset $\Delta \veco$ as 
+\begin{equation}
+  \Delta t = \frac{\Delta \veco \cdot \Delta \veca}{|\Delta \veco|^2}\,.
+\end{equation}
+The dotted line shows a finely-binned histogram of these stripping
+times, which indicates that stripping happens in bursts with a radial
+period of about $400\Myr$, the radial period of the progenitor's
+orbit. Thus, as expected, stripping happens primarily at pericenter
+passages, with a smaller number of particles lost between pericenter
+passages. Realistic models of a stream, especially those that require
+good models of the surface-density structure of the stream as a
+function of stream angle, need to model this non-uniform stripping
+process.
+
+The middle panel of \figurename~\ref{fig:gd1_times} shows the
+frequency offsets between stream particles and the progenitor as a
+function of strippng time, corresponding to ingredient (b) above. The
+same burstiness that is apparent in the distribution of stripping
+times shows up here. Particles stripped at pericenter typically have
+larger frequency offsets than those lost at larger radii. This can be
+described as saying that particles are \emph{removed} at pericenter,
+but only \emph{peeled off} between pericenter passages. Again,
+realistic models of tidal streams need to take this detailed structure
+into account.
+
+The right panel of \figurename~\ref{fig:gd1_times} shows the angle
+offset (at the end of the simulation) versus the stripping time. There
+is a spread in the angle offset reach for any given stripping time,
+but it is nevertheless typically the case that particles that have
+been stripped earlier are found at larger angle offsets
+today. Self-sorting---the tendency of particles stripped later with
+larger frequency offsets to overtake particles stripped earlier at
+smaller frequency differences and thus to erase correlations between
+particle position along the stream and stripping time---happens to a
+small extent but the narrow distribution of frequency offsets limits
+the ability of particles stripped later to reach large distances from
+the progenitor.
+
+\subsection{The fiducial stream model}
+
+The discussion of the simulated stream's properties as a function of
+stripping time in the previous section indicates that we can build
+simple models of the structure of tidal streams when considering them
+in frequency--angle space. In this section, we propose a very simple
+fiducial model that we will use in the remainder of this paper. This
+model combines simple analytic forms for ease of computation that are
+nevertheless realistic enough to provide adequate models for tidal
+streams in many applications.
+
+First, we approximate the bursty, non-uniform distribution of
+stripping times in \figurename~\ref{fig:gd1_times} with a uniform
+distribution
+\begin{align}\label{eq:pt}
+  \begin{split}
+    p(\Delta t) & \propto 1\,,\qquad 0 < \Delta t < t_d\\
+    & = 0\,,\qquad \mathrm{otherwise}\,.
+  \end{split}
+\end{align}
+The thick, solid histogram in the right panel of
+\figurename~\ref{fig:gd1_times} shows a coarser-binned histogram of
+stripping times, indicating that the uniform distribution is a good
+approximation over intervals larger than a radial period ($\approx
+400\Myr$). The \emph{disruption time} $t_d$ is a free parameter of the
+model that needs to be determined for each stream. For the model of
+the simulated stream used here we set $t_d = 4.5\Gyr$.
+
+Similarly, we model the distribution of frequency offsets between
+stream particles and the progenitor to be independent of stripping
+time, even though the middle panel of \figurename~\ref{fig:gd1_times}
+clearly shows that particles are stripped at larger frequency
+differences at pericentric passages than between them. The fact that
+there is no long-term trend in the typical frequency offset means that
+this is a good model on time-scales larger than the radial
+period. While this means that the small-scale structure of the stream
+will not be perfectly represented by the model, the large-scale
+structure of the stream will be fine. For using tidal streams to
+constrain the gravitational potential, large arcs are most important,
+such that this simple model will be adequate for such inferences.
+
+The distribution of frequencies is three dimensional. A general
+description in terms of a Gaussian distribution would have nine free
+parameters. However, we can model it with fewer free parameters as
+follows. First, following \citet{Eyre11a}, we approximate the
+\emph{action} distribution as a Gaussian with standard deviations
+\begin{equation}
+  \sigma_{J_R} = \frac{1}{\pi}\,\sigv\,\left(r_{\mathrm{apo}}-r_{\mathrm{peri}}\right)\,,\quad 
+  \sigma_{L_Z} = \sigv\,r_{\mathrm{peri}}\,,\quad 
+  \sigma_{J_Z} = \frac{2}{\pi}\,\sigv\,Z_{\mathrm{max}}\,,
+\end{equation}
+where $\sigv$ is the velocity dispersion of the progenitor,
+$r_{\mathrm{apo}}$ and $r_{\mathrm{peri}}$ are the apo- and pericenter
+radii of the progenitor orbit, respectively, and $Z_{\mathrm{max}}$ is
+the maximum $Z$ reached on this orbit. We assume that the all
+correlations between the actions are zero (see
+\figurename~\ref{fig:gd1_jt}). Then we propagate this Gaussian
+variance to frequency space using the Hessian $(\partial^2 H /
+\partial \vecj \partial \vecj)\large|_{\vecj^p}$\footnote{The Hessian
+  $(\partial^2 H / \partial \vecj \partial \vecj)\large|_{\vecj^p}$
+  can be computed using the method in \appendixname~\ref{sec:aa} by
+  computing $\partial (\vecj,\veca) / \partial (\vecx,\vecv)$ and
+  $\partial (\veco,\veca) / \partial (\vecx,\vecv)$ and forming
+  $\partial \veco / \partial \vecj = \left(\partial (\vecj,\veca) /
+  \partial (\vecx,\vecv)\right)^{-1}\,\left(\partial (\veco,\veca) /
+  \partial (\vecx,\vecv)\right)$.}, which gives the variance matrix
+$V_\veco$. The principal eigenvector of this matrix is the model
+direction along which the stream spreads. While the model I propose
+here is a simple one, it works well without having been tweaked for
+the simulation under scrutiny. The angle between the principal
+eigenvector of $V_\veco$ and the progenitor's frequency vector is
+$0.50^\circ$ while the value measured from the simulation is
+$0.18^\circ$. For a model with an isotropic action distribution, the
+misalignment would be $1.28^circ$. 
+
+We then further constrain the mean frequency offset to lie along the
+principal eigenvector of $V_\veco$. This mean frequency offset can be
+described in terms of a parameter $\mu_\Omega = \Delta \Omega^m /
+\sigma_{\Omega,1}$, where $\sigma_{\Omega,1}$ is the square root of the
+largest eigenvalue of $V_\veco$ and $\Delta \Omega^m$ is the mean
+frequency offset. \figurename~\ref{fig:gd1_dohist} shows the
+distribution frequency offsets in the direction of the median
+frequency offset in the stream. The dashed line is a Gaussian fit to
+this distribution, while the solid line is a fit of the form
+\begin{equation}\label{eq:do}
+  p(|\Delta \veco|_\parallel) = |\Delta \veco|_\parallel\,\mathcal{N}\left(|\Delta \veco|_\parallel|\Delta \Omega^m,\sigma_{\Omega,1}^2\right)\,,
+\end{equation}
+where $\mathcal{N}(\cdot|\cdot,\cdot)$ represents a Gaussian
+distribution. The fit is equally good (because the dispersion is much
+smaller than the mean) and we choose the second form because it
+simplifies some of the stream-track calculations below. The best-fit
+$(\Delta \Omega^m,\sigma_{\Omega,1})$ is $(0.19,0.033)\Gyr\inv$ in
+both cases. Based on this information, a model with $\sigv =
+0.365\kms$ and $\mu_\Omega = 6$ provides a good fit to the simulation
+data. The distribution of frequency offsets in the two-dimensional
+space perpendicular to the principal eigenvector of $V_\veco$ is
+modeled as a zero-mean Gaussian with variance matrix given by the
+projection of $V_\veco$ onto this space.
+
+Because we expect the typical $\Delta\veco$ to scale with the
+velocity dispersion of the progenitor (see also \citealt{Sanders13a}),
+I conjecture that a constant $\mu_\Omega$ can be used for modeling
+cold tidal streams of any (small-ish) velocity dispersion. Further
+modeling of simulated streams, however, is necessary to check this and
+to find the optimizal value of $\mu_\Omega$. Fixing $\mu_\Omega$
+leaves a single free parameter \sigv\ for modeling the frequency
+offset distribution of a tidal stream. In modeling to observed data,
+this parameter needs to be fit and we expect it to be proportional to
+the velocity dispersion of the progenitor, although this
+proportionality needs to be checked more carefully (but see Figure 3
+in \citealt{Sanders13a}, which shows that the size of the frequency
+distribution scales as mass$^{1/3}$, or approximately as the velocity
+dispersion). Similarly, the initial angle distribution, modeled here
+as an isotropic Gaussian, has a charactaristic spread $\sigma_{\theta}$
+which we set here to $0.00365$ ($=\sigv/[100\kms]$), and we likewise
+expect this spread to scale with the velocity dispersion of the
+progenitor.
+
+The fiducial model for a tidal stream in frequency--angle coordinates
+he proposed here is therefore described by essentially two free
+parameters in addition to the progenitor's phase-space position: the
+progenitor's velocity dispersion \sigv\ and the disruption time
+$t_d$. As shown below, these two parameters are the most important in
+determining the track of the stream. More sophisticated models can
+leave $\mu_\Omega$ and $\sigma_{\theta}$ as free paramters as well. In
+what follows, we will fix these to the values given in the previous
+paragraph. It must be stressed, however, that all of these parameters
+here have been fixed ``by-eye'', and better fits might be possible
+using more quantitative fit procedures. But such procedures are not
+pursued here further.
+
 \section{The track of a tidal stream}\label{sec:track}
+
+
 
 \section{Mock stream data}\label{sec:mock}
 
@@ -1228,7 +1444,7 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
     using the method described in \sectionname~\ref{sec:track}. The
     inset shows a zoomed-in version of part of the leading stream that
     more clearly shows the offset between the stream track and the
-    progenitor orbit.}\label{fig:gd1_xy}
+    progenitor orbit.}\label{fig:gd1_xz}
 %python plot_stream.py ../tex/gd1_evol_xz.ps
 \end{figure}
 
@@ -1270,7 +1486,7 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
     between a stream particle and the progenitor versus the equivalent
     frequency difference. The distribution of stripping times is shown
     in the left panel.  While the stripping process happens in bursts
-    with a period of roughly $40\Myr$ (the radial period of the
+    with a period of roughly $400\Myr$ (the radial period of the
     progenitor), it can be approximated as constant (more
     coarsely-binned solid histogram). The magnitude of the frequency
     offset between stream particles and the progenitor is shown in the
@@ -1292,7 +1508,13 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
 
 \begin{figure}[t!]
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aadohist.ps}
-  \caption{}\label{fig:gd1_dohist}
+  \caption{Distribution of the magnitude of frequency offsets between
+    stream particles and the progenitor along the direction of the
+    mean frequency offset. The dashed line is a Gaussian fit to this
+    distribution, while the solid line is a fit of our preferred form
+    for this distribution, given in \equationname~(\ref{eq:do}). Both
+    forms provide adequate fits to the
+    distribution. }\label{fig:gd1_dohist}
 %python plot_stream.py ../tex/gd1_evol_aadohist.ps
 \end{figure}
 
@@ -1301,7 +1523,27 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaaparoperp.ps}\\
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaaparaperp.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaapartime.ps}
-  \caption{}\label{fig:gd1_apar}
+  \caption{Stream properties as a function of angle along the
+    stream. The top, left panel shows the magnitude of frequency
+    offsets along the stream. The gray line shows the mean predicted
+    frequency offset calculated using the framework of
+    \sectionname\sectionname~\ref{sec:modeloa} and \ref{sec:track},
+    while the grayscale bands show the $68\,\%$ and $95\,\%$ limits of
+    the predicted distribution. The top, right panel shows the
+    magnitude of frequency offsets perpendicular to those in the left
+    panel. The predicted distribution is constant as a function of
+    angle and therefore not shown. The bottom, left panel shows the
+    angle offset perpendicular to the stream and the grayscale bands
+    show $68\,\%$ and $95\,\%$ limits of the predicted distribution of
+    angle offsets; the white dashed line shows the $68\,\%$ limit
+    calculated using a simplified method. The bottom, right panel
+    shows the stripping time. The gray line and grayscale bands again
+    show the mean and $68\,\%$ and $95\,\%$ confidence limits of the
+    predicted distribution. While the ``burstiness'' related to the
+    energetic stripping at pericenter that is apparent in the
+    simulated data's distributions is (by design) absent in the model,
+    the overall scale and the mean trends with angle are well
+    represented by the model.}\label{fig:gd1_apar}
 %python plot_stream.py ../tex/gd1_evol_aaaparopar.ps
 %python plot_stream.py ../tex/gd1_evol_aaaparoperp.ps
 %python plot_stream.py ../tex/gd1_evol_aaaparaperp.ps
@@ -1311,7 +1553,14 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
 \begin{figure}[t!]
   \includegraphics[width=\textwidth,clip=]{gd1_evol_lb.ps}
   \includegraphics[width=\textwidth,clip=]{gd1_evol_ld.ps}
-  \caption{}\label{fig:gd1_lbd}
+  \caption{Simulated stream after $5.01\Gyr$ as a function of Galactic
+    longitude. The top panel shows the stream in Galactic latitude and
+    the bottom panel shows the distance from the Sun. The progenitor
+    is shown as the large gray dot and its orbit as the dashed
+    lines. The predicted track of the stream is shown as the solid
+    line. Insets show various zoomed-in parts of the stream to show
+    the stream, progenitor orbit, and predicted stream track up
+    close.}\label{fig:gd1_lbd}
 %python plot_stream.py ../tex/gd1_evol_lb.ps
 %python plot_stream.py ../tex/gd1_evol_ld.ps
 \end{figure}
@@ -1319,7 +1568,13 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   \includegraphics[width=\textwidth,clip=]{gd1_evol_lvlos.ps}
   \includegraphics[width=\textwidth,clip=]{gd1_evol_lpmll.ps}
   \includegraphics[width=\textwidth,clip=]{gd1_evol_lpmbb.ps}
-  \caption{}\label{fig:gd1_lbv}
+  \caption{Simulated stream velocities as a function of Galactic
+    longitude. Same as \figurename~\ref{fig:gd1_lbd}, but for the
+    stream in heliocentric line-of-sight velocity $V_{\mathrm{los}}$
+    (top panel), proper motion in the direction of Galactic longitude
+    (middle panel), and in the direction of Galactic latitude (bottom
+    panel). Insets again show various interesting parts of the stream
+    up close.}\label{fig:gd1_lbv}
 %python plot_stream.py ../tex/gd1_evol_lvlos.ps
 %python plot_stream.py ../tex/gd1_evol_lpmll.ps
 %python plot_stream.py ../tex/gd1_evol_lpmbb.ps
@@ -1328,7 +1583,18 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
 \begin{figure}[t!]
  \includegraphics[width=0.48\textwidth,clip=]{gd1_evol_2Gya_xz.ps}
  \includegraphics[width=0.48\textwidth,clip=]{gd1_evol_2Gya_xz_sim.ps}
-  \caption{}\label{fig:gd1_sim}
+  \caption{Mock stream data generated from the model. The left panel
+    shows the same $N$-body stream as shown in previous figures, but
+    $1.96\Gyr$ earlier in its evolution. Symbols, lines, and the
+    stream model are the same as those in
+    \figurename~\ref{fig:gd1_xz}, except that the model progenitor
+    phase-space location from \figurename~\ref{fig:gd1_xz} has been
+    integrated backward in time for $1.96\Gyr$ (no other changes were
+    made to the model's parameters). The right panel shows mock stream
+    data drawn from the model using the procedures discussed in
+    \sectionname~\ref{sec:mock}. Overall, the spatial distribution of
+    the mock data is very similar to that of the $N$-body
+    stream.}\label{fig:gd1_sim}
 %python plot_stream_2Gya.py ../tex/gd1_evol_2Gya_xz.ps
 %python plot_stream_2Gya.py ../tex/gd1_evol_2Gya_xz_sim.ps
 \end{figure}
