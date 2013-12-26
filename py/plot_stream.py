@@ -514,6 +514,7 @@ def plot_stream_aa(plotfilename):
         dOdir= numpy.median(dO4dir,axis=1)
         dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
         dO1d= numpy.dot(dOdir,dO)
+        print "Misalignment:", numpy.arccos(numpy.sum(dOdir*progaa[-1,3:6])/numpy.sqrt(numpy.sum(dOdir**2.)*numpy.sum(progaa[-1,3:6]**2.)))/numpy.pi*180.-180.
         dO1d[dO1d < 0.]*= -1.
         bovy_plot.bovy_print()
         bovy_plot.bovy_hist(dO1d,range=[0.,0.4],bins=61,
