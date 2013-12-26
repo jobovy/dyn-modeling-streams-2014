@@ -1316,7 +1316,8 @@ The left panel of \figurename~\ref{fig:aAI} shows a running average of
 the radial action calculated using \eqnname~(\ref{eq:aAIJ}) along the
 orbit of the progenitor in the simulation used in the main body of
 this paper. The time in this figure is in units of $35.56\Myr$, so the
-orbit is integrated for a total of $7.11\Gyr$. After a few radial
+orbit is integrated for a total of $7.11\Gyr$. The auxiliary isochrone
+potential has a scale parameter of $6.4\kpc$. After a few radial
 periods, the radial action quickly converges with a remaining
 oscillatory behavior that is primarily a function of the radial angle,
 but that becomes smaller over time. With longer integrations and
@@ -1602,7 +1603,19 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
 \begin{figure}[t!]
  \includegraphics[width=0.48\textwidth,clip=]{aAI_jr.ps}
  \includegraphics[width=0.48\textwidth,clip=]{aAI_araz.ps}
-  \caption{}\label{fig:aAI}
+  \caption{Action--angle calculations using an orbit-integration-based
+    method. The right panel shows the cumulative mean of the radial
+    actions calculated in an auxiliary isochrone potential calculated
+    along the orbit of the progenitor used in the main body of this
+    paper. The color-coding corresponds to the radial angle
+    (calculated in the isochrone potential) along the orbit. The time
+    is in units of $35.56\Myr$ and the radial action is normalized by
+    its value at $t=200$. The left panel shows the radial and vertical
+    angles calculated in the auxiliary isochrone potential, with
+    color-coding corresponding to the azimuthal angle. The wiggles in
+    the angles are due to the isochrone potential not being the
+    correct potential, but these wiggles are fit and removed to
+    calculate the true angles.}\label{fig:aAI}
 %python plot_aAI.py ../tex/aAI_jr.ps
 %python plot_aAI.py ../tex/aAI_araz.ps
 \end{figure}
