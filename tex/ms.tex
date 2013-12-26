@@ -238,22 +238,19 @@ stream PDF for individual stream members as well as its
 marginalization and convolution over missing and noisy directions. A
 discussion and outlook is presented in
 \sectionname~\ref{sec:discussion} and I conclude in
-\sectionname~\ref{sec:conclusion}. In Appendix
-\sectionname~\ref{sec:aa} a novel method for calculating actions,
-frequencies, and angles for any orbit in any static gravitational
-potential is presented.
-
+\sectionname~\ref{sec:conclusion}. In \appendixname~\ref{sec:aa} a
+novel method for calculating actions, frequencies, and angles for any
+orbit in any static gravitational potential is presented.
 
 %BOVY: reference point
-
 
 \section{The dynamics of tidal streams}\label{sec:dynamics}
 
 The dynamics of tidal streams both in real (position--velocity) and
 action--angle space has been described by various previous authors
-\citep[\eg,][]{Helmi99a,Tremaine99a,SomeJohnstonPaper,Sanders13b}. I
-provide here a brief description of the dynamics of tidal streams that
-is relevant for what follows.
+\citep[\eg,][]{Helmi99a,Tremaine99a,Johnston99a,Sanders13b}. I provide
+here a brief description of the dynamics of tidal streams that is
+relevant for what follows.
 
 In real space, a tidal stream forms as stars are stripped from a
 progenitor some time $\Delta t$ in the past and then evolve (largely)
@@ -277,11 +274,12 @@ time $-\Delta t$ from the action--angle coordinates of the progenitor
 $(\vecj^p,\veca^p)$, similar to the small offset ($\Delta \vecx,\Delta
 \vecv)$ in the real--space description. The offset in the actions
 corresponds to an offset in the frequencies $\Delta \veco$;
-ultimately, this offset is responsible for the spreading of the stream
-over long stretches on the sky. Because both the progenitor's angles and
-the star's angles increase linearly with time, albeit at different
-frequencies, the difference in the angles also increases linearly in
-time. Therefore at time $t=0$ the difference in angles is
+ultimately, this frequency offset is responsible for the spreading of
+the stream over long stretches on the sky. Because both the
+progenitor's angles and the star's angles increase linearly with time,
+albeit at different frequencies, the difference in the angles also
+increases linearly in time. Therefore at time $t=0$ the difference in
+angles is
 \begin{equation}
 \Delta \veca(t=0) = \Delta \veca(-\Delta t) + \Delta \veco \Delta t\,,
 \end{equation}
@@ -289,18 +287,18 @@ while the difference in actions is constant
 \begin{equation}
 \Delta \vecj(t=0) = \Delta \vecj(-\Delta t)\,.
 \end{equation}
-As the initial offset $\Delta \veca(-\Delta t$ in angles is small
-compared to the growth $\Delta\veco\Delta t$, $\Delta \veca(t=0)
-\approx \Delta \veco \Delta t$.
+As the initial offset $\Delta \veca(-\Delta t)$ in angles is small
+compared to the growth, we have that $\Delta\veco\Delta t$, $\Delta
+\veca(t=0) \approx \Delta \veco \Delta t$.
 
 Thus, in action--angle coordinates, the dynamics of tidal-stream
 formation is simplified to linear growth of small initial angle
 differences due to small action/frequency differences. The angle
 direction $\unitvec{\veco} \equiv \Delta \veco / | \Delta \veco|$
 along which a star moves away from the progenitor is related to the
-initial action offset by $\Delta \veco \approx (\partial^2 H
-/ \partial \vecj \partial \vecj) \Delta \vecj$, in the limit of small
-action offsets, as $\veco = \partial H / \partial \vecj$. For an
+initial action offset by $\Delta \veco \approx (\partial^2 H /
+\partial \vecj \partial \vecj) \Delta \vecj$, in the limit of small
+action offsets, because $\veco = \partial H / \partial \vecj$. For an
 approximately one-dimensional stream to form, the Hessian matrix
 $(\partial^2 H / \partial \vecj \partial \vecj)\large|_{\vecj^p}$ has
 to be dominated by a single large eigenvalue; in this case the angle
@@ -315,10 +313,63 @@ dynamics of the progenitor and the stripping process (see discussion
 in \citealt{Sanders13b}). For dynamical modeling we can be agnostic
 about the relative importance of all of these contributors to
 $\unitvec \veco$ by flexible modeling of the distribution of $\Delta
-\vecj$.
+\vecj$ or $\Delta \veco$.
 
 
-\section{Generative models of tidal streams}\label{sec:method}
+\section{Generative models of tidal streams}\label{sec:generative}
+
+\subsection{A simulation}\label{eq:sim}
+
+I illustrate the theoretical considerations set forth in this paper by
+using a simulated tidal stream. This stream is set up similarly to
+that used in \citep{Sanders13b}. The stream is constructed by running
+an $N$-body simulation of a King cluster on an orbit similar to that
+of the GD-1 stream \citep{Koposov10a}. Specifically, a King cluster
+with a mass of $2\times10^4\msun$, a tidal radius of $0.07\kpc$, and a
+ratio of the central potential to the velocity dispersion squared of
+$2.0$ is sampled using $10^4$ particles. The cluster is evolved in an
+external logarithmic host potential with $V_c = 220\kms$ and a
+flattening $q=0.9$ ($\Phi = V_c^2 \ln (R^2 + z^2/q^2$) using the
+gyrfalcon code \citep{Dehnen00a,Dehnen02a} with a softening of
+$1.5\pc$ in the NEMO toolkit \citep{Teuben95a}. The cluster is evolved
+for $5.011\Gyr$ ($=5.125\kpc/[\kms]$) from the initial condition
+$(X,Y,Z) = (-11.63337239,-20.76235661,-10.631736273934635)\kpc$ and
+$(V_X,V_Y,V_Z) = (-128.8281653,42.88727925,79.172383882274971)\kms$,
+chosen such that the cluster ends up at roughly the observed location
+of the GD-1 stream at the end of the simulation
+\citep{Koposov10a}. The progenitor's orbit has an eccentricity of
+$0.31$, a pericenter of $13.7\kpc$, a current $r=14.4\kpc$, such that
+the cluster is close to pericenter at the end of the simulation. The
+actions of the progenitor are $(J_R,L_Z,J_Z) =
+(288.5,-3173.7,897.6)\kpc\kms$ and its orbital frequencies are
+$(\Omega_R,\Omega_\phi,\Omega_Z) = (15.7,-10.8,11.9)\Gyr\inv$.
+
+The final position of the stream in $(X,Z)$ is shown in
+\figurename~\ref{fig:gd1_xy}. \figurename~\ref{fig:gd1_jt} shows the
+final position of the stream in action--frequency--angle coordinates,
+calculated using the algorithm described in
+\appendixname~\ref{sec:aa}. As described in
+\sectionname~\ref{sec:dynamics}, a one-dimensional tidal stream forms
+because even though the action distribution of the tidal debris is not
+isotropic or one-dimensional, the Hessian $(\partial^2 H / \partial
+\vecj \partial \vecj)\large|_{\vecj^p}$ is so strongly dominated by a
+single large eigenvalue (the ratio of the largest to the second
+largest eigenvalue is about $30$), that the frequency distribution of
+the debris is essentially one dimensional. The angle distribution of
+the debris at the end of the simulation is therefore essentially one
+dimensional as well.
+
+\subsection{A model in frequency--action space}\label{sec:modeloa}
+
+\section{The track of a tidal stream}\label{sec:track}
+
+\section{Mock stream data}\label{sec:mock}
+
+\section{The full stream PDF}\label{sec:pdf}
+
+\section{Discussion}\label{sec:discussion}
+
+\section{Conclusion}\label{sec:conclusion}
 
 
 The discussions of the dynamics of stream formation in the previous
@@ -1129,6 +1180,10 @@ the \emph{galpy} Galactic dynamics code\footnote{Available at
   Carlberg,~R.~G. 2009, \apj, 705, L223
 \bibitem[Carlberg(2012)]{Carlberg12a}
 Carlberg,~R.~G. 2012, \apj, 748, 20
+\bibitem[Dehnen(2000)]{Dehnen00a}
+  Dehnen,~W. 2000, \apj, 536, L39
+\bibitem[Dehnen(2002)]{Dehnen02a}
+  Dehnen,~W. 2002, J.~Comput.~Phys., 179, 27
 \bibitem[Eyre \& Binney(2011)]{Eyre11a}
   Eyre,~A. \& Binney,~J. 2011, \mnras, 413, 1852
 \bibitem[Helmi \& White(1999)]{Helmi99a}
@@ -1153,6 +1208,9 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Sanders,~J. \& Binney,~J. 2013a, \mnras, 433, 1813
 \bibitem[Sanders \& Binney(2013b)]{Sanders13b}
   Sanders,~J. \& Binney,~J. 2013b, \mnras, 433, 1826
+\bibitem[Teuben(1995)]{Teuben95a}
+  Teuben,~P.~J. 1995, in Astronomical Data Analysis Software and Systems IV, 
+  ed.~R.~Shaw, H.~E.~Payne and J.~J.~E.~Hayes., PASP Conf Series 77, 398
 \bibitem[Tremaine(1999)]{Tremaine99a}
   Tremaine,~S. 1999, \mnras, 307, 877
 \bibitem[Yoon \etal(2011)]{Yoon11a}
