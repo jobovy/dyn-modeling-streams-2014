@@ -297,24 +297,25 @@ formation is simplified to linear growth of small initial angle
 differences due to small action/frequency differences. The angle
 direction $\unitvec{\veco} \equiv \Delta \veco / | \Delta \veco|$
 along which a star moves away from the progenitor is related to the
-initial action offset by $\Delta \veco \approx (\partial^2 H /
-\partial \vecj \partial \vecj) \Delta \vecj$, in the limit of small
-action offsets, because $\veco = \partial H / \partial \vecj$. For an
-approximately one-dimensional stream to form, the Hessian matrix
-$(\partial^2 H / \partial \vecj \partial \vecj)\large|_{\vecj^p}$ has
-to be dominated by a single large eigenvalue; in this case the angle
-difference of stars stripped from the stream at any time will fall
-along approximately the same direction $\unitvec\veco$, and the stream
-will essentially be one dimensional. In detail, because the
-distribution of initial offsets $\Delta \vecj$ is not isotropic, the
-direction $\unitvec \veco$ is not just determined by the potential
-(through $H$) and the progenitor orbit, but also by the distribution
-of $\Delta \vecj$, which is set through a combination of the internal
-dynamics of the progenitor and the stripping process (see discussion
-in \citealt{Sanders13b}). For dynamical modeling we can be agnostic
-about the relative importance of all of these contributors to
-$\unitvec \veco$ by flexible modeling of the distribution of $\Delta
-\vecj$ or $\Delta \veco$.
+initial action offset by $\Delta \veco \approx (\partial \veco /
+\partial \vecj) \Delta \vecj = (\partial^2 H / \partial \vecj \partial
+\vecj) \Delta \vecj$, in the limit of small action offsets, because
+$\veco = \partial H / \partial \vecj$. For an approximately
+one-dimensional stream to form, the Hessian matrix $(\partial^2 H /
+\partial \vecj \partial \vecj)\large|_{\vecj^p}$ has to be dominated
+by a single large eigenvalue; in this case the angle difference of
+stars stripped from the stream at any time will fall along
+approximately the same direction $\unitvec\veco$, and the stream will
+essentially be one dimensional. In detail, because the distribution of
+initial offsets $\Delta \vecj$ is not isotropic, the direction
+$\unitvec \veco$ is not just determined by the potential (through $H$)
+and the progenitor orbit, but also by the distribution of $\Delta
+\vecj$, which is set through a combination of the internal dynamics of
+the progenitor and the stripping process (see discussion in
+\citealt{Sanders13b}). For dynamical modeling we can be agnostic about
+the relative importance of all of these contributors to $\unitvec
+\veco$ by flexible modeling of the distribution of $\Delta \vecj$ or
+$\Delta \veco$.
 
 
 \section{Generative models of tidal streams}\label{sec:generative}
@@ -505,15 +506,15 @@ radii of the progenitor orbit, respectively, and $Z_{\mathrm{max}}$ is
 the maximum $Z$ reached on this orbit. We assume that the all
 correlations between the actions are zero (see
 \figurename~\ref{fig:gd1_jt}). Then we propagate this Gaussian
-variance to frequency space using the Hessian $(\partial^2 H /
-\partial \vecj \partial \vecj)\large|_{\vecj^p}$\footnote{The Hessian
-  $(\partial^2 H / \partial \vecj \partial \vecj)\large|_{\vecj^p}$
-  can be computed using the method in \appendixname~\ref{sec:aa} by
-  computing $\partial (\vecj,\veca) / \partial (\vecx,\vecv)$ and
-  $\partial (\veco,\veca) / \partial (\vecx,\vecv)$ and forming
-  $\partial \veco / \partial \vecj = \left(\partial (\vecj,\veca) /
-  \partial (\vecx,\vecv)\right)^{-1}\,\left(\partial (\veco,\veca) /
-  \partial (\vecx,\vecv)\right)$.}, which gives the variance matrix
+variance to frequency space using the Hessian $(\partial \veco /
+\partial \vecj)\large|_{\vecj^p}$\footnote{The Hessian $(\partial
+  \veco / \partial \vecj)\large|_{\vecj^p}$ can be computed using the
+  method in \appendixname~\ref{sec:aa} by computing $\partial
+  (\vecj,\veca) / \partial (\vecx,\vecv)$ and $\partial (\veco,\veca)
+  / \partial (\vecx,\vecv)$ and forming $\partial \veco / \partial
+  \vecj = \left(\partial (\vecj,\veca) / \partial
+  (\vecx,\vecv)\right)^{-1}\,\left(\partial (\veco,\veca) / \partial
+  (\vecx,\vecv)\right)$.}, which gives the variance matrix
 $V_\veco$. The principal eigenvector of this matrix is the model
 direction along which the stream spreads. While the model I propose
 here is a simple one, it works well without having been tweaked for
@@ -521,7 +522,7 @@ the simulation under scrutiny. The angle between the principal
 eigenvector of $V_\veco$ and the progenitor's frequency vector is
 $0.50^\circ$ while the value measured from the simulation is
 $0.18^\circ$. For a model with an isotropic action distribution, the
-misalignment would be $1.28^circ$. 
+misalignment would be $1.28^circ$.
 
 We then further constrain the mean frequency offset to lie along the
 principal eigenvector of $V_\veco$. This mean frequency offset can be
