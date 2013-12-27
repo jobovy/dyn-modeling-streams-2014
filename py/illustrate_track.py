@@ -27,15 +27,19 @@ def illustrate_track(plotfilename1,plotfilename2,plotfilename3):
     progAngle= numpy.dot(sdf._progenitor_angle,sdf._dsigomeanProgDirection)
     bovy_plot.bovy_print(fig_width=8.25,fig_height=3.5)
     bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,mOs,'ko',ms=8.,
-                        xlabel=r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$',
-                        ylabel=r'$\Large|\mathbf{\Omega}_\parallel\Large|\,(\mathrm{Gyr}^{-1})$',
+                        xlabel=r'$\theta_\parallel$',
+                        ylabel=r'$\Omega_\parallel\,(\mathrm{Gyr}^{-1})$',
                         xrange=[-0.2-1.14,1.6-1.14],
                         yrange=[22.05,22.55])
     bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,mOs,'k-',lw=1.5,overplot=True)
     bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,mOs+2*sOs,'ko',ms=6.,mfc='none',
-                        overplot=True)
+                        zorder=1,overplot=True)
     bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,mOs-2*sOs,'ko',ms=6.,mfc='none',
-                        overplot=True)
+                        zorder=1,overplot=True)
+    bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,mOs+2*sOs,'k-.',lw=1.5,
+                        zorder=0,overplot=True)
+    bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,mOs-2*sOs,'k-.',lw=1.5,
+                        zorder=0,overplot=True)
     bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,sdf._progenitor_Omega_along_dOmega*bovy_conversion.freq_in_Gyr(220.,8.)*numpy.ones(len(sdf._thetasTrack)),
                         'k--',lw=1.5,overplot=True)
     bovy_plot.bovy_plot(sdf._thetasTrack+progAngle,sdf._progenitor_Omega_along_dOmega*bovy_conversion.freq_in_Gyr(220.,8.)*numpy.ones(len(sdf._thetasTrack)),
@@ -43,16 +47,17 @@ def illustrate_track(plotfilename1,plotfilename2,plotfilename3):
     bovy_plot.bovy_text(1.05+progAngle,22.475,r'$\mathrm{progenitor\ orbit}$',size=16.)
     bovy_plot.bovy_text(progAngle+0.05,22.50,r'$\mathrm{current\ progenitor\ position}$',size=16.)
     bovy_plot.bovy_plot([progAngle+0.05,progAngle],[22.50,sdf._progenitor_Omega_along_dOmega*bovy_conversion.freq_in_Gyr(220.,8.)],'k:',overplot=True)
-    bovy_plot.bovy_text(-0.6,22.33,r'$\mathrm{at\ a\ small\ number\ of\ points\ along\ the}$'+'\n'+r'$\mathrm{progenitor\ orbit, we\ calculate}\ \frac{\partial(\mathbf{\Omega},\mathbf{\theta})}{\partial (\mathbf{x},\mathbf{v})}$',size=16.)
+    bovy_plot.bovy_text(-0.6,22.33,r'$\mathrm{at\ a\ small\ number\ of\ points\ along\ the}$'+'\n'+r'$\mathrm{progenitor\ orbit, we\ calculate}\ \frac{\partial(\mathbf{\Omega},\boldsymbol{\theta})}{\partial (\mathbf{x},\mathbf{v})}$',size=16.)
     bovy_plot.bovy_plot([progAngle+sdf._thetasTrack[1],-0.6],
                         [sdf._progenitor_Omega_along_dOmega*bovy_conversion.freq_in_Gyr(220.,8.),22.38],
                         'k:',overplot=True)
-    bovy_plot.bovy_text(-1.105,22.075,r'$\mathrm{at\ the\ same\ points, we\ calculate\ the}$'+'\n'+r'$\mathrm{mean\ stream\ track\ in}\ (\mathbf{\Omega},\mathbf{\theta})\ \mathrm{and}$'+'\n'+r'$\mathrm{estimate\ the\ spread\ around\ the\ track}$',size=16.)
+    bovy_plot.bovy_text(-1.105,22.07,r'$\mathrm{at\ the\ same\ points, we\ calculate\ the}$'+'\n'+r'$\mathrm{mean\ stream\ track\ in}\ (\mathbf{\Omega},\boldsymbol{\theta})\ \mathrm{and}$'+'\n'+r'$\mathrm{estimate\ the\ spread\ around\ the\ track}$',size=16.)
     bovy_plot.bovy_plot([-0.9,progAngle+sdf._thetasTrack[1]],
                         [22.2,mOs[1]],
                         'k:',overplot=True)
-    bovy_plot.bovy_text(-0.05,22.210,r'$\mathrm{stream\ track}$',size=16.,
-                        rotation=-16.)
+    bovy_plot.bovy_text(-0.18,22.265,r'$\mathrm{stream\ track\ +\ spread}$',
+                         size=16.,
+                        rotation=-20.)
     bovy_plot.bovy_end_print(plotfilename1)
     #Now plot Z,X
     bovy_plot.bovy_print(fig_width=8.25,fig_height=3.5)
@@ -79,8 +84,8 @@ def illustrate_track(plotfilename1,plotfilename2,plotfilename3):
     bovy_plot.bovy_text(1.,13.78,r'$\mathrm{stream\ track\ +\ spread}$',
                         size=16.,rotation=-25.)
     bovy_plot.bovy_text(7.5,14.2,r"$\mathrm{at\ these\ points, we\ calculate\ the\ stream\ position\ in}\ (\mathbf{x},\mathbf{v})\ \mathrm{from}$"+
-                         '\n'+r"$\mathrm{the\ progenitor's}\ (\mathbf{x}_p,\mathbf{v}_p) = (\mathbf{\Omega_p},\mathbf{\theta}_p), \mathrm{the\ mean\ offset} (\Delta \mathbf{\Omega},\Delta \mathbf{\theta}),$"+'\n'+
-                         r"$\mathrm{and}\ \left(\frac{\partial(\mathbf{\Omega},\mathbf{\theta})}{\partial (\mathbf{x},\mathbf{v})}\right)^{-1}$",
+                         '\n'+r"$\mathrm{the\ progenitor's}\ (\mathbf{x}_p,\mathbf{v}_p) = (\mathbf{\Omega_p},\boldsymbol{\theta}_p), \mathrm{the\ mean\ offset} (\Delta \mathbf{\Omega},\Delta \boldsymbol{\theta}),$"+'\n'+
+                         r"$\mathrm{and}\ \left(\frac{\partial(\mathbf{\Omega},\boldsymbol{\theta})}{\partial (\mathbf{x},\mathbf{v})}\right)^{-1}$",
 size=16.)
     bovy_plot.bovy_plot([sdf._progenitorTrack.z(sdf._trackts[1])*8.,4.5],
                         [sdf._progenitorTrack.x(sdf._trackts[1])*8.,14.8],
@@ -117,7 +122,7 @@ size=16.)
     bovy_plot.bovy_plot([230.,sdf._interpolatedObsTrackLB[850,0]],
                         [13.25,sdf._interpolatedObsTrackLB[850,2]],
                         'k:',overplot=True)
-    bovy_plot.bovy_text(170.,9.4,r"$\mathrm{the\ estimated\ spread\ is\ propagated}$"+'\n'+r"$\mathrm{at\ the\ points\ directly\ from}\ (\mathbf{\Omega},\mathbf{\theta})\ \mathrm{to}$"+'\n'+r"$(l,b,D,\ldots)\ \mathrm{and\ interpolated}$"+'\n'+r"$\mathrm{using\ slerp}$",
+    bovy_plot.bovy_text(170.,9.4,r"$\mathrm{the\ estimated\ spread\ is\ propagated}$"+'\n'+r"$\mathrm{at\ the\ points\ directly\ from}\ (\mathbf{\Omega},\boldsymbol{\theta})\ \mathrm{to}$"+'\n'+r"$(l,b,D,\ldots)\ \mathrm{and\ interpolated}$"+'\n'+r"$\mathrm{using\ slerp}$",
                         size=16.)
     bovy_plot.bovy_plot([195.,sdf._ObsTrackLB[1,0]],
                         [9.7,sdf._ObsTrackLB[1,2]],
