@@ -803,6 +803,11 @@ def plot_stream_aa(plotfilename):
         pyplot.fill_between(das,(dOs+2*sOs)*bovy_conversion.freq_in_Gyr(220.,8),
                             (dOs-2*sOs)*bovy_conversion.freq_in_Gyr(220.,8),
                             color='0.8',zorder=0)
+        #Also plot the apar at which t_d becomes important
+        pyplot.plot([sdf.meanOmega(0.01,oned=True)*sdf._tdisrupt,
+                     sdf.meanOmega(0.01,oned=True)*sdf._tdisrupt],
+                    [0.,0.3],
+                    'k--')                     
     elif includetrack and 'apartime' in plotfilename:
         das= numpy.linspace(0.01,1.3,101)
         mts= numpy.array([sdf.meantdAngle(da) for da in das])
