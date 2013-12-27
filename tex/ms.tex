@@ -74,6 +74,16 @@
 \newcommand{\ar}{\ensuremath{\theta_R}}
 \newcommand{\aphi}{\ensuremath{\theta_\phi}}
 \newcommand{\az}{\ensuremath{\theta_Z}}
+\newcommand{\apar}{\ensuremath{\theta_\parallel}}
+\newcommand{\opar}{\ensuremath{\Omega_\parallel}}
+\newcommand{\aperp}{\ensuremath{\veca_\perp}}
+\newcommand{\aperpii}{\ensuremath{\theta_{\perp,ii}}}
+\newcommand{\operp}{\ensuremath{\veco_\perp}}
+\newcommand{\operpii}{\ensuremath{\Omega_{\perp,ii}}}
+
+\newcommand{\vlos}{\ensuremath{V_{\mathrm{los}}}}
+\newcommand{\pmll}{\ensuremath{\mu_l}}
+\newcommand{\pmbb}{\ensuremath{\mu_b}}
 
 %\submitted{}
 
@@ -243,7 +253,6 @@ discussion and outlook is presented in
 novel method for calculating actions, frequencies, and angles for any
 orbit in any static gravitational potential is presented.
 
-%BOVY: reference point
 
 \section{The dynamics of tidal streams}\label{sec:dynamics}
 
@@ -522,7 +531,7 @@ the simulation under scrutiny. The angle between the principal
 eigenvector of $V_\veco$ and the progenitor's frequency vector is
 $0.50^\circ$ while the value measured from the simulation is
 $0.18^\circ$. For a model with an isotropic action distribution, the
-misalignment would be $1.28^circ$.
+misalignment would be $1.28^\circ$.
 
 We then further constrain the mean frequency offset to lie along the
 principal eigenvector of $V_\veco$. This mean frequency offset can be
@@ -581,8 +590,167 @@ here have been fixed ``by-eye'', and better fits might be possible
 using more quantitative fit procedures. But such procedures are not
 pursued here further.
 
+
 \section{The track of a tidal stream}\label{sec:track}
 
+In this section, I discuss how to calculate the track of a model tidal
+stream in the generative model described in
+\sectionname~\ref{sec:generative}. The track consists of the mean
+location of the stream as a function of angle along the stream. I also
+describe how to estimate the dispersion of the stream along this
+track. In \sectionname~\ref{sec:trackaa}, I explain how to calculate
+the track of the stream in frequency--angle coordinates as well as how
+to estimate the spread around this track. In
+\sectionname~\ref{sec:trackxv} I discuss how to efficiently project
+the stream track and dispersion into position--velocity coordinates
+$(\vecx,\vecv)$ or observable coordinates $(l,b,D,\vlos,\pmll,\pmbb)$.
+
+
+\subsection{In frequency--angle coordinates}\label{sec:trackaa}
+
+Here, I discuss how to calculate the stream's properties as a function
+of the angle along the stream. In the generative model described
+above, the direction of the angle along the stream lies along the
+principal eigenvector of $V_\veco$, the variance matrix of the model
+$\Delta \veco$ distribution. We denote the angle in this direction as
+$\apar$ and the frequency in this direction $\opar$; the
+two-dimensional angle- and frequency-space perpendicular to this
+direction is denoted as $\aperp$ and $\operp$. 
+
+First, we compute the distribution of $\Delta \opar$, the frequency
+offset between stream members and the progenitor, given the angle
+offset $\Delta \apar$ as follows
+\begin{equation}\label{eq:poparapargeneral}
+\begin{split}
+  p(\Delta \opar|\Delta \apar) & = \int \dd \Delta t\,p(\Delta \opar,\Delta t|\Delta \apar)\, \\
+  & = \int \dd \Delta t \,p(\Delta \apar | \Delta \opar,\Delta t)\,p(\Delta \opar,\Delta t)\,,\\
+  & \approx \int \dd \Delta t \,\delta(\Delta \apar - \Delta \opar\,\Delta t)\,p(\Delta \opar,\Delta t)\,,\\
+  & = \frac{1}{\left|\Delta \opar\right|}\,p(\Delta \opar,\frac{\Delta \apar}{\Delta \opar})\,,
+\end{split}
+\end{equation}
+where in the penultimate step we have approximated the initial angle
+distribution as a delta function (as the initial angle offset is small
+with respect to the final offset). This is a fully general
+expression. For the fiducial stream model, this can be simplified to
+\begin{equation}\label{eq:poparapar}
+\begin{split}
+  p(\Delta \opar|\Delta \apar) \propto &\ \frac{1}{\left|\Delta \opar\right|}\,p(\Delta \opar)\,,\qquad 0 < \frac{\Delta \apar}{\Delta \opar} < t_d\,.\\
+  & 0\,,\qquad \mathrm{otherwise}\,.
+\end{split}
+\end{equation}
+\equationname~(\ref{eq:poparapar}) shows why we chose to model
+$p(\Delta \opar)$ as a Gaussian multiplied with $|\Delta
+\opar|$. $p(\Delta \opar|\Delta \apar)$ is then a Gaussian with mean
+$\Delta \Omega^m$ and variance $\sigma^2_{\Omega,1}$, for $\Delta
+\opar > \Delta \apar / t_d$, and zero otherwise. The mean and variance
+of such a Gaussian is straightforward to calculate in terms of error
+functions. The top left panel of \figurename~\ref{fig:gd1_apar} shows
+the distribution of $|\Delta \opar|$ versus $|\Delta \apar|$ (absolute
+value in order to show the trailing and leading stream together) for
+the simulated stream, as well as the mean and dispersion calculated
+from the fiducial model. The dashed line shows $\Delta \apar = \Delta
+\Omega^m \,t_d$, approximately the angle where the finite disruption
+time starts to influence the mean $\Delta \opar$ of the stream. The
+finite disruption time, $\approx 4.5\Gyr$ in this case, of a tidal
+stream means that for stream members to have reached very large angle
+differences with respect to the progenitor, they must have been
+removed at large frequency differences. Around $\Delta \Omega^m
+\,t_d$, average stream stars, \ie, those removed with the average
+frequency offset, do not have a large enough offset to reach large
+angle offsets. Therefore, even though the average frequency offset
+does not change over time (see \figurename~\ref{fig:gd1_times}), the
+average frequency offset, and therefore the average orbit, does change
+with distance from the progenitor. It is in this sense that streams do
+not follow a single orbit. This is discussed further in BOVY:REF.
+
+In the fiducial model, the average $\Delta \operp$, and $\Delta
+\aperp$ as a function of $\Delta \apar$ are zero. Therefore, the
+average stream track as a function of $\Delta \apar$ is entirely
+specified by the mean $\Delta \opar(\Delta \apar)$ and zero offsets in
+the perpendicular direction. This track can be rotated into the
+$(R,\phi,Z)$ coordinate system using the eigenvectors of $V_\veco$.
+
+To estimate the spread around the stream track, we need to calculate
+the distributions $p(\Delta \operp|\Delta \apar)$ and $p(\Delta
+\aperp|\Delta \apar)$. The former is just the zero mean Gaussian with
+variance given by the projection of $V_\veco$ onto the direction
+perpendicular to the stream. The distribution $p(\Delta \aperp|\Delta
+\apar)$, however, does depend on $\Delta \apar$, because $\Delta
+\aperp = \Delta \aperp^{\mathrm{init}} + \Delta \operp \Delta t$ and
+the distribution of $\Delta t$ depends on $\Delta \apar$. Therefore,
+we first calculate $p(\Delta t | \Delta \apar)$.
+
+We can calculate $p(\Delta t | \Delta \apar)$ as follows
+\begin{equation}\label{eq:pdtapar}
+\begin{split}
+  p(\Delta t | \Delta \apar) & = \int \dd \Delta \opar\,p(\Delta t,\Delta \opar|\Delta \apar)\,,\\
+  & = \int \dd \Delta \opar\,p(\Delta t|\Delta \opar,\Delta \apar)\,p(\Delta \opar|\Delta \apar)\,,\\
+  & = p\left(\Delta \opar = \frac{\Delta \apar}{\Delta t}\right)\,\left|\frac{\Delta \apar}{(\Delta t)^2}\right|\,,
+\end{split}
+\end{equation}
+where in the last step we have again approximated the initial
+distribution of parallel angle offsets as a delta function. The first
+factor in this equation is given by the expression given in
+\equationname~(\ref{eq:poparapargeneral}) (in general) or
+\equationname~(\ref{eq:poparapar}) for the fiducial model. The lower
+right panel of \figurename~\ref{fig:gd1_apar} shows the distribution
+of stripping times for members of the simulated stream as well as the
+mean and dispersion calculated from
+\equationname~(\ref{eq:pdtapar}). Similar to the distribution of
+$\Delta \opar$ as a function of $\Delta \apar$, the distribution of
+$\Delta t$ has a kink at the angle offset that can only be reached by
+stars that have to have been stripped at large frequency offsets (that
+is, larger than average). 
+
+We can now also calculate $p(\Delta \aperp|\Delta \apar)$
+\begin{equation}
+  p(\Delta \aperpii|\Delta \apar) = \int \dd \Delta t \,\dd \Delta
+  \operpii \,p(\Delta \aperpii|\Delta \operpii,\Delta t)\,p(\Delta \operpii|\Delta t,\Delta \apar)\,p(\Delta t|\Delta \apar)\,,
+\end{equation}
+where $ii=2,3$ for the first and second perpendicular direction. For
+the fiducial model, this simplifies to
+\begin{equation}\label{eq:paperpapar}
+  p(\Delta \aperpii|\Delta \apar) = \int \dd \Delta t \,\mathcal{N}\left(\Delta \aperpii|0,\sigma_{\theta}^2+(\Delta t\,\sigma_{\Omega,ii})^2\right)\,p(\Delta t|\Delta \apar)\,,
+\end{equation}
+where $\sigma_{\Omega,ii}$ is the model frequency dispersion in the
+perpendicular direction (corresponding to the middle and smallest
+eigenvalue of $V_\veco$). In the fiducial model, this distribution is
+the only one of those considered in this section that requires an
+explicit integration. However, we can approximate the distribution by
+using the mean $\Delta t(\Delta \apar)$ rather than integrating over
+$\Delta t$. The lower left panel of \figurename~\ref{fig:gd1_apar}
+shows the distribution of perpendicular angle offsets and the
+grayscale bands show the dispersion calculated using
+\equationname~(\ref{eq:paperpapar}); the white dashed line shows the
+approximate estimate obtained using the mean stripping time rather
+than integrating over it. This simple estimate agrees well with the
+exact calculation.
+
+We can then estimate the dispersion around the stream track, which is
+useful for getting a sense of the width of the model stream and to
+find appropriate integration intervals when marginalizing the stream
+PDF as discussed in \sectionname~\ref{sec:pdf}. At a given angle
+offset $\Delta \apar$ we calculate the dispersion in $\Delta \opar$
+from \equationname~(\ref{eq:poparapar}) and we substitute this
+appropriately in $V_\veco$. We can also calculate the dispersion in
+$\Delta \aperp$ using \equationname~(\ref{eq:paperpapar}). How to
+estimate the dispersion in $\Delta \apar$ near a given $\Delta \apar$
+is more difficult, and I simply use a dispersion of $1$, as the stream
+typically spreads out over $\approx 1$ radian. This choice could be
+improved, as it has the effect of overestimating the true dispersion
+(see \sectionname~\ref{sec:pdf} below). We could calculate the
+correlation between $\Delta \operpii$ and $\Delta aperpii$ using
+similar equations as those given in the previous paragraphs, but for a
+simple estimate we can approximate these as $0.5$; we set the
+correlation between $\Delta \opar$ and $\Delta \apar$ to zero. While
+these estimates are not perfect, they give a reasonable estimate of
+the dispersion along the stream track. This provides an adequate
+starting point for more precise calculations of the dispersion in
+\sectionname~\ref{sec:pdf}.
+
+\subsection{In position--velocity coordinates}\label{sec:trackxv}
+
+%BOVY: reference point
 
 
 \section{Mock stream data}\label{sec:mock}
