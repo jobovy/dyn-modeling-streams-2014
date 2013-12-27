@@ -112,7 +112,7 @@ size=16.)
     bovy_plot._add_ticks()
     bovy_plot._add_axislabels(r'$\mathrm{Galactic\ longitude\, (deg)}$',
                               r'$\mathrm{distance\, (kpc)}$')
-    bovy_plot.bovy_text(165.,13.5,r"$\mathrm{finally, the\ interpolated\ track\ in}\ (\mathbf{x},\mathbf{v})\ \mathrm{is}"+'\n'+r"$\mathrm{converted\ to\ observable\ quantities\ (here}, l\ \mathrm{and}\ D)$",
+    bovy_plot.bovy_text(165.,13.5,r"$\mathrm{finally, the\ interpolated\ track\ in}\ (\mathbf{x},\mathbf{v})\ \mathrm{is}$"+'\n'+r"$\mathrm{converted\ to\ observable\ quantities\ (here}, l\ \mathrm{and}\ D)$",
                         size=16.)
     bovy_plot.bovy_plot([230.,sdf._interpolatedObsTrackLB[850,0]],
                         [13.25,sdf._interpolatedObsTrackLB[850,2]],
