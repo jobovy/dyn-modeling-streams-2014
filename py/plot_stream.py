@@ -822,8 +822,8 @@ def plot_stream_aa(plotfilename):
                             color='0.6',zorder=1)
     elif includetrack and 'aparaperp' in plotfilename:
         das= numpy.linspace(0.01,1.3,101)
-        sas= numpy.array([sdf.sigangledAngle(da) for da in das])
-        sass= numpy.array([sdf.sigangledAngle(da,simple=True) for da in das])
+        sas= numpy.array([sdf.sigangledAngle(da) for da in das])*numpy.sqrt(2.)
+        sass= numpy.array([sdf.sigangledAngle(da,simple=True) for da in das])*numpy.sqrt(2.)
         pyplot.fill_between(das,0.,
                             (2*sas),
                             color='0.8',zorder=0)
