@@ -750,6 +750,103 @@ starting point for more precise calculations of the dispersion in
 
 \subsection{In position--velocity coordinates}\label{sec:trackxv}
 
+Having estimated the track of the stream and the dispersion around
+this in frequency--angle space, we can propagate the track to
+position--velocity coordinates by inverting the transformation
+$(\vecx,\vecv) \rightarrow (\veco,\veca)$. We do this by linearizing
+the transformation along the orbit of the progenitor in the vicinity
+of the stream and inverting this linearized transformation. That this
+works relies on the stream being cold for a few different
+reasons. First, the track of a cold stream, while in general offset
+from the orbit of the progenitor, does not stray too far from it, such
+that the transformation to frequency--angle coordinates can be
+linearized over the range of the stream--orbit offset. Second, cold
+streams are essentially one-dimensional, that is, they only spread
+significantly over a single direction. This means that non-linearity
+in the $(\vecx,\vecv) \rightarrow (\veco,\veca)$ transformation only
+affects a single direction, which roughly follows the orbit of the
+progenitor. Therefore, we can linearize the $(\vecx,\vecv) \rightarrow
+(\veco,\veca)$ transformation along a one-dimensional grid of points
+on the progenitor's orbit, rather than on a full six-dimensional
+grid. Third, the coldness of the stream means that any significant
+mass of the full stream PDF is close enough to the stream track that
+all frequency--angle calculations can be performed using the linear
+approximation along the progenitor orbit.
+
+\figurename~\ref{fig:track} illustrates how I linearize the
+$(\vecx,\vecv) \rightarrow (\veco,\veca)$ transformation along the
+progenitor orbit and use it to propagate the track of the stream to
+position--velocity coordinates and to observable quantities
+$(l,b,D,\vlos,\pmll,\pmbb)$. The top panel shows the orbit of the
+progenitor and the mean stream track in frequency--angle
+coordinates. Only the parallel direction is shown here; the mean
+stream track coincides with the progenitor orbit in the perpendicular
+direction. At a small number of points along the progenitor orbit,
+chosen here to span $1.5$ radians, we calculate the Jacobian $\partial
+(\veco,\veca) / \partial (\vecx,\vecv)$. In this figure this is done
+at four points, but for all other figures and calculations in this
+paper eleven points are used. Each Jacobian calculation requires seven
+frequency--angle calcuations, such that the total number of such
+computations is less than $100$ to adequately model the stream (each
+computation involves a single orbit integration, see
+\appendixname~\ref{sec:aa}). 
+
+We then calculate the stream track in Galactocentric
+position--velocity coordinates at the parallel angles for which we
+have linearized the frequency--angle transformation. This is shown in
+the middle panel of \figurename~\ref{fig:track}. Similarly, we
+transform the approximated variance described at the end of the
+previous section to position--velocity coordinates under the linear
+approximation. We can then interpolate the track of the stream between
+this small number of points at which it is calculated; this gives the
+full track of the stream. In \sectionname~\ref{sec:pdf}, we require an
+estimate of the dispersion around the track at any angle along the
+stream (for calculating the marginalized PDF). We can obtain this from
+interpolating the estimated variances at the calculated track
+points. This interpolation can be performed practically as follows. We
+decompose the variance matrix at each calculated track point into its
+eigendecomposition and order the eigenvalues by size. We then
+interpolate the values of each of the six eigenvalues using spline
+interpolation. The direction of each eigenvector is interpolated using
+\emph{slerp} \citep{Shoemake85a}, which is a type of spherical linear
+interpolation. The variance matrix at interpolated track points can
+then be constructed by from the interpolated eigenvalues and
+eigenvectors. All other $(\vecx,\vecv) \leftrightarrow (\veco,\veca)$
+calculations can then be performed by using the closest interpolated
+track point in $(\vecx,\vecv)$ or $(\veco,\veca)$ and using the
+calculated Jacobian from the closest calculated track point.
+
+Finally, we can calculate the stream track in observable quantities
+$(l,b,D,\vlos,\pmll,\pmbb)$ by converting the interpolated track in
+$(\vecx,\vecv)$ to these observable coordinates. The dispersion at
+calculated track points is calculated from that in $(\veco,\veca)$
+using the appropriate Jacobians and the six-dimensional dispersion can
+again be interpolated using the eigendecomposition. This is
+illustrated in the bottom panel of \figurename~\ref{fig:track}.
+
+The average stream location computed in the manner described in this
+section is an approximate track. The mean stream location, for
+example, in distance from the Sun at a given Galactic longitude, can
+be exactly calculated by marginalizing over the full six-dimensional
+stream PDF in $(l,b,D,\vlos,\pmll,\pmbb)$ over the unobserved
+dimensions $(b,\vlos,\pmll,\pmbb)$. In general this will give a
+slightly different stream location, because the stream DF is not
+exactly Gaussian. However, it is demonstrated in
+\sectionname~\ref{sec:pdf}, where I calculate the full stream PDF,
+that the approximate mean stream location of this section is
+sufficiently close to the true average position for all practical
+purposes. The same should hold for any cold stream.
+
+\figurename~\ref{fig:gd1_xz} shows the simulated stream particles as
+well as the stream track calculated in this section in Galactocentric
+$X$ and $Z$ coordinates. It is clear that the average stream location
+tracks the position of the simulated stream. \figurename
+s~\ref{fig:gd1_lbd} and \ref{fig:gd1_lbv} show the same, but in
+observed coordinates $(l,b,D,\vlos,\pmll,\pmbb)$. These figures show
+that the simple fiducial stream model does a good job of predicting
+where the stream is located as a function of Galactic longitude. 
+
+
 %BOVY: reference point
 
 
@@ -1509,6 +1606,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Sanders,~J. \& Binney,~J. 2013a, \mnras, 433, 1813
 \bibitem[Sanders \& Binney(2013b)]{Sanders13b}
   Sanders,~J. \& Binney,~J. 2013b, \mnras, 433, 1826
+\bibitem[Shoemake(1985)]{Shoemake85}
+  Shoemake,~K. 1985, ACM SIGGRAPH Computer Graphics 3, 45
 \bibitem[Teuben(1995)]{Teuben95a}
   Teuben,~P.~J. 1995, in Astronomical Data Analysis Software and Systems IV, 
   ed.~R.~Shaw, H.~E.~Payne and J.~J.~E.~Hayes., PASP Conf Series 77, 398
