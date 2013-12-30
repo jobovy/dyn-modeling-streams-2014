@@ -527,7 +527,7 @@ small extent but the narrow distribution of frequency offsets limits
 the ability of particles stripped later to reach large distances from
 the progenitor.
 
-\subsection{The fiducial stream model}
+\subsection{The fiducial stream model}\label{sec:fidmodel}
 
 The discussion of the simulated stream's properties as a function of
 stripping time in the previous section indicates that we can build
@@ -1010,8 +1010,6 @@ that the simple fiducial stream model does a good job of predicting
 where the stream is located as a function of Galactic longitude. 
 
 
-%BOVY: reference point
-
 
 \section{Mock stream data}\label{sec:mock}
 
@@ -1024,15 +1022,67 @@ where the stream is located as a function of Galactic longitude.
     stream model are the same as those in
     \figurename~\ref{fig:gd1_xz}, except that the model progenitor
     phase-space location from \figurename~\ref{fig:gd1_xz} has been
-    integrated backward in time for $1.96\Gyr$ (no other changes were
+    integrated backward in time for $1.96\Gyr$ and the model
+    disruption time was reduced by $1.96\Gyr$ (no other changes were
     made to the model's parameters). The right panel shows mock stream
     data drawn from the model using the procedures discussed in
     \sectionname~\ref{sec:mock}. Overall, the spatial distribution of
     the mock data is very similar to that of the $N$-body
-    stream.}\label{fig:gd1_sim}
+    stream.}\label{fig:gd1_mock}
 %python plot_stream_2Gya.py ../tex/gd1_evol_2Gya_xz.ps
 %python plot_stream_2Gya.py ../tex/gd1_evol_2Gya_xz_sim.ps
 \end{figure}
+
+Using the generative model described in
+\sectionname~\ref{sec:modeloa}, it is straightforward how to draw mock
+stream data in frequency--angle space. The three ingredients---time,
+frequency, and angle distributions of the debris---allow for mock data
+to be generated in four steps. First, a stripping time $t_s$ is
+sampled from the distribution of stripping times. Second, a frequency
+offset $\Delta \veco$ with respect to the progenitor is drawn from the
+frequency distribution at $t_s$. Third, an initial angle offset is
+drawn. Fourth, the initial angle offset is incremented by $\Delta
+\veco \,ts$. This generates the final frequency--angle coordinates of
+the mock stream member $(\Delta \veco,\Delta \veca+\Delta \veco\,t_s)$. 
+
+For the fiducial stream model of \sectionname~\ref{sec:fidmodel} the
+procedure for producing mock data is simplified to sampling a small
+number of easy-to-sample distributions. First, $t_s$ is drawn
+uniformly between $0$ and $t_d$. Second, $\Delta \operp$ is drawn from
+the Gaussian distribution of $\Delta \operp$. The distribution of
+$\Delta \opar$ is not Gaussian, as it is a Gaussian in $|\Delta
+\opar|$ multiplied with $|\Delta \opar|$ over the range $\Delta \opar
+> 0$. This distribution is log-concave, that is, the derivative of its
+logarithm is negative everywhere, and therefore it can be efficienly
+sampled using adaptive-rejection sampling \citep{Gilks92a}. The sign
+of $\Delta \opar$ is determined by whether we are generating a leading
+or trailing stream. Third, initial angle offsets are drawn from the
+Gaussian distribution of such offsets. 
+
+To transform the mock stream in frequency--angle coordinates to
+position--velocity space, we use the approximate procedure for this
+transformation along the stream track described at the end of the
+previous section. The mock stream in $(\vecx,\vecv)$ can then be
+further transformed to observable coordinates
+$(l,b,D,\vlos,\pmll,\pmbb)$ or any other similar quantities as
+desired.
+
+\figurename~\ref{fig:gd1_mock} shows mock data generated for the model
+of the simulated stream described in
+\sectionname~\ref{sec:fidmodel}. The mock data in this Figure has been
+generated $1.96\Gyr$ before the final snapshot of the simulation. The
+model from \sectionname~\ref{sec:fidmodel}, which was for the final
+snapshot, was adjusted to this earlier time by backward orbit
+integration of the model progenitor and by revising the disruption
+time downward by $1.96\Gyr$. No other changes were made to the
+model. The right panel of \figurename~\ref{fig:gd1_mock} shows the
+mock data generated from the model in $(X,Z)$, while the left panel
+shows the simulated stream data at this time. Overall, the
+distribution of the mock and simulated data are similar. 
+
+
+%BOVY: reference point
+
 
 \section{The full stream PDF}\label{sec:pdf}
 
@@ -1787,6 +1837,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Dehnen,~W. 2002, J.~Comput.~Phys., 179, 27
 \bibitem[Eyre \& Binney(2011)]{Eyre11a}
   Eyre,~A. \& Binney,~J. 2011, \mnras, 413, 1852
+\bibitem[Gilks \& Wild(1992)]{Gilks92a}
+  Gilks,~W.~R. \& Wild,~P. 1992, Applied Statistics, 41, 337
 \bibitem[Helmi \& White(1999)]{Helmi99a}
   Helmi,~A. \& White,~S.~D.~M. 1999, \mnras, 307, 495
 \bibitem[Johnston \etal(1999)]{Johnston99a}
