@@ -1176,6 +1176,24 @@ the progenitor when integrating their orbits backward in time
 position--velocity space), but cannot be marginalized over unobserved
 or noisy phase--space dimensions as easily.
 
+\begin{figure}[t!]
+ \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_0.ps}
+ \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_1.ps}
+ \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_2.ps}
+ \caption{Marginalized, conditional $p(Z|X)$ PDFs. The left panel
+   shows the model leading stream (see \figurename~\ref{fig:gd1_xz}),
+   with the stream track shown as the solid line, the estimated
+   $2\sigma$ width of the stream as the dash-dotted line, and the
+   progenitor orbit as the dashed line. The solid line in the middle
+   and right panels shows $p(Z|X)$ calculated at the $X$ indicated in
+   the left panel; the dash-dotted line is a simple Gaussian
+   estimate. The upper branch near $Z \approx 5\kpc$ of the stream is
+   chosen for the middle panel. The right panel shows an $X$ close to
+   where the stream turns around in $X$; the PDF has multiple peaks in
+   this case.}\label{fig:gd1_pdf_xz}
+%python plot_pdfs_xz.py ../tex/gd1_pdf_xz_0.ps ../tex/gd1_pdf_xz_1.ps ../tex/gd1_pdf_xz_2.ps
+\end{figure}
+
 We can marginalize \equationname~(\ref{eq:pxvt}) over $t_s$ and find
 that
 \begin{equation}\label{eq:pxv}
