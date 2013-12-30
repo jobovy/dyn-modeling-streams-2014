@@ -12,7 +12,7 @@ _STREAMSNAPDIR= '../sim/snaps'
 _STREAMSNAPAADIR= '../sim/snaps_aai'
 _NTRACKCHUNKS= 11
 _SIGV=0.365
-_NZS= 101
+_NZS= 301
 _NGL= 5
 def plot_pdfs_xz(plotfilename1,plotfilename2,plotfilename3):
     lp= potential.LogarithmicHaloPotential(q=0.9,normalize=1.)
