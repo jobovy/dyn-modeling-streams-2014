@@ -1236,6 +1236,23 @@ Y\,\dd \vecv\, p(\vecx,\vecv)$ by numerical integration over the, \eg,
 $3\sigma$ range of this Gaussian; this numerical integration can be
 performed efficiently using Gaussian quadrature. 
 
+\figurename~\ref{fig:gd1_pdf_xz} shows such PDFs of $p(Z|X)$ for a few
+$X$ on the leading arm of the stream as well as the estimated Gaussian
+PDFs determined using the procedure in
+\sectionname~\ref{sec:trackxv}. It is clear that the average stream
+location as calculated in \sectionname~\ref{sec:trackxv} is very close
+to the actual average location of the stream in $(\vecx,\vecv)$ and
+that the estimated dispersion is close to the true model
+dispersion. The fact that the estimated Gaussian in the right panel is
+only at the highest peak is by choice; there is an estimated Gaussian
+dispersion at the lower peak as well.
+
+Similar procedures can be followed to evaluate other projections and
+marginalizations of the PDF, \eg, $p(b|l)$ for the observed track of
+the stream on the sky, to convolve the PDF with observational
+uncertainties, and to calculate moments of the PDF, \eg, the density
+and velocity dispersion along the stream.
+
 %BOVY: reference point
 
 \section{Discussion}\label{sec:discussion}
@@ -1245,13 +1262,13 @@ performed efficiently using Gaussian quadrature.
 
 %BOVY: reference point
 
-\acknowledgements It is a pleasure to thank \dots for helpful comments
-and assistance. J.B. was supported by NASA through Hubble Fellowship
-grant HST-HF-51285.01 from the Space Telescope Science Institute,
-which is operated by the Association of Universities for Research in
-Astronomy, Incorporated, under NASA contract NAS5-26555. J.B.
-acknowledges support from SFB 881 (A3) funded by the German Research
-Foundation DFG.
+\acknowledgements It is a pleasure to thank David W. Hogg, Hans-Walter
+Rix, and Jason Sanders for helpful discussions. J.B. was supported by
+NASA through Hubble Fellowship grant HST-HF-51285.01 from the Space
+Telescope Science Institute, which is operated by the Association of
+Universities for Research in Astronomy, Incorporated, under NASA
+contract NAS5-26555. J.B.  acknowledges support from SFB 881 (A3)
+funded by the German Research Foundation DFG.
 
 
 \appendix
