@@ -1101,7 +1101,7 @@ stripping time $t_s$
 where the three factors on the right are specified through the three
 ingredients of \sectionname~\ref{sec:modeloa}. The PDF in
 position--velocity space is then given by
-\begin{equation}
+\begin{equation}\label{eq:pxvt}
   p(\vecx,\vecv,t_s) = p(\veco,\veca,t_s)\,\left|\frac{\partial
     \veco}{\partial \vecj}\right|\,.
 \end{equation}
@@ -1176,6 +1176,47 @@ the progenitor when integrating their orbits backward in time
 position--velocity space), but cannot be marginalized over unobserved
 or noisy phase--space dimensions as easily.
 
+We can marginalize \equationname~(\ref{eq:pxvt}) over $t_s$ and find
+that
+\begin{equation}\label{eq:pxv}
+  p(\vecx,\vecv) = p(\veco,\veca)\,\left|\frac{\partial
+    \veco}{\partial \vecj}\right|\,.
+\end{equation}
+When evaluating this PDF as a function of $(\vecx,\vecv)$ or as a
+function of observable quantities $(l,b,D,\vlos,\pmll,\pmbb)$ we
+calculate frequencies and angles using the approximate, linear
+transformation near the stream track as described at the end of
+\sectionname~\ref{sec:trackxv}. Thus, $p(\vecx,\vecv)$ can be
+evaluated very quickly by making efficient use of array operations. In
+this approximation the Jacobian $|\partial \veco / \partial \vecj|$ is
+constant everywhere near the track (for a given potential).
+
+We can marginalize the PDF over unobserved directions, convolve it
+with uncertainty distributions, or condition it on certain directions
+using the standard rules of probability theory; I will refer to all of
+these as marginalizations in what follows, as they all involve
+integrations over the PDF. In practice, the perform these
+marginalizations it is useful to estimate the extent of the PDF to
+estimate appropriate intervals for efficient numerical
+integration. For this we can use the average stream track and
+dispersion around it as estimated in
+\sectionname~\ref{sec:track}. This is most easily explained through an
+example. To determine $p(Z|X)$, the distribution of Galactocentric $Z$
+at a given Galactocentric $X$, we need to calculate
+\begin{equation}
+  p(Z|X) = \frac{p(Z,X)}{p(X)} = \frac{\int \dd Y\,\dd \vecv\, p(\vecx,\vecv)}{\int \dd Y\,\dd Z\,\dd \vecv\, p(\vecx,\vecv)}\,.
+\end{equation}
+Thus, we need to marginalize over $(Y,\vecv)$ in the numerator and
+$(Y,Z,\vecv)$ in the denominator. Focusing on the numerator, we find
+the closest point on the stream track calculated as in
+\sectionname~\ref{sec:trackxv} and calculate its six-dimensional
+Gaussian approximation. Then we condition this six-dimensional
+Gaussian on $(X,Z)$ using the standard rules of Gaussian conditioning
+(\eg, Appendix B of arXiv version 1 of \citealt{Bovy11a}) to obtain
+the approximate PDF $p(Y,\vecv|X,Z)$. We then evaluate $\int \dd
+Y\,\dd \vecv\, p(\vecx,\vecv)$ by numerical integration over the, \eg,
+$3\sigma$ range of this Gaussian; this numerical integration can be
+performed efficiently using Gaussian quadrature. 
 
 %BOVY: reference point
 
@@ -1397,6 +1438,8 @@ the \emph{galpy} Galactic dynamics code\footnote{Available at
   Binney,~J. 2008, \mnras, 386, L47
 \bibitem[Binney(2012)]{Binney12a}
   Binney,~J. 2012, \mnras, 426, 1324
+\bibitem[Bovy \etal(2011)]{Bovy11a}
+  Bovy,~J., Hogg,~D.~W., \& Roweis,~S.~T. 2011, Ann. Appl. Stat. 5, 1657, arXiv:0905.2979v1
 \bibitem[Carlberg(2009)]{Carlberg09a}
   Carlberg,~R.~G. 2009, \apj, 705, L223
 \bibitem[Carlberg(2012)]{Carlberg12a}
