@@ -1264,13 +1264,10 @@ $(\vecj,\veca)$ by a generating function that can be written as
 \begin{equation}
   S(\veca^A,\vecj) = \veca^A\cdot\vecj+2\sum_{\vecn > 0} S_{\vecn}(\vecj)\sin(\vecn\cdot\veca^A)\,,
 \end{equation}
-where the $\vecn > 0$ sum is over the integer two-dimensional
-half-plane that excludes the origin (two- rather than
-three-dimensional, as the azimuthal angle is perfectly correlated with
-the vertical angle in the auxiliary isochrone potential;
-\citealt{binneytremaine}), and the $S_{\vecn}$ are functions of the
-target actions that are to be determined. The canonical transformation
-corresponding to this generating function is
+where the $\vecn > 0$ sum is over the integer three-dimensional
+half-space that excludes the origin and the $S_{\vecn}$ are functions
+of the target actions that are to be determined. The canonical
+transformation corresponding to this generating function is
 \begin{equation}\label{eq:jjt}
   \vecj^A = \frac{\partial S(\veca^A,\vecj)}{\partial \veca^A} = \vecj + 2\sum_{\vecn > 0} \vecn\,S_{\vecn}(\vecj)\cos(\vecn\cdot\veca^A)\,,
 \end{equation}
@@ -1278,6 +1275,10 @@ and
 \begin{equation}\label{eq:aat}
   \veca = \frac{\partial S(\veca^A,\vecj)}{\partial \vecj} = \veca^A +2\sum_{\vecn > 0} \frac{\partial S_{\vecn}(\vecj)}{\partial \vecj}\,\sin(\vecn\cdot\veca^A)\,.
 \end{equation}
+For axisymmetric potentials $J_\phi \equiv L_Z$, such that all
+$S_\vecn = 0$ when $n_\phi \neq 0 $ in the above equations. For
+axisymmetric potentials we therefore only need to consider
+$\theta^A_R$ and $\theta^A_Z$.
 
 The Fox \& Binney method consists of averaging \eqnname~(\ref{eq:jjt})
 over the auxiliary angle along the path of the orbit, such that the
@@ -1295,13 +1296,16 @@ the orbit. In this Equation, we integrate over the angle coordinate
 $\theta_i^A$ associated with the action $J_i$ that we want to compute
 (that is, $\theta_R$ for $J_R$ and so on). This is because of the
 factor $\vecn$: the condition $\vecn > 0$ means that when calculating
-$J_R$ there are terms with $\vecn = (n_R,0)$, which would not cancel
+$J_R$ there are terms with $\vecn = (n_R,0,0)$, which would not cancel
 according to the argument below when integrating over $\theta_Z$. For
 non-resonant orbits and after a long-enough orbit integration, the
 angles can be considered to be independent (that is, the orbit ``fills
 its torus''), such that we can write (for example, for $\theta_R$)
 \begin{equation}
-  \int \dd \theta_R^A\cos(\vecn\cdot\veca^A) = \mathrm{Re}\left[\int \dd \theta_R^A\,\exp(-i\vecn\cdot\veca^A)\right] = \mathrm{Re}\left[\exp(-i\,n_Z\,\theta^A_Z)\int \dd \theta_R^A\,\exp(-i\,n_R\,\theta^A_R)\right]\,.
+\begin{split}
+  \int \dd \theta_R^A\cos(\vecn\cdot\veca^A) & = \mathrm{Re}\left[\int \dd \theta_R^A\,\exp(-i\vecn\cdot\veca^A)\right]\,, \\
+  & = \mathrm{Re}\left[\exp(-i\,n_\phi\,\theta^A_\phi-i\,n_Z\,\theta^A_Z)\int \dd \theta_R^A\,\exp(-i\,n_R\,\theta^A_R)\right]\,.
+\end{split}
 \end{equation}
 As long as the auxiliary angle $\theta_R$ goes through the full range
 $0$ to $2\pi$ along the orbit, the oscillatory behavior integrates to
@@ -1352,8 +1356,8 @@ behavior in the angles is removed before the linear fit described in
 the previous paragraph, which is shown in this figure. It is clear
 that the contribution of the oscillatory terms
 $\sin(\vecn\cdot\veca^A)$ is small, such that a small number of
-expansion terms is sufficient (we limit the terms to $n_R < 4$ and
-$n_Z < 4$).
+expansion terms is sufficient (we limit the terms in this axisymmetric
+case to $n_R < 4$ and $n_Z < 4$).
 
 The method described here is completely general, but the only obstacle
 to using it is that a sufficiently close isochrone potential has to be
