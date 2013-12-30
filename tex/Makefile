@@ -2,7 +2,10 @@ FIGS= gd1_evol_lvlos.eps \
 	gd1_evol_lpmll.eps \
 	gd1_evol_lpmbb.eps \
 	gd1_evol_lb.eps \
-	gd1_evol_ld.eps
+	gd1_evol_ld.eps \
+	track_aa.eps \
+	track_xz.eps \
+	track_ld.eps
 
 .SECONDARY:$(FIGS)
 
@@ -29,6 +32,24 @@ ms.dvi: ms.tex $(FIGS)
 gd1_evol_l%.eps: gd1_evol_l%.ps Makefile
 	cp $< tmp.ps
 	echo "1,\$$s/%%BoundingBox: 8 263 603 522/%%BoundingBox: 28 255 547 500/g" > edcmd
+	echo "w" >> edcmd
+	ed $< < edcmd
+	cp $< $@
+	cp tmp.ps $< 
+	rm edcmd tmp.ps
+
+track_ld.eps: track_ld.ps Makefile
+	cp $< tmp.ps
+	echo "1,\$$s/%%BoundingBox: 8 263 603 522/%%BoundingBox: 28 255 547 500/g" > edcmd
+	echo "w" >> edcmd
+	ed $< < edcmd
+	cp $< $@
+	cp tmp.ps $< 
+	rm edcmd tmp.ps
+
+track_%.eps: track_%.ps Makefile
+	cp $< tmp.ps
+	echo "1,\$$s/%%BoundingBox: 8 262 603 522/%%BoundingBox: 28 255 547 500/g" > edcmd
 	echo "w" >> edcmd
 	ed $< < edcmd
 	cp $< $@
