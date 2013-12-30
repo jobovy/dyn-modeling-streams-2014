@@ -1042,8 +1042,9 @@ sampled from the distribution of stripping times. Second, a frequency
 offset $\Delta \veco$ with respect to the progenitor is drawn from the
 frequency distribution at $t_s$. Third, an initial angle offset is
 drawn. Fourth, the initial angle offset is incremented by $\Delta
-\veco \,ts$. This generates the final frequency--angle coordinates of
-the mock stream member $(\Delta \veco,\Delta \veca+\Delta \veco\,t_s)$. 
+\veco \,t_s$. This generates the final frequency--angle coordinates of
+the mock stream member $(\Delta \veco,\Delta \veca+\Delta \veco\,t_s)
++ (\veco_p,\veca_p)$.
 
 For the fiducial stream model of \sectionname~\ref{sec:fidmodel} the
 procedure for producing mock data is simplified to sampling a small
@@ -1057,7 +1058,7 @@ logarithm is negative everywhere, and therefore it can be efficienly
 sampled using adaptive-rejection sampling \citep{Gilks92a}. The sign
 of $\Delta \opar$ is determined by whether we are generating a leading
 or trailing stream. Third, initial angle offsets are drawn from the
-Gaussian distribution of such offsets. 
+Gaussian distribution of such offsets. The fourth step is as above.
 
 To transform the mock stream in frequency--angle coordinates to
 position--velocity space, we use the approximate procedure for this
@@ -1070,15 +1071,16 @@ desired.
 \figurename~\ref{fig:gd1_mock} shows mock data generated for the model
 of the simulated stream described in
 \sectionname~\ref{sec:fidmodel}. The mock data in this Figure has been
-generated $1.96\Gyr$ before the final snapshot of the simulation. The
-model from \sectionname~\ref{sec:fidmodel}, which was for the final
+generated $1.96\Gyr$ before the final snapshot of the simulation (that
+is, $1.96\Gyr$ before \figurename~\ref{fig:gd1_xz}). The model
+from \sectionname~\ref{sec:fidmodel}, which was for the final
 snapshot, was adjusted to this earlier time by backward orbit
 integration of the model progenitor and by revising the disruption
 time downward by $1.96\Gyr$. No other changes were made to the
 model. The right panel of \figurename~\ref{fig:gd1_mock} shows the
 mock data generated from the model in $(X,Z)$, while the left panel
 shows the simulated stream data at this time. Overall, the
-distribution of the mock and simulated data are similar. 
+distribution of the mock and simulated data are similar.
 
 
 %BOVY: reference point
