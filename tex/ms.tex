@@ -1083,10 +1083,101 @@ shows the simulated stream data at this time. Overall, the
 distribution of the mock and simulated data are similar.
 
 
-%BOVY: reference point
-
-
 \section{The full stream PDF}\label{sec:pdf}
+
+Data on tidal streams typically come in one of two flavors: data on
+individual stream members, often with multiple missing phase--space
+components, or data describing the mean position and width of the
+stream. For the proper analysis of these kinds of data it is useful to
+be able to evaluate the PDF for the stream model described in this
+paper and to marginalize over or condition it on certain dimensions.
+
+The generative model described in \sectionname~\ref{sec:modeloa}
+corresponds to the stream PDF in frequency $\veco$, angle $\veca$, and
+stripping time $t_s$
+\begin{equation}
+  p(\veco,\veca,t_s) = p(t_s)\,p(\veco|t_s)\,p(\veca|\veco,t_s)\,,
+\end{equation}
+where the three factors on the right are specified through the three
+ingredients of \sectionname~\ref{sec:modeloa}. The PDF in
+position--velocity space is then given by
+\begin{equation}
+  p(\vecx,\vecv,t_s) = p(\veco,\veca,t_s)\,\left|\frac{\partial
+    \veco}{\partial \vecj}\right|\,.
+\end{equation}
+The PDF in observable quantities $(l,b,D,\vlos,\pmll,\pmbb)$ can be
+obtained from $p(\vecx,\vecv,t_s)$ by multiplying by the Jacobian
+$\left|\partial(\vecx,\vecv)/\partial(l,b,D,\vlos,\pmll,\pmbb)\right|$. 
+
+The stripping time $t_s$ cannot be observed and should therefore by
+marginalized over when evaluating the PDF. One of the great advantages
+of modeling a stream in frequency--angle coordinates is that this
+marginalization can be done analytically for many choices of $p(t_s)$
+if $p(\veco|t_s) \equiv p(\veco)$. Specifically, for the fiducial
+model $p(t_s)$ is uniform up to a maximum disruption time $t_d$ (see
+\equationname~[\ref{eq:pt}]) such that we can write
+\begin{equation}
+\begin{split}
+  p(\veco,\veca) & = \int \dd t_s\,p(\veco,\veca,t_s)\,,\\
+  & = p(\veco)\,\int_0^{t_d} \dd t_s\,
+  \frac{1}{(2\,\pi)^{3/2}\,\sigma_\theta^3}\,\exp\left(-\frac{1}{2\,\sigma_\theta^2}\left[\sum_{R,\phi,Z}\left(\Delta \veca_i-\Delta \veco_i\,t_s\right)^2\right]\right)\,,
+\end{split}
+\end{equation}
+where the sum in the argument of the exponential is over the three
+components of $\Delta \veca_i$ and $\Delta \veco_i$. This integral can
+be done analytically, resulting in
+\begin{equation}\label{eq:pdf}
+\begin{split}
+  p(\veco,\veca) & = 
+  p(\veco) \,  \frac{\mathrm{erf}(a_0) + \mathrm{erf}(a_d)}{4\,\pi\,\sigma_\theta^2\,|\Delta \veco|}\,\exp\left(-\frac{1}{2\,\sigma_\theta^2}\left[\sum_{R,\phi,Z}\Delta \veca^2_i-\frac{\left(\sum_{R,\phi,Z} \Delta \veco_i\Delta \veca_i\right)^2}{|\Delta \veco|}\right]\right)\,.
+\end{split}
+\end{equation}
+In this expression, $\Delta X^2 \equiv (X_1-X_2)^2$. The expression in
+square brackets is positive by using the Cauchy-Schwarz
+inequality. The quantities $a_0$ and $a_d$ in this expression are
+defined by the following expressions
+\begin{align}
+  \tilde{t}_s & = \frac{\sum \Delta \veco_i\Delta \veca_i}{|\Delta \veco_i|^2}\,,\\
+  a_0 & = \frac{|\Delta \veco_i|}{\sqrt{2}\,\sigma_\theta}\,\tilde{t}_s\,,\\
+  a_d & = \frac{|\Delta \veco_i|}{\sqrt{2}\,\sigma_\theta}\,\left(t_d - \tilde{t}_s\right)\,.
+\end{align}
+The time $\tilde{t}_s$ is the best estimate of the stripping time for
+a given $\Delta \veco$ and $\Delta \veca$. The quantity $a_0$ then
+serves to suppress the PDF in case the stripping time is smaller than
+zero, \ie, a stream member appears to have been stripping \emph{in the
+  future}; in this case $\mathrm{erf}(a_0) \approx -1$ and the PDF
+goes to zero. Similarly, $a_d$ suppresses the PDF when the stripping
+time is larger than $t_d$, \ie, the stream member seems to have been
+stripped before disruption began. Both of these get a tolerance
+corresponding to the initial angle spread. For example, if
+$\tilde{t}_s$ is negative, but so small such that $|\Delta
+\veco|\,\tilde{t}_s \sim \sigma_\theta$, the PDF is only mildly
+suppressed. For stars well within the stream $\mathrm{erf}(a_0) +
+\mathrm{erf}(a_d) \approx 2$.
+
+The probability in \eqnname~(\ref{eq:pdf}) incorporates and elucidates
+commonly used methods for fitting tidal streams. On the one hand are
+approaches that search to minimize the spread in energy, integrals of
+the motion, or actions (\eg, \citealt{Binney08a,Penarrubia12a},
+Sanderson \etal, 2013, in preparation). These approaches ignore the
+correlations between actions and angles in the stream (the exponential
+in \eqnname~(\ref{eq:pdf}), which describes this correlation through
+the frequencies) and only use $p(\veco)$; finding the gravitational
+potential that minimizes the spread in frequencies (or equivalently,
+actions) optimizes $p(\veco)$. Recently, a new method was proposed
+that only uses the correlation between the actions and the angles,
+expressed by the exponential in \eqnname~(\ref{eq:pdf})
+\citep{Sanders13b}; this method does not use the fact that the spread
+in actions in a tidal stream is small (expressed by $p(\veco)$), but
+only uses the fact that the angles and actions/frequencies are highly
+correlated. Approaches that require stream members to re-unite with
+the progenitor when integrating their orbits backward in time
+\citep{Johnston99a,PriceWhelan13a}) use the full PDF (but expressed in
+position--velocity space), but cannot be marginalized over unobserved
+or noisy phase--space dimensions as easily.
+
+
+%BOVY: reference point
 
 \section{Discussion}\label{sec:discussion}
 
@@ -1603,23 +1694,6 @@ This view of the dynamics of the stream in action-angle coordinates
 also shows that the orbit of the source does not have to coincide with
 that of the actual progenitor. 
 
-The probability in \eqnname~(\ref{eq:aadfsimple}) incorporates and
-elucidates commonly used methods for fitting tidal streams. On the one
-hand are approaches that search to minimize the spread in energy,
-integrals of the motion, or actions (\eg,
-\citealt{Binney08a,Penarrubia12a}, Sanderson \etal, 2013, in
-preparation). These approaches ignore the correlations between actions
-and angles in the stream (the exponential in
-\eqnname~(\ref{eq:aadfsimple}), which describes this correlation
-through the frequencies) and only use $f_{\vecj}(\Delta
-\vecj_i|\paramsdiff)$; finding the gravitational potential that
-minimizes the spread in actions optimizes $f_{\vecj}(\Delta
-\vecj_i|\paramsdiff)$. Recently, a method was proposed that only uses
-the correlation between the actions and the angles, expressed by the
-exponential in \eqnname~(\ref{eq:aadfsimple}) \citep{Sanders13b}; this
-method does not use the fact that the spread in actions in a tidal
-stream is small (expressed by $f_{\vecj}(\Delta
-\vecj_i|\paramsdiff)$).
 
 
 %BOVY: reference point
