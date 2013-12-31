@@ -746,7 +746,7 @@ def plot_stream_aa(plotfilename):
         xrange=[0.,1.3]
         yrange=[0.,5.]
         xlabel= r'$\Large|\Delta \mathbf{\theta}_\parallel\Large|$'
-        ylabel= r'$\Delta t\,(\mathrm{Gyr})$'
+        ylabel= r'$t_s\,(\mathrm{Gyr})$'
         fmt= 'k.'
     bovy_plot.bovy_print()
     bovy_plot.bovy_plot(plotx,ploty,fmt,
@@ -867,7 +867,7 @@ def plot_stream_times(plotfilename):
     if 'hist' in plotfilename:
         bovy_plot.bovy_print()
         bovy_plot.bovy_hist(dts,range=[0.,6.],bins=13,
-                            xlabel=r'$\Delta t\ (\mathrm{Gyr})$',
+                            xlabel=r'$t_s\ (\mathrm{Gyr})$',
                             histtype='step',color='k',normed=True,lw=2.)
         bovy_plot.bovy_hist(dts,range=[0.,6.],bins=61,normed=True,
                             overplot=True,ls='dotted',histtype='step',
@@ -905,7 +905,7 @@ def plot_stream_times(plotfilename):
                             'k.',
                             xrange=[0.,6.],
                             yrange=[0.1,0.35],
-                            xlabel=r'$\Delta t\ (\mathrm{Gyr})$',
+                            xlabel=r'$t_s\ (\mathrm{Gyr})$',
                             ylabel=r'$|\Delta \mathbf{\Omega}|\ (\mathrm{Gyr}^{-1})$')
     elif 'da' in plotfilename:
         bovy_plot.bovy_print()
@@ -914,7 +914,7 @@ def plot_stream_times(plotfilename):
                             'k.',
                             xrange=[0.,6.],
                             yrange=[0.,1.5],
-                            xlabel=r'$\Delta t\ (\mathrm{Gyr})$',
+                            xlabel=r'$t_s\ (\mathrm{Gyr})$',
                             ylabel=r'$|\Delta \boldsymbol\theta|$')
     bovy_plot.bovy_end_print(plotfilename)
     return None
