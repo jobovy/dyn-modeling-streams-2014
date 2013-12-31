@@ -1240,6 +1240,17 @@ Y\,\dd \vecv\, p(\vecx,\vecv)$ by numerical integration over the, \eg,
 $3\sigma$ range of this Gaussian; this numerical integration can be
 performed efficiently using Gaussian quadrature. 
 
+\begin{figure}[t!]
+ \includegraphics[width=0.8\textwidth,clip=]{gd1_pdf_l.ps}
+ \caption{Density distribution as a function of Galactic
+   longitude. The smooth solid line shows the fiducial model's
+   prediction, while the histogram shows the density along the
+   simulated stream. The simple fiducial stream model can accurately
+   predict the density distribution along the
+   stream.}\label{fig:gd1_pdf_l}
+%python plot_pdfs_l.py ../tex/gd1_pdf_l.ps
+\end{figure}
+
 \figurename~\ref{fig:gd1_pdf_xz} shows such PDFs of $p(Z|X)$ for a few
 $X$ on the leading arm of the stream as well as the estimated Gaussian
 PDFs determined using the procedure in
@@ -1255,7 +1266,14 @@ Similar procedures can be followed to evaluate other projections and
 marginalizations of the PDF, \eg, $p(b|l)$ for the observed track of
 the stream on the sky, to convolve the PDF with observational
 uncertainties, and to calculate moments of the PDF, \eg, the density
-and velocity dispersion along the stream.
+and velocity dispersion along the stream. Another example is shown in
+\figurename~\ref{fig:gd1_pdf_l}. This Figure shows the model's density
+as a function of Galactic longitude and compares it to that of the
+simulated stream in the final snapshot (\ie, that of
+\figurename~s~\ref{fig:gd1_lbd} and \ref{fig:gd1_lbv}). The model
+density here is calculated using a Monte Carlo mock stream sample,
+drawn as described in \sectionname~\ref{sec:mock}, rather than through
+direct numerical integration. 
 
 %BOVY: reference point
 
