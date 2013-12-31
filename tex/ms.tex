@@ -1275,9 +1275,92 @@ density here is calculated using a Monte Carlo mock stream sample,
 drawn as described in \sectionname~\ref{sec:mock}, rather than through
 direct numerical integration. 
 
-%BOVY: reference point
 
 \section{Discussion}\label{sec:discussion}
+
+\subsection{Dynamical fitting}
+
+There are multiple existing methods for fitting data on tidal streams
+with models for the Milky Way potential, however, none of these allow
+for the likelihood of a model to be evaluated using a well-defined
+generative model. The only exceptions to this are orbit-fitting
+methods, but these use a faulty generative model (see below), and the
+method of \citet{Varghese11a}. The latter is in many ways similar to
+the method proposed here, in that it calculates the stream track and
+uses this as the basis of the stream inference. They calculate the
+track directly in position--velocity space by orbit integration of
+stream members released at the Lagrange points. However, they do not
+relate the observed width of the stream to the velocity dispersion of
+the progenitor---and thus the location of the Lagrange points and the
+position of the track---and it is therefore only weakly constrained
+and has to be assumed. In general, it is straightforward to write down
+generative models of tidal streams in position--velocity space by
+substituting our initial offsets $(\Delta \veco,\Delta \veca)$ by
+similar offsets $(\Delta \vecx,\Delta \vecv)$ and integrating both the
+progenitor and offset stream members forward in time. However,
+evaluating such models when fitting observational data requires large
+numbers of orbit integrations to marginalize over stripping time
+(which cannot be performed analytically in this case) and missing
+phase--space dimensions. Thus, any such method will likely be orders
+of magnitude slower than the method put forth here.
+
+The forward model of this paper is superior to all other
+stream-fitting methods in that it allows easy marginalization over
+missing or noisily measured phase--space coordinates. The obvious
+exception to this is orbit fitting, which as a purely one-dimensional
+model is easy to integrate over. However, orbit fitting likely
+produces biased results as streams do not delineate single orbits over
+their full angle widths (see below). The fiducial model I propose in
+this paper allows for a straightforward replacement of orbit fitting,
+at the expense of adding two extra parameters, $\sigv$ and $t_d$, in
+addition to the six-dimensional position of the progenitor. The orbit
+in orbit fitting then gets replaced by the stream track, calculated as
+in \sectionname~\ref{sec:track}. To constrain $\sigv$ and $t_d$ it is
+necessary to also use the observed width and length of the
+stream. While cold streams are typically too narrow to be resolved in
+$D$ or any of the velocity components, the observed width of the
+stream's sky projection can be measured and used as a
+constraint. Future high-resolution spectroscopic data,
+$\mu\mathrm{as}$-level astrometric data, or percent-level distances
+for standard candles may allow the width and structure of tidal
+streams to be resolved and provide further constraints on the
+generative model. The switch from orbit fitting to stream-track
+fitting comes at the expense of $\approx100$ orbit integrations for
+each model rather than a single integration. If the progenitor is
+unknown we also need to marginalize over whether we are seeing a
+leading or a trailing stream.
+
+The dynamical framework proposed here can be used in situations where
+fitting a stream track is insufficient, for exampe, when high-quality
+data in some dimensions on individual stars are available. Many of the
+approaches in the literature do not require a model progenitor
+position. This includes methods that attempt to minimize the spread of
+orbital energies or actions in the stream (\eg,
+\citealt{Binney08a,Penarrubia12a}, Sanderson \etal, 2014, in
+preparation) as well as the method of \citet{Sanders13b}, which
+constrains the potential by requiring angle differences in the stream
+to lie along the same direction as frequency differences (see
+\equationname~\ref{eq:pdf} and subsequent discussion). These methods
+require good measurements of the phase--space coordinates of stream
+members, or at the very least, \emph{some} measurement of all of the
+six phase--space coordinates (although the latter can be relaxed when
+excellent measurements of the line-of-sight velocity along the stream
+are available; \citealt{Binney08a}). If such high-quality data are
+present, these methods can provide good initial guesses for the PDF of
+potential parameters that fit a stream, which can subsequently be used
+in a more thorough exploration of the PDF and structure of the stream
+using the framework of \sectionname~\ref{sec:pdf}. That these methods
+work also goes to show that the progenitor parameters---phase--space
+position, $\sigv$ and $t_d$---are not that important for the
+constraints on the gravitational potential.
+
+%BOVY: reference point
+
+\subsection{Do streams follow orbits?}
+
+\subsection{Constraining progenitor properties with stream kinematics}
+
+\subsection{Baseline models for stream-gap finding}
 
 \section{Conclusion}\label{sec:conclusion}
 
@@ -1534,7 +1617,9 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Teuben,~P.~J. 1995, in Astronomical Data Analysis Software and Systems IV, 
   ed.~R.~Shaw, H.~E.~Payne and J.~J.~E.~Hayes., PASP Conf Series 77, 398
 \bibitem[Tremaine(1999)]{Tremaine99a}
-  Tremaine,~S. 1999, \mnras, 307, 877
+  Tremaine,~S. 1999, \mnras, 307, 877\
+\bibitem[Varghese \etal(2011)]{Varghese11a}
+  Varghese,~A., Ibata,~R., \& Lewis,~G.~F. 2011, \mnras, 417, 198
 \bibitem[Yoon \etal(2011)]{Yoon11a}
   Yoon,~J.~H., Johnston,~K.~V., \& Hogg,~D.~W. 2011, \apj, 731, 58
 \end{thebibliography}
