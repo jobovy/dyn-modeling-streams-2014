@@ -1453,6 +1453,13 @@ progenitors.
 
 \subsection{Baseline models for stream-gap finding}
 
+NOTES: stream feathering not included in our model, because of the
+linearization of the dynamics (feathering means it's not linear over
+the width of the stream. When important, can calculate actions and
+angles directly (data good enough -> no need for that much
+marginalization?) or, when samping mock data, use torus machinery to
+calculate (X,V) better.
+
 %BOVY: reference point
 
 \section{Conclusion}\label{sec:conclusion}
