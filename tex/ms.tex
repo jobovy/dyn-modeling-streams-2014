@@ -1,3 +1,8 @@
+%BOVY:NOTES:
+% - GO through citations and be a little more reluctant to cite Sanders
+% - do more justice to Eyre & Binney work
+% - discuss hotter streams somewhere
+% - say more about why dynammical large-scale modeling doesn't care about the small-scale structure
 \documentclass[12pt,preprint]{aastex}
 %\documentclass{emulateapj}
 \usepackage{amssymb,amsmath}
@@ -1453,12 +1458,46 @@ progenitors.
 
 \subsection{Baseline models for stream-gap finding}
 
-NOTES: stream feathering not included in our model, because of the
-linearization of the dynamics (feathering means it's not linear over
-the width of the stream. When important, can calculate actions and
-angles directly (data good enough -> no need for that much
-marginalization?) or, when samping mock data, use torus machinery to
-calculate (X,V) better.
+Besides allowing for sensitive measurements of the Milky Way's
+large-scale gravitational potential through the wide arcs traced by
+tidal streams, their structure on smaller scales is also sensitive to
+more subtle features of the halo's density distribution. In
+particular, the perturbations from dark--matter subhalos orbiting
+within the Milky Way's halo can have the effect of removing stars from
+small segments of a tidal stream \citep{Yoon11a,Carlberg12a}. Thus,
+the small-scale density structure of tidal streams can be used to
+constrain the subhalo mass function at the high-mass end ($M \gtrsim
+10^5\msun$). This holds a great promise for testing the basic
+predictions of dark--mater clustering in the $\Lambda$CDM framework
+and for shedding light on galaxy formation in the smallest galaxies in
+the Universe.
+
+Tidal streams, even in the absence of perturbations from orbiting
+dark--matter subhalos, are not entirely smooth as the effects of the
+preferential stripping at pericenter and orbital dynamics can create
+over- and underdensities along the observed stream track (see
+\figurename~\ref{fig:gd1_times}; \citealt{Kuepper10a}). These effects
+can lead to spurious detections of gaps in streams that provide a
+source of noise in measurements of gaps due to substructure in the
+halo \citep{Ngan14a}. 
+
+The generative stream models proposed in this paper can be useful for
+generating tailor-made background models for stream gap-finding
+algorithms. The generative model allows for the density along the
+stream to be predicted quickly for a given progenitor orbit and
+distribution of stripping times. The example given in
+\figurename~\ref{fig:gd1_pdf_l} using the simple fiducial model shows
+that this works well. However, the fiducial model assumes a uniform
+distribution of stripping times rather than bursts at pericenter
+passages, and therefore it cannot model the under- and over-densities
+along the stream (\eg, ``feathering'') in detail. The
+mock-stream-generation algorithm given in \sectionname~\ref{sec:mock}
+works almost as simply for more complicated models of the stripping
+process (\eg, a bursty distribution of stripping times and more
+energetic stripping at pericenter) and it is therefore straightforward
+to produce more realistic models of the small-scale density structure
+of observed tidal streams. These background models will allow more
+sensitive detections of substructure due to halo substructure.
 
 %BOVY: reference point
 
@@ -1695,6 +1734,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Johnston,~K.~V., Zhao,~H., Spergel,~D.~N., \& Hernquist,~L. 1999, \apj, 512, L109
 \bibitem[Koposov \etal(2010)]{Koposov10a}
   Koposov,~S.~E., Rix,~H.-W., \& Hogg,~D.~W. 2010, \apj, 712, 260
+\bibitem[K\"{u}pper \etal(2010)]{Kuepper10a}
+  K\"{u}pper,~A.~H.~W., Kroupa,~P., Baumgardt,~H., \& Heggie,~D.~C. 2010, \mnras, 401, 105
 \bibitem[McGill \& Binney(1990)]{McGill90a}
   McGill,~C. \& Binney,~J. 1990, \mnras, 244, 634
 \bibitem[McMillan \& Binney(2008)]{McMillan08a}
