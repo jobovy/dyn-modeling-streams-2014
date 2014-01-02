@@ -1,5 +1,3 @@
-%BOVY:NOTES:
-% - We/I distinction
 \documentclass[12pt,preprint]{aastex}
 %\documentclass{emulateapj}
 \usepackage{amssymb,amsmath}
@@ -244,7 +242,7 @@ frequency--angle coordinates is given in
 \sectionname~\ref{sec:generative}. \sectionname~\ref{sec:track}
 describes how to compute the stream's properties as a function of
 angle along the stream, both in action--angle coordinates and in
-poition--velocity coordinates. \sectionname~\ref{sec:mock} discusses
+position--velocity coordinates. \sectionname~\ref{sec:mock} discusses
 how to generate mock stream data using the generative model of a tidal
 stream and in \sectionname~\ref{sec:pdf} I show how to calculate the
 stream PDF for individual stream members as well as its
@@ -362,7 +360,7 @@ $(\Omega_R,\Omega_\phi,\Omega_Z) = (15.7,-10.8,11.9)\Gyr\inv$.
   \includegraphics[width=0.5\textwidth,clip=]{gd1_evol_xz.ps}
   \caption{Mock tidal stream simulated as described in
     \sectionname~\ref{sec:sim} after $5.011\Gyr$ of evolution in
-    Galactocentric $X$ and $Z$ coordinates. The grey dot shows the
+    Galactocentric $X$ and $Z$ coordinates. The gray dot shows the
     current position of the progenitor cluster and the dashed line
     shows its orbit. The solid line gives the stream track, calculated
     using the method described in \sectionname~\ref{sec:track}. The
@@ -426,7 +424,7 @@ space is a better coordinate system than action--angle space for
 modeling tidal streams. That is, the distribution of actions in a
 tidal stream has a complicated structure that is hard to capture using
 a simple, analytic form (see also the discussion in
-\citealt{Eyre11a}). Especially the ``bowtie'' structure in $(J_R,L_Z)$
+\citealt{Eyre11a}). Especially the ``bow tie'' structure in $(J_R,L_Z)$
 and the overlapping leading- and trailing-arm distributions in
 ($J_R,J_Z$) are difficult to model with a simple distribution
 function. The distribution of frequencies, however, is close-to one
@@ -509,7 +507,7 @@ process.
 
 The middle panel of \figurename~\ref{fig:gd1_times} shows the
 frequency offsets between stream particles and the progenitor as a
-function of strippng time, corresponding to ingredient (b) above. The
+function of stripping time, corresponding to ingredient (b) above. The
 same burstiness that is apparent in the distribution of stripping
 times shows up here. Particles stripped at pericenter typically have
 larger frequency offsets than those lost at larger radii. This can be
@@ -660,7 +658,7 @@ Because we expect the typical $\Delta\veco$ to scale with the velocity
 dispersion of the progenitor, I conjecture that a constant
 $\mu_\Omega$ can be used for modeling cold tidal streams of any
 (small-ish) velocity dispersion. Further modeling of simulated
-streams, however, is necessary to check this and to find the optimizal
+streams, however, is necessary to check this and to find the optimal
 value of $\mu_\Omega$. Fixing $\mu_\Omega$ leaves a single free
 parameter \sigv\ for modeling the frequency offset distribution of a
 tidal stream. In modeling to observed data, this parameter needs to be
@@ -670,7 +668,7 @@ carefully (but see Figure 3 in \citealt{Sanders13a}, which shows that
 the size of the frequency distribution scales as mass$^{1/3}$, or
 approximately as the velocity dispersion). Similarly, the initial
 angle distribution, modeled here as an isotropic Gaussian, has a
-charactaristic spread $\sigma_{\theta}$ which I set here to $0.003$
+characteristic spread $\sigma_{\theta}$ which I set here to $0.003$
 ($=\sigv/[122\kms]$), and we likewise expect this spread to scale with
 the velocity dispersion of the progenitor.
 
@@ -932,7 +930,7 @@ chosen here to span $1.5$ radians, we calculate the Jacobian $\partial
 (\veco,\veca) / \partial (\vecx,\vecv)$. In this Figure this is done
 at four points, but for all other figures and calculations in this
 paper eleven points are used. Each Jacobian calculation requires seven
-frequency--angle calcuations, such that the total number of such
+frequency--angle calculations, such that the total number of such
 computations is less than $100$ to adequately model the stream (each
 computation involves a single orbit integration, see
 \appendixname~\ref{sec:aa}). 
@@ -1068,7 +1066,7 @@ the Gaussian distribution of $\Delta \operp$. The distribution of
 $\Delta \opar$ is not Gaussian, as it is a Gaussian in $|\Delta
 \opar|$ multiplied with $|\Delta \opar|$ over the range $\Delta \opar
 > 0$. This distribution is log-concave, that is, the derivative of its
-logarithm is negative everywhere, and therefore it can be efficienly
+logarithm is negative everywhere, and therefore it can be efficiently
 sampled using adaptive-rejection sampling \citep{Gilks92a}. The sign
 of $\Delta \opar$ is determined by whether we are generating a leading
 or trailing stream. Third, initial angle offsets are drawn from the
@@ -1084,9 +1082,9 @@ desired.
 
 \figurename~\ref{fig:gd1_mock} shows mock data generated for the model
 of the simulated stream described in
-\sectionname~\ref{sec:fidmodel}. The mock data in this Figure has been
-generated $1.96\Gyr$ before the final snapshot of the simulation (that
-is, $1.96\Gyr$ before \figurename~\ref{fig:gd1_xz}). The model
+\sectionname~\ref{sec:fidmodel}. The mock data in this Figure have
+been generated $1.96\Gyr$ before the final snapshot of the simulation
+(that is, $1.96\Gyr$ before \figurename~\ref{fig:gd1_xz}). The model
 from \sectionname~\ref{sec:fidmodel}, which was for the final
 snapshot, was adjusted to this earlier time by backward orbit
 integration of the model progenitor and by revising the disruption
@@ -1341,7 +1339,7 @@ unknown we also need to marginalize over whether we are seeing a
 leading or a trailing stream.
 
 The dynamical framework proposed here can be used in situations where
-fitting a stream track is insufficient, for exampe, when high-quality
+fitting a stream track is insufficient, for example, when high-quality
 data in some dimensions on individual stars are available. Many of the
 approaches in the literature do not require a model progenitor
 position. This includes methods that attempt to minimize the spread of
@@ -1392,7 +1390,7 @@ this is explicitly expressed by the distribution $p(\Delta
 \opar|\Delta \apar)$, calculated in \equationname~(\ref{eq:poparapar})
 and shown in the top left panel of
 \figurename~\ref{fig:gd1_apar}. Thus, the average orbit changes as a
-function of positon along the stream, whether expressed as $\Delta
+function of position along the stream, whether expressed as $\Delta
 \apar$, $X$, or $l$, and a single-orbit approximation is necessarily
 wrong over the full length of the stream.
 
@@ -1524,10 +1522,10 @@ The framework allows for the proper analysis of data on tidal streams
 by taking into account all the relevant dynamical effects, most
 notably the stream--single-orbit offset. As such, it should be
 immediately useful for the proper analysis of data on the GD-1
-\citep{Koposov10a}, Orphan \citep[\eg,][]{Sesar13a}, Pal 5 and othter
+\citep{Koposov10a}, Orphan \citep[\eg,][]{Sesar13a}, Pal 5 and other
 streams. The ability to quickly marginalize the model over unobserved
 dimensions will also prove highly useful when Gaia data for these
-streams becomes available in the near future. The novel framework also
+streams become available in the near future. The novel framework also
 provides a straightforward way to generate mock stream data that is
 useful for detecting anomalies in the structure of tidal streams, such
 as those that can be caused by fly-bys of dark--mater subhalos.
@@ -1656,7 +1654,7 @@ The Fox \& Binney method consists of averaging \eqnname~(\ref{eq:jjt})
 over the auxiliary angle along the path of the orbit, such that the
 mapping defined by the $S_{\vecn}$ is onto orbital tori of the target
 Hamiltonian, the oscillating cosine behavior cancels, and the target
-action is obtained as the auxiliary-angle-averaged auxilary
+action is obtained as the auxiliary-angle-averaged auxiliary
 action. That is,
 \begin{equation}\label{eq:jjtint}
   \int \dd \theta_i^A J_i^A = \int \dd \theta_i^A J_i + 2 \sum_{\vecn > 0} \vecn\,S_{\vecn}(J_i)\int \dd \theta_i^A\cos(\vecn\cdot\veca^A)\,,
