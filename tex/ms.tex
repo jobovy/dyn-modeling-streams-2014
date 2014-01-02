@@ -186,17 +186,17 @@ However, streams are observed in position--velocity coordinates and
 for action--angle descriptions to be useful, we must be able to
 calculate the transformation between these coordinate systems
 efficiently. Until now this has required accurate phase--space data
-and specialized algorithms to calculate action--angle coordinates that
-break down for the eccentric orbits on which tidal-stream progenitors
-are typically found (that is, radial and/or vertical actions of
-similar size as the angular momentum; \citealt{Sanders12a}). However,
-even with Gaia, future stream data will typically have large
-uncertainties compared to the intrinsic dispersion of the stream and
-in particular the line-of-sight velocities of the faintest stream
-members will not be observed for many stars. Additionally, streams are
-superimposed on a non-negligible background of field stars and
-background contamination cannot be easily taken into account in any of
-the current stream-fitting methods.
+and specialized algorithms that break down for the eccentric orbits on
+which tidal-stream progenitors are typically found (that is, radial
+and/or vertical actions of similar magnitude as the angular momentum;
+\citealt{Sanders12a}). However, even with Gaia, future stream data
+will typically have large uncertainties compared to the intrinsic
+dispersion of the stream and in particular the line-of-sight
+velocities of the faintest stream members will not be observed for
+many stars. Additionally, streams are superimposed on a non-negligible
+background of field stars and background contamination cannot be
+easily taken into account in any of the current stream-fitting
+methods.
 
 In this paper, I present a new method for modeling cold tidal streams
 that fundamentally lives in frequency--angle space, because the stream
@@ -208,21 +208,21 @@ the stream, a three-dimensional Gaussian distribution of initial angle
 offsets between stream members and the progenitor, and a uniform
 distribution of stripping times; the frequency and angle distributions
 are independent of stripping time. While this model oversimplifies the
-real stripping process, it is argued that at least for constraining
-the gravitational potential with stream data, this simple model is
-likely unbiased. For detailed mock stream data, more elaborate models
-of the stripping process as a function of time might be necessary and
-I discuss how these could easily be incorporated into the proposed
+real stripping process, I argue that at least for constraining the
+gravitational potential with stream data, this simple model is likely
+unbiased. For detailed mock stream data, more elaborate models of the
+stripping process as a function of time might be necessary and I
+discuss how these could easily be incorporated into the proposed
 framework.
 
 To evaluate the model in position--velocity coordinates, the
 transformation to and from action--angle coordinates is computed using
 a novel method for calculating action--angle coordinates presented in
 Appendix~\ref{sec:aa}. This transformation is linearized at a small
-number of points along the progenitor orbit that span the width of the
-stream. For cold streams, the separation between the stream track and
-the progenitor orbit as well as the internal differences within the
-stream are small, such that this linear approximation is accurate
+number of points along the progenitor orbit that span the length of
+the stream. For cold streams, the separation between the stream track
+and the progenitor orbit as well as the internal differences within
+the stream are small, such that this linear approximation is accurate
 enough. The linear approximation allows for fast evaluation of the
 average stream location (the stream ``track'') in position--velocity
 coordinates and efficient mock data generation. For a uniform
@@ -256,15 +256,15 @@ orbit in any static gravitational potential is presented.
 
 \section{The dynamics of tidal streams}\label{sec:dynamics}
 
-The dynamics of tidal streams both in real (position--velocity) and
-action--angle space has been described by various previous authors
+The dynamics of tidal streams both in position--velocity and
+action--angle space has been described previously by various authors
 \citep[\eg,][]{Helmi99a,Tremaine99a,Johnston99a,Sanders13b}. I provide
 here a brief description of the dynamics of tidal streams that is
 relevant for what follows.
 
-In real space, a tidal stream forms as stars are stripped from a
-progenitor cluster or satellite galaxy some time $\ts$ in the
-past and then evolve (largely) independently in a galaxy's host
+In position--velocity space, a tidal stream forms as stars are
+stripped from a progenitor cluster or satellite galaxy some time $\ts$
+in the past and then evolve (largely) independently in a galaxy's host
 potential, moving away both in position and velocity from the
 progenitor object as time goes on. Thus, a star was offset by a small
 amount $(\Delta \vecx,\Delta \vecv)$ from the position of the
@@ -283,14 +283,13 @@ In action--angle space the dynamics of stream formation is much
 simpler. A star received an offset ($\Delta \vecj,\Delta \veca$) at
 time $-\ts$ from the action--angle coordinates of the progenitor
 $(\vecj^p,\veca^p)$, similar to the small offset ($\Delta \vecx,\Delta
-\vecv)$ in the real--space description. The offset in the actions
-corresponds to an offset in the frequencies $\Delta \veco$;
-ultimately, this frequency offset is responsible for the spreading of
-the stream over long stretches on the sky. Because both the
-progenitor's angles and the star's angles increase linearly with time,
-albeit at different frequencies, the difference in the angles also
-increases linearly in time. Therefore at time $t=0$ the difference in
-angles is
+\vecv)$. The offset in the actions corresponds to an offset in the
+frequencies $\Delta \veco$; ultimately, this frequency offset is
+responsible for the spreading of the stream over long stretches on the
+sky. Because both the progenitor's angles and the star's angles
+increase linearly with time, albeit at different frequencies, the
+difference in the angles also increases linearly in time. Therefore at
+time $t=0$ the difference in angles is
 \begin{equation}
 \Delta \veca(t=0) = \Delta \veca(-\ts) + \Delta \veco \,\ts\,,
 \end{equation}
@@ -320,12 +319,12 @@ direction $\unitvec\veco$, and the stream will be essentially one
 dimensional. In detail, because the distribution of initial offsets
 $\Delta \vecj$ is not isotropic, the direction $\unitvec \veco$ is not
 just determined by the potential (through $H$) and the progenitor
-orbit, but also by the distribution of $\Delta \vecj$, which is set
-through a combination of the internal dynamics of the progenitor and
-the stripping process. For dynamical modeling we can be agnostic about
-the relative importance of all of these contributors to $\unitvec
-\veco$ by flexible modeling of the distribution of $\Delta \vecj$ or
-$\Delta \veco$.
+orbit $\vecj^p$, but also by the distribution of $\Delta \vecj$, which
+is set through a combination of the internal dynamics of the
+progenitor and the stripping process. For dynamical modeling we can be
+agnostic about the relative importance of all of these contributors to
+$\unitvec \veco$ by flexible modeling of the distribution of $\Delta
+\vecj$ or $\Delta \veco$.
 
 
 \section{Generative models of tidal streams}\label{sec:generative}
@@ -339,13 +338,14 @@ an $N$-body simulation of a King cluster on an orbit similar to that
 of the GD-1 stream \citep{Koposov10a}. Specifically, a King cluster
 with a mass of $2\times10^4\msun$, a tidal radius of $0.07\kpc$, and a
 ratio of the central potential to the velocity dispersion squared of
-$2.0$ is sampled using $10^4$ particles. The cluster is evolved in an
-external logarithmic host potential with $V_c = 220\kms$ and a
-flattening $q=0.9$ ($\Phi = V_c^2 \ln [R^2 + z^2/q^2]$) using the
-gyrfalcon code \citep{Dehnen00a,Dehnen02a} with a softening of
-$1.5\pc$ in the NEMO toolkit \citep{Teuben95a}. The cluster is evolved
-for $5.011\Gyr$ ($=5.125\kpc/[\kms]$) from the initial condition
-$(X,Y,Z) = (-11.63337239,-20.76235661,-10.631736273934635)\kpc$ and
+$2.0$ is sampled using $10^4$ particles. The cluster is evolved with
+self-gravity in an external logarithmic host potential with $V_c =
+220\kms$ and a flattening $q=0.9$ ($\Phi = V_c^2 \ln [R^2 + z^2/q^2]$)
+using the gyrfalcon code \citep{Dehnen00a,Dehnen02a} with a softening
+of $1.5\pc$ in the NEMO toolkit \citep{Teuben95a}. The cluster is
+evolved for $5.011\Gyr$ ($=5.125\kpc/[\kms]$) from the initial
+condition $(X,Y,Z) =
+(-11.63337239,-20.76235661,-10.631736273934635)\kpc$ and
 $(V_X,V_Y,V_Z) = (-128.8281653,42.88727925,79.172383882274971)\kms$,
 chosen such that the cluster ends up at roughly the observed location
 of the GD-1 stream at the end of the simulation
@@ -453,7 +453,7 @@ initial angle offset is quickly overwhelmed by the subsequent
 dynamical evolution; for the simulated stream used here this happens
 after approximately $20\Myr$). For that reason, I will assume that the
 initial angle offsets are independent of both stripping time and
-frequency offset. In what follows, we will model them using a simple
+frequency offset. In what follows, I will model them using a simple
 isotropic Gaussian distribution.
 
 \begin{figure}[t!]
@@ -472,9 +472,9 @@ isotropic Gaussian distribution.
     offset between stream particles and the progenitor is shown in the
     middle panel. While particles stripped at pericenter have larger
     frequency offsets than those between pericenter passages, there is
-    no secular trend and the typical frequency offset (averaged over a
-    radial period) can be considered constant with time. The right
-    panel shows the magnitude of the angle offset between stream
+    almost no secular trend and the typical frequency offset (averaged
+    over a radial period) can be considered constant with time. The
+    right panel shows the magnitude of the angle offset between stream
     particles and the progenitor as a function of stripping
     time. There is a spread in the angle offset at all stripping times
     because of the dispersion in frequency offsets, but typically
@@ -518,7 +518,7 @@ into account.
 
 The right panel of \figurename~\ref{fig:gd1_times} shows the angle
 offset (at the end of the simulation) versus the stripping time. There
-is a spread in the angle offset reach for any given stripping time,
+is a spread in the angle offset reached for any given stripping time,
 but it is nevertheless typically the case that particles that have
 been stripped earlier are found at larger angle offsets
 today. Self-sorting---the tendency of particles stripped later with
@@ -535,8 +535,8 @@ potentials. However, for spherical potentials this mapping only has
 rank two, because $\Omega_\phi = \mathrm{sgn}(L_Z)\,\Omega_Z$, such
 that the determinant $|\partial \veco / \partial \vecj|$ is zero. For
 spherical potentials, tidal streams only spread in a five-dimensional
-subspace and in modeling stream in spherical potentials we need to
-keep the direction perpendicular to this subspace constant. 
+subspace and in modeling streams in spherical potentials we need to
+keep the direction perpendicular to this subspace constant.
 
 \subsection{The fiducial stream model}\label{sec:fidmodel}
 
@@ -561,7 +561,7 @@ distribution
 The thick, solid histogram in the right panel of
 \figurename~\ref{fig:gd1_times} shows a coarser-binned histogram of
 stripping times, indicating that the uniform distribution is a good
-approximation over intervals larger than a radial period ($\approx
+approximation over intervals longer than a radial period ($\approx
 400\Myr$). The \emph{disruption time} $t_d$ is a free parameter of the
 model that needs to be determined for each stream. For the model of
 the simulated stream used here I set $t_d = 4.5\Gyr$.
@@ -622,7 +622,8 @@ misalignment would be $1.28^\circ$.
     stream particles and the progenitor along the direction of the
     mean frequency offset. The dashed line is a Gaussian fit to this
     distribution, while the solid line is a fit of our preferred form
-    for this distribution, given in \equationname~(\ref{eq:do}). Both
+    for this distribution, given in \equationname~(\ref{eq:do}) (the
+    dashed line is almost entirely covered by the solid line). Both
     forms provide adequate fits to the
     distribution. }\label{fig:gd1_dohist}
 %python plot_stream.py ../tex/gd1_evol_aadohist.ps
@@ -633,7 +634,7 @@ principal eigenvector of $V_\veco$. This mean frequency offset can be
 described in terms of a parameter $\mu_\Omega = \Delta \Omega^m /
 \sigma_{\Omega,1}$, where $\sigma_{\Omega,1}$ is the square root of
 the largest eigenvalue of $V_\veco$ and $\Delta \Omega^m$ is the
-one-dimensional mean frequency offset. The sign of this parameter sets
+one-dimensional mean frequency offset. The sign of $\mu_\Omega$ sets
 whether we are modeling a leading or a trailing
 arm. \figurename~\ref{fig:gd1_dohist} shows the distribution of
 frequency offsets in the direction of the median frequency offset in
@@ -680,14 +681,14 @@ $t_d$. As shown below, these two parameters are the most important in
 determining the track of the stream. More sophisticated models can
 leave $\mu_\Omega$ and $\sigma_{\theta}$ as free parameters as
 well. In what follows, I will fix these to the values given in the
-previous paragraph. It must be stressed, however, that all of these
+previous paragraphs. It must be stressed, however, that all of these
 parameters here have been fixed ``by-eye'', and better fits might be
 possible using more quantitative fit procedures.
 
 
 \section{The track of a tidal stream}\label{sec:track}
 
-In this section, I discuss how to calculate the track of a model tidal
+In this Section, I discuss how to calculate the track of a model tidal
 stream in the generative model described in
 \sectionname~\ref{sec:generative}. The track consists of the mean
 location of the stream as a function of angle along the stream. I also
@@ -713,20 +714,22 @@ $(\vecx,\vecv)$ or observable coordinates $(l,b,D,\vlos,\pmll,\pmbb)$.
     frequency offset calculated using the framework of
     \sectionname\sectionname~\ref{sec:modeloa} and \ref{sec:track},
     while the grayscale bands show the $68\,\%$ and $95\,\%$ limits of
-    the predicted distribution. The top, right panel shows the
-    magnitude of frequency offsets perpendicular to those in the left
-    panel. The predicted distribution is constant as a function of
-    angle and therefore not shown. The bottom, left panel shows the
-    angle offset perpendicular to the stream and the grayscale bands
-    show $68\,\%$ and $95\,\%$ limits of the predicted distribution of
-    angle offsets; the white dashed line shows the $68\,\%$ limit
-    calculated using a simplified method. The bottom, right panel
-    shows the stripping time. The gray line and grayscale bands again
-    show the mean and $68\,\%$ and $95\,\%$ confidence limits of the
-    predicted distribution. While the ``burstiness'' related to the
-    energetic stripping at pericenter that is apparent in the
-    simulated data's distributions is (by design) absent in the model,
-    the overall scale and the mean trends with angle are well
+    the predicted distribution. The dashed line shows the angle $\apar
+    = \Delta \Omega^m\,t_d$, angles beyond which can only be reached
+    by having a larger $\Delta \opar$ than average. The top, right
+    panel shows the magnitude of frequency offsets perpendicular to
+    those in the left panel. The predicted distribution is constant as
+    a function of angle and therefore not shown. The bottom, left
+    panel shows the angle offset perpendicular to the stream and the
+    grayscale bands show $68\,\%$ and $95\,\%$ limits of the predicted
+    distribution of angle offsets; the white dashed line shows the
+    $68\,\%$ limit calculated using a simplified method. The bottom,
+    right panel shows the stripping time. The gray line and grayscale
+    bands again show the mean and $68\,\%$ and $95\,\%$ confidence
+    limits of the predicted distribution. While the ``burstiness''
+    related to the energetic stripping at pericenter that is apparent
+    in the simulated data's distributions is (by design) absent in the
+    model, the overall scale and the mean trends with angle are well
     represented by the model.}\label{fig:gd1_apar}
 %python plot_stream.py ../tex/gd1_evol_aaaparopar.ps
 %python plot_stream.py ../tex/gd1_evol_aaaparoperp.ps
@@ -783,10 +786,10 @@ removed at large frequency differences. Around $\Delta \Omega^m
 \,t_d$, average stream stars, \ie, those removed with the average
 frequency offset, do not have a large enough offset to reach large
 angle offsets. Therefore, even though the average frequency offset
-does not change over time (see \figurename~\ref{fig:gd1_times}), the
-average frequency offset, and therefore the average orbit, does change
-with distance from the progenitor. It is in this sense that streams do
-not follow a single orbit. This is discussed further in
+does not change much over time (see \figurename~\ref{fig:gd1_times}),
+the average frequency offset, and therefore the average orbit, does
+change with distance from the progenitor. It is in this sense that
+streams do not follow a single orbit. This is discussed further in
 \sectionname~\ref{sec:discussorbit}.
 
 In the fiducial model, the average $\Delta \operp$, and $\Delta
@@ -812,7 +815,7 @@ We can calculate $p(\ts | \Delta \apar)$ as follows
 \begin{split}
   p(\ts | \Delta \apar) & = \int \dd \Delta \opar\,p(\ts,\Delta \opar|\Delta \apar)\,,\\
   & = \int \dd \Delta \opar\,p(\ts|\Delta \opar,\Delta \apar)\,p(\Delta \opar|\Delta \apar)\,,\\
-  & = p\left(\Delta \opar = \frac{\Delta \apar}{\ts}\right)\,\left|\frac{\Delta \apar}{(\ts)^2}\right|\,,
+  & \approx p\left(\Delta \opar = \frac{\Delta \apar}{\ts}\right)\,\left|\frac{\Delta \apar}{(\ts)^2}\right|\,,
 \end{split}
 \end{equation}
 where in the last step I have again approximated the initial
@@ -950,7 +953,7 @@ interpolating the estimated variances at the calculated track
 points. This interpolation can be performed practically as follows. We
 decompose the variance matrix at each calculated track point into its
 eigendecomposition and order the eigenvalues by size. We then
-interpolate the values of each of the six eigenvalues using spline
+interpolate each of the six eigenvalues using spline
 interpolation. The direction of each eigenvector is interpolated using
 \emph{slerp} \citep{Shoemake85a}, which is a type of spherical linear
 interpolation. The variance matrix at interpolated track points can
@@ -962,23 +965,23 @@ calculated Jacobian from the closest calculated track point.
 
 Finally, we can calculate the stream track in observable quantities
 $(l,b,D,\vlos,\pmll,\pmbb)$ by converting the interpolated track in
-$(\vecx,\vecv)$ to these observable coordinates. The dispersion at
-calculated track points is calculated from that in $(\veco,\veca)$
-using the appropriate Jacobians and the six-dimensional dispersion can
-again be interpolated using the eigendecomposition. This is
-illustrated in the bottom panel of \figurename~\ref{fig:track}.
+$(\vecx,\vecv)$ to these coordinates. The dispersion at calculated
+track points is calculated from that in $(\veco,\veca)$ using the
+appropriate Jacobians and the six-dimensional dispersion can again be
+interpolated using the eigendecomposition. This is illustrated in the
+bottom panel of \figurename~\ref{fig:track}.
 
 \begin{figure}[t!]
   \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lb.eps}
   \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_ld.eps}
-  \caption{Simulated stream after $5.011\Gyr$ as a function of Galactic
-    longitude. The top panel shows the stream in Galactic latitude and
-    the bottom panel shows the distance from the Sun. The progenitor
-    is shown as the large gray dot and its orbit as the dashed
-    lines. The predicted track of the stream is shown as the solid
-    line. Insets show various zoomed-in parts of the stream to show
-    the stream, progenitor orbit, and predicted stream track up
-    close.}\label{fig:gd1_lbd}
+  \caption{Simulated stream after $5.011\Gyr$ as a function of
+    Galactic longitude. The top panel shows the stream in Galactic
+    latitude and the bottom panel shows it in the distance from the
+    Sun. The progenitor is shown as the large gray dot and its orbit
+    as the dashed lines. The predicted track of the stream is shown as
+    the solid line. Insets show various zoomed-in parts of the stream
+    to show the stream, progenitor orbit, and predicted stream track
+    up close.}\label{fig:gd1_lbd}
 %python plot_stream.py ../tex/gd1_evol_lb.ps
 %python plot_stream.py ../tex/gd1_evol_ld.ps
 \end{figure}
@@ -1172,19 +1175,18 @@ commonly used methods for fitting tidal streams. On the one hand are
 approaches that search to minimize the spread in energy, integrals of
 the motion, or actions (\eg, \citealt{Binney08a,Penarrubia12a},
 Sanderson \etal, 2014, in preparation). These approaches ignore the
-correlations between actions and angles in the stream (the exponential
-in \eqnname~(\ref{eq:pdf}), which describes this correlation through
-the frequencies) and only use $p(\veco)$; finding the gravitational
-potential that minimizes the spread in frequencies (or equivalently,
-actions) optimizes $p(\veco)$. Recently, a new method was proposed
-that only uses the correlation between the actions and the angles,
-expressed by the exponential in \eqnname~(\ref{eq:pdf})
-\citep{Sanders13b}; this method does not use the fact that the spread
-in actions in a tidal stream is small (expressed by $p(\veco)$), but
-only uses the fact that the angles and actions/frequencies are highly
-correlated. Approaches that require stream members to re-unite with
-the progenitor when integrating their orbits backward in time
-\citep{Johnston99a,PriceWhelan13a} use the full PDF (but expressed in
+correlations between actions and angles in the stream and only use
+$p(\veco)$; finding the gravitational potential that minimizes the
+spread in frequencies (or equivalently, actions) optimizes
+$p(\veco)$. Recently, a new method was proposed that only uses the
+correlation between the actions and the angles, expressed by the
+exponential in \eqnname~(\ref{eq:pdf}) \citep{Sanders13b}; this method
+does not use the fact that the spread in actions in a tidal stream is
+small (expressed by $p(\veco)$), but only uses the fact that the
+angles and actions/frequencies are highly correlated. Approaches that
+require stream members to re-unite with the progenitor when
+integrating their orbits backward in time
+\citep{Johnston99a,PriceWhelan13a} use the full PDF (expressed in
 position--velocity space), but cannot be marginalized over unobserved
 or noisy phase--space dimensions as easily.
 
@@ -1271,17 +1273,17 @@ only at the highest peak is by choice; there is an estimated Gaussian
 dispersion at the lower peak as well, but it is not shown.
 
 Similar procedures can be followed to evaluate other projections and
-marginalizations of the PDF, \eg, $p(b|l)$ for the observed track of
-the stream on the sky, to convolve the PDF with observational
+marginalizations of the PDF (\eg, $p(b|l)$ for the observed track of
+the stream on the sky), to convolve the PDF with observational
 uncertainties, and to calculate moments of the PDF, \eg, the density
 and velocity dispersion along the stream. Another example is shown in
 \figurename~\ref{fig:gd1_pdf_l}. This Figure shows the model's density
 as a function of Galactic longitude and compares it to that of the
-simulated stream in the final snapshot (\ie, that of
-\figurename s~\ref{fig:gd1_lbd} and \ref{fig:gd1_lbv}). The model
-density here is calculated using a Monte Carlo mock stream sample,
-drawn as described in \sectionname~\ref{sec:mock}, rather than through
-direct numerical integration. 
+simulated stream in the final snapshot (\ie, that of \figurename
+s~\ref{fig:gd1_lbd} and \ref{fig:gd1_lbv}). The model density here is
+calculated using a Monte Carlo mock stream sample, drawn as described
+in \sectionname~\ref{sec:mock}, rather than through direct numerical
+integration.
 
 
 \section{Discussion}\label{sec:discussion}
@@ -1289,7 +1291,7 @@ direct numerical integration.
 \subsection{Dynamical fitting}
 
 There are multiple existing methods for fitting data on tidal streams
-with models for the Milky Way potential, however, none of these allow
+with models for the Milky Way potential. However, none of these allow
 for the likelihood of a model to be evaluated using a well-defined
 generative model. The only exceptions to this are orbit-fitting
 methods, but these use a faulty generative model (see below), and the
@@ -1300,8 +1302,8 @@ track directly in position--velocity space by orbit integration of
 stream members released at the Lagrange points. However, they do not
 relate the observed width of the stream to the velocity dispersion of
 the progenitor---and thus the location of the Lagrange points and the
-position of the track---and it is therefore only weakly constrained
-and has to be assumed. In general, it is straightforward to write down
+position of the track---which is therefore only weakly constrained and
+has to be assumed. In general, it is straightforward to write down
 generative models of tidal streams in position--velocity space by
 substituting our initial offsets $(\Delta \veco,\Delta \veca)$ by
 similar offsets $(\Delta \vecx,\Delta \vecv)$ and integrating both the
@@ -1413,7 +1415,7 @@ Way halo's potential based on streams such as GD-1 or the Orphan
 stream must be treated with suspicion. The fact that the progenitors
 of these streams have not been located means that the observed stream
 segments are likely far from the progenitor, where the average orbit
-changes as a function of angle along the stream (\ie, right of the
+changes as a function of angle along the stream (\ie, rightward of the
 dashed line in \figurename~\ref{fig:gd1_apar}).
 
 
@@ -1433,7 +1435,7 @@ velocity dispersion of the progenitor.
 Our calculation of the mean stream orbit as a function of angle along
 the stream also points the way to determining the location of an
 ``orphan'' stream's progenitor (an orphan stream is a stream for which
-the progenitor is not know). This requires high-quality data that
+the progenitor is not known). This requires high-quality data that
 allows the average orbit as a function of position along the stream to
 be determined. If this can be done, then the observation of a steady
 change in the mean orbit followed by a plateau indicates that the
@@ -1492,8 +1494,8 @@ distribution of stripping times. The example given in
 \figurename~\ref{fig:gd1_pdf_l} using the simple fiducial model shows
 that this works well. However, the fiducial model assumes a uniform
 distribution of stripping times rather than bursts at pericenter
-passages, and therefore it cannot model the under- and over-densities
-along the stream (\eg, ``feathering'') in detail. The
+passages, and therefore it cannot fully model the under- and
+over-densities along the stream (\eg, ``feathering'') in detail. The
 mock-stream-generation algorithm given in \sectionname~\ref{sec:mock}
 works almost as simply for more complicated models of the stripping
 process (\eg, a bursty distribution of stripping times and more
@@ -1506,26 +1508,26 @@ sensitive detections of substructure due to halo substructure.
 
 I have presented a new method for modeling the dynamics of tidal
 streams, making extensive use of action--angle variables. This new
-framework consists of simple models for the disruption of the stream
-in frequency--angle space, coupled with a novel method for calculating
-action--angle variables for any orbit in any potential. The model is a
-generative model, meaning that it can be used to sample mock stream
-data and evaluate the likelihood of different models for observed
-tidal stream data. I have described fast methods for calculating the
-mean location of the stream in various coordinate systems, for
-estimating the dispersion of the stream and relating it to the
-velocity dispersion of mass of the progenitor, and for marginalizing
-the stream likelihood over noisily or entirely unobserved dimensions
-of phase space.
+framework consists of simple models for the disruption of a star
+cluster in frequency--angle space coupled with a novel method for
+calculating action--angle variables for any orbit in any
+potential. The model is a generative model, meaning that it can be
+used to sample mock stream data and evaluate the likelihood of
+different models for observed tidal stream data. I have described fast
+methods for calculating the mean location of the stream in various
+coordinate systems, for estimating the dispersion of the stream and
+relating it to the velocity dispersion or mass of the progenitor, and
+for marginalizing the stream likelihood over noisily or entirely
+unobserved dimensions of phase space.
 
 The framework allows for the proper analysis of data on tidal streams
 by taking into account all the relevant dynamical effects, most
 notably the stream--single-orbit offset. As such, it should be
 immediately useful for the proper analysis of data on the GD-1
-\citep{Koposov10a}, Orphan \citep[\eg,][]{Sesar13a}, Pal 5 and other
+\citep{Koposov10a}, Orphan \citep[\eg,][]{Sesar13a}, Pal 5, and other
 streams. The ability to quickly marginalize the model over unobserved
 dimensions will also prove highly useful when Gaia data for these
-streams become available in the near future. The novel framework also
+streams become available in the near future. The new framework also
 provides a straightforward way to generate mock stream data that is
 useful for detecting anomalies in the structure of tidal streams, such
 as those that can be caused by fly-bys of dark--mater subhalos.
