@@ -3,6 +3,8 @@
 % - do more justice to Eyre & Binney work
 % - discuss hotter streams somewhere
 % - say more about why dynammical large-scale modeling doesn't care about the small-scale structure
+% - what about spherical potentials? dO/dJ has zero eigenvalue
+% - We/I distinction
 \documentclass[12pt,preprint]{aastex}
 %\documentclass{emulateapj}
 \usepackage{amssymb,amsmath}
@@ -1499,20 +1501,67 @@ to produce more realistic models of the small-scale density structure
 of observed tidal streams. These background models will allow more
 sensitive detections of substructure due to halo substructure.
 
-%BOVY: reference point
-
 \section{Conclusion}\label{sec:conclusion}
 
+I have presented a new method for modeling the dynamics of tidal
+streams, making extensive use of action--angle variables. This new
+framework consists of simple models for the disruption of the stream
+in frequency--angle space, coupled with a novel method for calculating
+action--angle variables for any orbit in any potential. The model is a
+generative model, meaning that it can be used to sample mock stream
+data and evaluate the likelihood of different models for observed
+tidal stream data. I have described fast methods for calculating the
+mean location of the stream in various coordinate systems, for
+estimating the dispersion of the stream and relating it to the
+velocity dispersion of mass of the progenitor, and for marginalizing
+the stream likelihood over noisily or entirely unobserved dimensions
+of phase space.
+
+The framework allows for the proper analysis of data on tidal streams
+by taking into account all the relevant dynamical effects, most
+notably the stream--single-orbit offset. As such, it should be
+immediately useful for the proper analysis of data on the GD-1
+\citep{Koposov10a}, Orphan \citep[\eg,][]{Sesar13a}, Pal 5 and othter
+streams. The ability to quickly marginalize the model over unobserved
+dimensions will also prove highly useful when Gaia data for these
+streams becomes available in the near future. The novel framework also
+provides a straightforward way to generate mock stream data that is
+useful for detecting anomalies in the structure of tidal streams, such
+as those that can be caused by fly-bys of dark--mater subhalos.
+
+Besides being a practical tool for proper stream fitting, the
+framework presented here also clarifies the relation between the
+stream, the potential, and properties of the progenitor. I have
+discussed how we can relate the properties of a stream to those of its
+progenitor, potentially allowing for the unknown progenitor of streams
+such as GD-1 or the Orphan stream to be located. Further
+investigations of the dynamics of cluster disruption and tidal-stream
+generation for different progenitor orbits, a larger and more
+realistic set of potentials, and different progenitor structures will
+be necessary to perfect the models in frequency--angle space proposed
+here and to parameterize the mapping between model parameters and
+actual progenitor properties.
+
+The full modeling and action--angle framework presented here is
+available as part of the \emph{galpy} Galactic Dynamics
+code\footnote{Available at
+  \protect{\url{http://github.com/jobovy/galpy}}~.}. A tutorial on how
+to use this code is given at
+\[
+\protect{\mathrm{\url{http://jobovy.github.io/galpy/}}}\,.
+\]
+BOVY:WRITE AND LINK TO TUTORIAL.
 
 %BOVY: reference point
 
 \acknowledgements It is a pleasure to thank David W. Hogg, Hans-Walter
-Rix, and Jason Sanders for helpful discussions. J.B. was supported by
-NASA through Hubble Fellowship grant HST-HF-51285.01 from the Space
-Telescope Science Institute, which is operated by the Association of
-Universities for Research in Astronomy, Incorporated, under NASA
-contract NAS5-26555. J.B.  acknowledges support from SFB 881 (A3)
-funded by the German Research Foundation DFG.
+Rix, Jason Sanders, and Scott Tremaine for helpful
+discussions. J.B. was supported by NASA through Hubble Fellowship
+grant HST-HF-51285.01 from the Space Telescope Science Institute,
+which is operated by the Association of Universities for Research in
+Astronomy, Incorporated, under NASA contract NAS5-26555. J.B.
+acknowledges support from SFB 881 (A3) funded by the German Research
+Foundation DFG.
 
 
 \appendix
@@ -1752,6 +1801,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Sanders,~J.~L. \& Binney,~J. 2013a, \mnras, 433, 1813
 \bibitem[Sanders \& Binney(2013b)]{Sanders13b}
   Sanders,~J.~L. \& Binney,~J. 2013b, \mnras, 433, 1826
+\bibitem[Sesar\etal(2013)]{Sesar13a}
+  Sesar,~B., \etal\ 2013, \apj, 776, 26
 \bibitem[Shoemake(1985)]{Shoemake85a}
   Shoemake,~K. 1985, ACM SIGGRAPH Computer Graphics 3, 45
 \bibitem[Teuben(1995)]{Teuben95a}
