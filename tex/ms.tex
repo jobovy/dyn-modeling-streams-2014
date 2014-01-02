@@ -1,9 +1,4 @@
 %BOVY:NOTES:
-% - GO through citations and be a little more reluctant to cite Sanders
-% - do more justice to Eyre & Binney work
-% - discuss hotter streams somewhere
-% - say more about why dynammical large-scale modeling doesn't care about the small-scale structure
-% - what about spherical potentials? dO/dJ has zero eigenvalue
 % - We/I distinction
 \documentclass[12pt,preprint]{aastex}
 %\documentclass{emulateapj}
@@ -193,18 +188,17 @@ However, streams are observed in position--velocity coordinates and
 for action--angle descriptions to be useful, we must be able to
 calculate the transformation between these coordinate systems
 efficiently. Until now this has required accurate phase--space data
-\citep{Sanders13b} and specialized algorithms to calculate
-action--angle coordinates that break down for the eccentric orbits on
-which tidal-stream progenitors are typically found (that is, radial
-and/or vertical actions of similar size as the angular momentum;
-\citealt{Sanders12a}). However, even with Gaia, future stream data
-will typically have large uncertainties compared to the intrinsic
-dispersion of the stream and in particular the line-of-sight
-velocities of the faintest stream members will not be observed for
-many stars. Additionally, streams are superimposed on a non-negligible
-background of field stars and background contamination cannot be
-easily taken into account in any of the current stream-fitting
-methods.
+and specialized algorithms to calculate action--angle coordinates that
+break down for the eccentric orbits on which tidal-stream progenitors
+are typically found (that is, radial and/or vertical actions of
+similar size as the angular momentum; \citealt{Sanders12a}). However,
+even with Gaia, future stream data will typically have large
+uncertainties compared to the intrinsic dispersion of the stream and
+in particular the line-of-sight velocities of the faintest stream
+members will not be observed for many stars. Additionally, streams are
+superimposed on a non-negligible background of field stars and
+background contamination cannot be easily taken into account in any of
+the current stream-fitting methods.
 
 In this paper, I present a new method for modeling cold tidal streams
 that fundamentally lives in frequency--angle space, because the stream
@@ -330,10 +324,10 @@ $\Delta \vecj$ is not isotropic, the direction $\unitvec \veco$ is not
 just determined by the potential (through $H$) and the progenitor
 orbit, but also by the distribution of $\Delta \vecj$, which is set
 through a combination of the internal dynamics of the progenitor and
-the stripping process (see discussion in \citealt{Sanders13b}). For
-dynamical modeling we can be agnostic about the relative importance of
-all of these contributors to $\unitvec \veco$ by flexible modeling of
-the distribution of $\Delta \vecj$ or $\Delta \veco$.
+the stripping process. For dynamical modeling we can be agnostic about
+the relative importance of all of these contributors to $\unitvec
+\veco$ by flexible modeling of the distribution of $\Delta \vecj$ or
+$\Delta \veco$.
 
 
 \section{Generative models of tidal streams}\label{sec:generative}
@@ -459,8 +453,8 @@ enough that they are likely unobservable even with futuristic data
 (especially in the direction of the frequency offset, where the
 initial angle offset is quickly overwhelmed by the subsequent
 dynamical evolution; for the simulated stream used here this happens
-after approximately $20\Myr$). For that reason, we will assume that
-the initial angle offsets are independent of both stripping time and
+after approximately $20\Myr$). For that reason, I will assume that the
+initial angle offsets are independent of both stripping time and
 frequency offset. In what follows, we will model them using a simple
 isotropic Gaussian distribution.
 
@@ -537,13 +531,22 @@ small extent but the narrow distribution of frequency offsets limits
 the ability of particles removed later to reach large distances from
 the progenitor.
 
+We can model streams in frequency space because the mapping $\vecj
+\rightarrow \veco$ is of full rank for axisymmetric and triaxial
+potentials. However, for spherical potentials this mapping only has
+rank two, because $\Omega_\phi = \mathrm{sgn}(L_Z)\,\Omega_Z$, such
+that the determinant $|\partial \veco / \partial \vecj|$ is zero. For
+spherical potentials, tidal streams only spread in a five-dimensional
+subspace and in modeling stream in spherical potentials we need to
+keep the direction perpendicular to this subspace constant. 
+
 \subsection{The fiducial stream model}\label{sec:fidmodel}
 
 The discussion of the simulated stream's properties as a function of
 stripping time in the previous section indicates that we can build
 simple models of the structure of tidal streams when considering them
-in frequency--angle space. In this section, we propose a very simple
-fiducial model that we will use in the remainder of this paper. This
+in frequency--angle space. In this section, I propose a very simple
+fiducial model that I will use in the remainder of this paper. This
 model combines simple analytic forms for ease of computation that are
 nevertheless realistic enough to provide adequate models for tidal
 streams in many applications.
@@ -563,15 +566,15 @@ stripping times, indicating that the uniform distribution is a good
 approximation over intervals larger than a radial period ($\approx
 400\Myr$). The \emph{disruption time} $t_d$ is a free parameter of the
 model that needs to be determined for each stream. For the model of
-the simulated stream used here we set $t_d = 4.5\Gyr$.
+the simulated stream used here I set $t_d = 4.5\Gyr$.
 
 Similarly, we model the distribution of frequency offsets between
 stream particles and the progenitor to be independent of stripping
 time, even though the middle panel of \figurename~\ref{fig:gd1_times}
 clearly shows that particles are stripped at larger frequency
 differences at pericentric passages than between them. The fact that
-there is no long-term trend in the typical frequency offset means that
-this is a good model on time-scales larger than the radial
+there is only a small long-term trend in the typical frequency offset
+means that this is a good model on time-scales larger than the radial
 period. While this means that the small-scale structure of the stream
 will not be perfectly represented by the model, the large-scale
 structure of the stream will be fine. For using tidal streams to
@@ -594,7 +597,7 @@ deviations
 where $\sigv$ is the velocity dispersion of the progenitor,
 $r_{\mathrm{apo}}$ and $r_{\mathrm{peri}}$ are the apo- and pericenter
 radii of the progenitor orbit, respectively, and $Z_{\mathrm{max}}$ is
-the maximum $Z$ reached on this orbit. We assume that the all
+the maximum $Z$ reached on this orbit. We assume that all of the
 correlations between the actions are zero (see
 \figurename~\ref{fig:gd1_jt}). Then we propagate this Gaussian
 variance to frequency space using the Hessian $(\partial \veco /
@@ -627,7 +630,7 @@ misalignment would be $1.28^\circ$.
 %python plot_stream.py ../tex/gd1_evol_aadohist.ps
 \end{figure}
 
-We then further constrain the mean frequency offset to lie along the
+I then further constrain the mean frequency offset to lie along the
 principal eigenvector of $V_\veco$. This mean frequency offset can be
 described in terms of a parameter $\mu_\Omega = \Delta \Omega^m /
 \sigma_{\Omega,1}$, where $\sigma_{\Omega,1}$ is the square root of
@@ -643,7 +646,7 @@ while the solid line is a fit of the form
 \end{equation}
 where $\mathcal{N}(\cdot|\cdot,\cdot)$ represents a Gaussian
 distribution. The fit is equally good (because the dispersion is much
-smaller than the mean) and we choose the second form because it
+smaller than the mean) and I choose the second form because it
 simplifies some of the stream-track calculations below. The best-fit
 $(\Delta \Omega^m,\sigma_{\Omega,1})$ is $(0.19,0.033)\Gyr\inv$ in
 both cases. Based on this information, a model with $\sigv =
@@ -653,24 +656,23 @@ space perpendicular to the principal eigenvector of $V_\veco$ is
 modeled as a zero-mean Gaussian with variance matrix given by the
 projection of $V_\veco$ onto this space.
 
-Because we expect the typical $\Delta\veco$ to scale with the
-velocity dispersion of the progenitor (see also \citealt{Sanders13a}),
-I conjecture that a constant $\mu_\Omega$ can be used for modeling
-cold tidal streams of any (small-ish) velocity dispersion. Further
-modeling of simulated streams, however, is necessary to check this and
-to find the optimizal value of $\mu_\Omega$. Fixing $\mu_\Omega$
-leaves a single free parameter \sigv\ for modeling the frequency
-offset distribution of a tidal stream. In modeling to observed data,
-this parameter needs to be fit and we expect it to be proportional to
-the velocity dispersion of the progenitor, although this
-proportionality needs to be checked more carefully (but see Figure 3
-in \citealt{Sanders13a}, which shows that the size of the frequency
-distribution scales as mass$^{1/3}$, or approximately as the velocity
-dispersion). Similarly, the initial angle distribution, modeled here
-as an isotropic Gaussian, has a charactaristic spread $\sigma_{\theta}$
-which we set here to $0.003$ ($=\sigv/[122\kms]$), and we likewise
-expect this spread to scale with the velocity dispersion of the
-progenitor.
+Because we expect the typical $\Delta\veco$ to scale with the velocity
+dispersion of the progenitor, I conjecture that a constant
+$\mu_\Omega$ can be used for modeling cold tidal streams of any
+(small-ish) velocity dispersion. Further modeling of simulated
+streams, however, is necessary to check this and to find the optimizal
+value of $\mu_\Omega$. Fixing $\mu_\Omega$ leaves a single free
+parameter \sigv\ for modeling the frequency offset distribution of a
+tidal stream. In modeling to observed data, this parameter needs to be
+fit and we expect it to be proportional to the velocity dispersion of
+the progenitor, although this proportionality needs to be checked more
+carefully (but see Figure 3 in \citealt{Sanders13a}, which shows that
+the size of the frequency distribution scales as mass$^{1/3}$, or
+approximately as the velocity dispersion). Similarly, the initial
+angle distribution, modeled here as an isotropic Gaussian, has a
+charactaristic spread $\sigma_{\theta}$ which I set here to $0.003$
+($=\sigv/[122\kms]$), and we likewise expect this spread to scale with
+the velocity dispersion of the progenitor.
 
 The fiducial model for a tidal stream in frequency--angle coordinates
 proposed here is therefore described by essentially two free
@@ -679,7 +681,7 @@ progenitor's velocity dispersion \sigv\ and the disruption time
 $t_d$. As shown below, these two parameters are the most important in
 determining the track of the stream. More sophisticated models can
 leave $\mu_\Omega$ and $\sigma_{\theta}$ as free parameters as
-well. In what follows, we will fix these to the values given in the
+well. In what follows, I will fix these to the values given in the
 previous paragraph. It must be stressed, however, that all of these
 parameters here have been fixed ``by-eye'', and better fits might be
 possible using more quantitative fit procedures.
@@ -753,7 +755,7 @@ positive)
   & = \frac{1}{\Delta \opar}\,p(\Delta \opar,\frac{\Delta \apar}{\Delta \opar})\,,
 \end{split}
 \end{equation}
-where in the penultimate step we have approximated the initial angle
+where in the penultimate step I have approximated the initial angle
 distribution as a delta function (as the initial angle offset is small
 with respect to the final offset). This is a fully general
 expression. For the fiducial stream model, this can be simplified to
@@ -763,7 +765,7 @@ expression. For the fiducial stream model, this can be simplified to
   & 0\,,\qquad \mathrm{otherwise}\,.
 \end{split}
 \end{equation}
-\Eqnname~(\ref{eq:poparapar}) shows why we chose to model $p(\Delta
+\Eqnname~(\ref{eq:poparapar}) shows why I chose to model $p(\Delta
 \opar)$ as a Gaussian multiplied with $|\Delta \opar|$. $p(\Delta
 \opar|\Delta \apar)$ is then a Gaussian with mean $\Delta \Omega^m$
 and variance $\sigma^2_{\Omega,1}$, for $\Delta \opar > \Delta \apar /
@@ -815,7 +817,7 @@ We can calculate $p(\ts | \Delta \apar)$ as follows
   & = p\left(\Delta \opar = \frac{\Delta \apar}{\ts}\right)\,\left|\frac{\Delta \apar}{(\ts)^2}\right|\,,
 \end{split}
 \end{equation}
-where in the last step we have again approximated the initial
+where in the last step I have again approximated the initial
 distribution of parallel angle offsets as a delta function. The first
 factor in this equation is given by the expression given in
 \equationname~(\ref{eq:poparapargeneral}) (in general) or in
@@ -841,7 +843,7 @@ the fiducial model, this simplifies to
 \end{equation}
 where $\sigma_{\Omega,ii}$ is the model frequency dispersion in the
 perpendicular direction (corresponding to the middle and smallest
-eigenvalue of $V_\veco$). We have \emph{not} approximated the initial
+eigenvalue of $V_\veco$). I have \emph{not} approximated the initial
 angle-offset distribution as a delta function here, because its width
 is a significant fraction of that of the the final
 perpendicular-angle-offset distribution. In the fiducial model, this
@@ -869,7 +871,7 @@ is more difficult, and I simply use a dispersion of $1$, as the stream
 typically spreads out over $\approx 1$ radian. We could calculate the
 correlation between $\Delta \operpii$ and $\Delta \aperpii$ using
 similar equations as those given in the previous paragraphs, but for a
-simple estimate we can approximate these as $0.5$; we set the
+simple estimate we can approximate these as $0.5$; I set the
 correlation between $\Delta \opar$ and $\Delta \apar$ to zero. While
 these estimates are not perfect, they give a reasonable estimate of
 the dispersion along the stream track. This provides an adequate
@@ -881,7 +883,7 @@ starting point for more precise calculations of the dispersion in
 Having estimated the track of the stream and the dispersion around
 this in frequency--angle space, we can propagate the track to
 position--velocity coordinates by inverting the transformation
-$(\vecx,\vecv) \rightarrow (\veco,\veca)$. We do this by linearizing
+$(\vecx,\vecv) \rightarrow (\veco,\veca)$. I do this by linearizing
 the transformation along the orbit of the progenitor in the vicinity
 of the stream and inverting this linearized transformation. That this
 works relies on the stream being cold for a few different
@@ -1715,7 +1717,7 @@ $\frac{\partial S_{\vecn}(\vecj)}{\partial \vecj}$. For a finely
 integrated orbit, this system is highly over-constrained (at least
 when the number of expansion terms is small) and its solution can be
 found by simple linear algebra for any desired number of expansion
-terms $\sin(\vecn\cdot\veca^A)$. For extra stability, we integrate the
+terms $\sin(\vecn\cdot\veca^A)$. For extra stability, I integrate the
 orbit both forward and backward in time, such that the desired angle
 $\veca(t=0)$ is at the center of the dependent variable $t$.
 
@@ -1726,7 +1728,7 @@ behavior in the angles is removed before the linear fit described in
 the previous paragraph, which is shown in this figure. It is clear
 that the contribution of the oscillatory terms
 $\sin(\vecn\cdot\veca^A)$ is small, such that a small number of
-expansion terms is sufficient (we limit the terms in this axisymmetric
+expansion terms is sufficient (I limit the terms in this axisymmetric
 case to $n_R < 4$ and $n_Z < 4$).
 
 The method described here is completely general, but the only obstacle
