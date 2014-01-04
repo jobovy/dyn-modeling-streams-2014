@@ -424,18 +424,22 @@ space is a better coordinate system than action--angle space for
 modeling tidal streams. That is, the distribution of actions in a
 tidal stream has a complicated structure that is hard to capture using
 a simple, analytic form (see also the discussion in
-\citealt{Eyre11a}). Especially the ``bow tie'' structure in $(J_R,L_Z)$
-and the overlapping leading- and trailing-arm distributions in
-($J_R,J_Z$) are difficult to model with a simple distribution
-function. The distribution of frequencies, however, is close-to one
-dimensional, its direction of largest variance can be well-modeled as
-a Gaussian (although below we will model it slightly differently), and
-its parameters can all be easily estimated from the velocity
-dispersion of the progenitor, the orbit of the progenitor, and the
-gravitational potential, as discussed below. Therefore, we will model
-tidal streams in frequency--angle space. Because the leading and
-trailing arm are well-separated in frequency space, we model each arm
-individually.
+\citealt{Eyre11a}). Especially the ``bow tie'' structure in
+$(J_R,L_Z)$ and the overlapping leading- and trailing-arm
+distributions in ($J_R,J_Z$) are difficult to model with a simple
+distribution function\footnote{For triaxial potentials, the azimuthal
+  action $J_\phi \neq L_Z$ is the correct action to use instead of
+  $L_Z$. Even though the modeling in this paper also applies to
+  triaxial potentials, we denote $J_\phi$ as $L_Z$, because the
+  simulation uses an axisymmetric potential.}. The distribution of
+frequencies, however, is close-to one dimensional, its direction of
+largest variance can be well-modeled as a Gaussian (although below we
+will model it slightly differently), and its parameters can all be
+easily estimated from the velocity dispersion of the progenitor, the
+orbit of the progenitor, and the gravitational potential, as discussed
+below. Therefore, we will model tidal streams in frequency--angle
+space. Because the leading and trailing arm are well-separated in
+frequency space, we model each arm individually.
 
 A generative model of a tidal stream in frequency--angle space
 requires three ingredients: (a) a model for the distribution of times
