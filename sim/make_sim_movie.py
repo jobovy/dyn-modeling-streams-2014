@@ -222,7 +222,9 @@ def make_sim_movie(proj='xz',comov=False,skippng=False,
         print "'ffmpeg' failed"
     return None                           
 
-def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
+def make_sim_movie_aa(proj='aaarazap',comov=False,
+                      debris=False,
+                      skippng=False,
                       includeorbit=True,aas=False):
     #Directories
     if aas:
@@ -262,15 +264,34 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
         elif 'aas' in snapaadir:
             xrange=[1.1,1.5]
             yrange=[3.85,4.3]
+    if debris:
+        basefilename+= 'debris_'
+        moviefilename+= '_debris'
     if not skippng:
         nx= 10000
         nt= len(glob.glob(os.path.join(snapaadir,
                                        'gd1_evol_hitres_aa_*.dat')))
+        if debris:
+            #Load final snapshot first, determine which stars are debris
+            data= numpy.loadtxt(os.path.join(snapaadir,
+                                             'gd1_evol_hitres_aa_%s.dat' % str(1312).zfill(5)),
+                                delimiter=',')
+            thetar= data[:,6]
+            thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+            debrisIndx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
         for ii in range(nt):
             #Read data
             data= numpy.loadtxt(os.path.join(snapaadir,
                                        'gd1_evol_hitres_aa_%s.dat' % str(ii).zfill(5)),
                                 delimiter=',')
+            if debris:
+                thetar= data[:,6]
+                thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+                indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+                indx*= debrisIndx
+                data= data[indx,:]
+                if numpy.sum(indx) == 0:
+                    data= -1000.+numpy.random.uniform(size=(2,9))*50.
             if proj.lower() == 'aaarazap':
                 plotx= data[:,6]
                 ploty= data[:,8]
@@ -287,7 +308,10 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
                 plotx= data[:,0]*8.
                 ploty= data[:,2]*8.
                 plotz= data[:,1]*8.
-                zrange=[numpy.amin(plotz)+0.05,numpy.amax(plotz)-0.05]
+                if (numpy.amax(plotz)-numpy.amin(plotz)) <= 0.1:
+                    zrange=[numpy.amin(plotz),numpy.amax(plotz)]
+                else:
+                    zrange=[numpy.amin(plotz)+0.05,numpy.amax(plotz)-0.05]
             bovy_plot.bovy_print()
             bovy_plot.bovy_plot(plotx,ploty,c=plotz,scatter=True,
                                 edgecolor='none',s=2.,
@@ -295,6 +319,7 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
                                 ylabel=ylabel,
                                 xrange=xrange,
                                 yrange=yrange,
+                                crange=zrange,
                                 vmin=zrange[0],vmax=zrange[1],zorder=2)
             if includeorbit:
                 if proj.lower() == 'aaarazap':
@@ -331,6 +356,7 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,skippng=False,
 
 if __name__ == '__main__':
     if 'aa' in sys.argv[1].lower():
-        make_sim_movie_aa(proj=sys.argv[1],comov=len(sys.argv) > 2)
+        make_sim_movie_aa(proj=sys.argv[1],comov=len(sys.argv) > 2,
+                          debris=len(sys.argv) > 3)
     else:
         make_sim_movie(proj=sys.argv[1],comov=len(sys.argv) > 2)
