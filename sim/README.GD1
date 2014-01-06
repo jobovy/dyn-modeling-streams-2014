@@ -16,3 +16,15 @@ s2a gd1_evol.nemo gd1_evol.dat
 
 #HIGH TIME RESOLUTION
 gyrfalcON in=gd1_shifted.nemo out=gd1_evol_hitres.nemo tstop=5.125 eps=0.0015 step=0.00390625 kmax=8 Nlev=10 fac=0.01 accname=LogPot accpars=0,48400.,0.,1.0,0.9
+
+
+
+A SIMILAR SIMULATION WITH A HIGHER VELOCITY DISPERSION
+
+mkking out=gd1-hisigv.nemo nbody=10000 W0=2. mass=20000000 r_t=14.0 WD_units=t
+
+snapshift gd1-hisigv.nemo gd1-hisigv_shifted.nemo rshift=-11.63337239,-10.631736273934635,-20.76235661 vshift=-128.8281653,79.172383882274971,42.88727925
+
+gyrfalcON in=gd1-hisigv_shifted.nemo out=gd1-hisigv_evol.nemo tstop=5.125 eps=0.014 step=0.125 kmax=6 Nlev=10 fac=0.01 accname=LogPot accpars=0,48400.,0.,1.0,0.9
+
+s2a gd1-hisigv_evol.nemo gd1-hisigv_evol.dat

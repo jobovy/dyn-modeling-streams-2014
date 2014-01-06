@@ -355,7 +355,10 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,
     return None
 
 if __name__ == '__main__':
-    if 'aa' in sys.argv[1].lower():
+    if 'oparapar' in sys.argv[1].lower():
+        make_sim_movie_oparapar(proj=sys.argv[1],comov=len(sys.argv) > 2,
+                                debris=len(sys.argv) > 3)
+    elif 'aa' in sys.argv[1].lower():
         make_sim_movie_aa(proj=sys.argv[1],comov=len(sys.argv) > 2,
                           debris=len(sys.argv) > 3)
     else:
