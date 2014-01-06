@@ -1627,9 +1627,9 @@ method for calculating $\vecj(\vecx,\vecv)$ inspired by torus
 modeling. This method requires only a single orbit integration and
 allows the actions to be calculated accurately and as precisely as
 desired (that is, a convergence criterion can be applied and
-convergence can be attained). I describe this method briefly here and
-then show how to extend it to also calculate the frequencies and
-angles: $(\vecx,\vecv) \rightarrow (\veco,\veca)$.
+convergence can be attained). I describe the Fox \& Binney method
+briefly here and then show how to extend it to also calculate the
+frequencies and angles: $(\vecx,\vecv) \rightarrow (\veco,\veca)$.
 
 As in torus modeling, the Fox \& Binney method uses an auxiliary
 isochrone potential $\Phi^A$ that should be close to the target
@@ -1685,7 +1685,7 @@ its torus''), such that we can write (for example, for $\theta_R$)
   & \approx \mathrm{Re}\left[\exp(-i\,n_\phi\,\theta^A_\phi-i\,n_Z\,\theta^A_Z)\int \dd \theta_R^A\,\exp(-i\,n_R\,\theta^A_R)\right]\,.
 \end{split}
 \end{equation}
-As long as the auxiliary angle $\theta_R$ goes through the full range
+As long as the auxiliary angle $\theta^A_R$ goes through the full range
 $0$ to $2\pi$ along the orbit, the oscillatory behavior integrates to
 zero and \eqnname~(\ref{eq:jjtint}) simplifies to
 \begin{equation}\label{eq:aAIJ}
@@ -1717,8 +1717,8 @@ time zero and the frequencies
 \begin{equation}\label{eq:aat2}
   \veca = \veca(t=0) + \veco(\vecj) \,t = \veca^A +2\sum_{\vecn > 0} \frac{\partial S_{\vecn}(\vecj)}{\partial \vecj}\,\sin(\vecn\cdot\veca^A)\,.
 \end{equation}
-This a linear system of equations for each point along the orbit with
-unknowns $\veca(t=0)$, $\veco(\vecj)$, and the functions
+This is a linear system of equations for each point along the orbit
+with unknowns $\veca(t=0)$, $\veco(\vecj)$, and the functions
 $\frac{\partial S_{\vecn}(\vecj)}{\partial \vecj}$. For a finely
 integrated orbit, this system is highly over-constrained (at least
 when the number of expansion terms is small) and its solution can be
@@ -1737,28 +1737,33 @@ $\sin(\vecn\cdot\veca^A)$ is small, such that a small number of
 expansion terms is sufficient (I limit the terms in this axisymmetric
 case to $n_R < 4$ and $n_Z < 4$).
 
-The method described here is completely general, but the only obstacle
+The method described here is completely general and the only obstacle
 to using it is that a sufficiently close isochrone potential has to be
 supplied. Sufficiently close means specifically that the auxiliary
 angles have to go through the full range of $0$ to $2\pi$ along the
 orbit in the target potential. Whether they do or not is easy to check
 and I have found that with limited trial and error a good enough
 isochrone potential can be determined quickly for Milky-Way-like
-axisymmetric potentials, although it remains to be checked whether
-this holds for triaxial potentials as well. For analyzing stream data,
-the necessity of this trial-and-error determination of the auxiliary
-potential does not pose a practical problem, as all of the stream
-stars are on very similar orbits. Therefore, the same auxiliary
-potential can be used for all action--angle calculations for a given
-potential and for different potentials as well, as long as they are
-not too different. More widespread use of this technique may require
-automated methods for determining a good auxiliary potential. In the
-unlikely circumstance that no good auxiliary isochrone potential can
-be found, the method discussed here can also be used with other
-auxiliary potentials for which the actions and angles can be
-calculated, such as other spherical potentials or the family of
-St\"{a}ckel potentials. This will, however, add a non-negligible
-amount of computation for the necessary numerical integrations.
+axisymmetric potentials in regions where the flattening is mild (\ie,
+in the halo). Whether this method works near the plane of the disk
+where the potential is strongly flattened remains to be checked,
+although the fact that disk orbits are close to circular makes the
+details of the auxiliary potential important. Similarly, the method
+should be tested in more detail for triaxial potentials as well. For
+analyzing stream data, the necessity of this trial-and-error
+determination of the auxiliary potential does not pose a practical
+problem, as all of the stream stars are on very similar
+orbits. Therefore, the same auxiliary potential can be used for all
+action--angle calculations for a given potential and for different
+potentials as well, as long as they are not too different. More
+widespread use of this technique may require automated methods for
+determining a good auxiliary potential. In the unlikely circumstance
+that no good auxiliary isochrone potential can be found, the method
+discussed here can also be used with other auxiliary potentials for
+which the actions and angles can be calculated, such as other
+spherical potentials or the family of St\"{a}ckel potentials. This
+will, however, add a non-negligible amount of computation for the
+necessary numerical integrations.
 
 The action--angle method described in this Appendix is implemented in
 the \emph{galpy} Galactic dynamics code\footnote{Available at
