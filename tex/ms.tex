@@ -596,11 +596,12 @@ general description in terms of a Gaussian distribution would have
 nine free parameters. However, we can model it with fewer free
 parameters as follows. First, following \citet{Eyre11a}, we
 approximate the \emph{action} distribution as a Gaussian with standard
-deviations
+deviations given by the approximate spread in the actions $(\delta
+J_R,\delta L_Z,\delta J_Z)$ in the cluster
 \begin{align}
-  \sigma_{J_R} & = \frac{1}{2\,\pi}\oint\dd r\,p_r \approx \frac{1}{\pi}\,\sigv\,\left(r_{\mathrm{apo}}-r_{\mathrm{peri}}\right)\,,\\
-  \sigma_{L_Z} & \approx  \sigv\,r_{\mathrm{peri}}\,,\\
-  \sigma_{J_Z} & = \frac{1}{\pi}\oint\dd z\,p_z \approx \frac{2}{\pi}\,\sigv\,Z_{\mathrm{max}}\,,
+  \sigma_{J_R} & \approx \delta \left(\frac{1}{2\,\pi}\oint\dd r\,p_r\right) \approx \frac{1}{\pi}\,\sigv\,\left(r_{\mathrm{apo}}-r_{\mathrm{peri}}\right)\,,\\
+  \sigma_{L_Z} & \approx  \delta L_Z \approx \sigv\,r_{\mathrm{peri}}\,,\\
+  \sigma_{J_Z} & \approx \delta\left(\frac{1}{\pi}\oint\dd z\,p_z \right)\approx \frac{2}{\pi}\,\sigv\,Z_{\mathrm{max}}\,,
 \end{align}
 where $\sigv$ is the velocity dispersion of the progenitor,
 $r_{\mathrm{apo}}$ and $r_{\mathrm{peri}}$ are the apo- and pericenter
@@ -622,9 +623,10 @@ direction along which the stream spreads. While the model I propose
 here is a simple one, it works well without having been tweaked for
 the simulation under scrutiny. The angle between the principal
 eigenvector of $V_\veco$ and the progenitor's frequency vector is
-$0.50^\circ$ while the value measured from the simulation is
-$0.18^\circ$. For a model with an isotropic action distribution, the
-misalignment would be $1.28^\circ$.
+$0.50^\circ$ which is close to the value measured from the simulation
+is $0.18^\circ$. For a model with an isotropic action distribution,
+the misalignment would be $1.28^\circ$, much larger than the measured
+value.
 
 \begin{figure}[t!]
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aadohist.ps}
@@ -1324,18 +1326,18 @@ numbers of orbit integrations to marginalize over stripping time
 phase--space dimensions. Thus, any such method will likely be orders
 of magnitude slower than the method put forth here.
 
-The forward model of this paper is superior to all other
-stream-fitting methods in that it allows easy marginalization over
-missing or noisily measured phase--space coordinates. The obvious
-exception to this is orbit fitting, which as a purely one-dimensional
-model is easy to integrate over. However, orbit fitting likely
-produces biased results as streams do not delineate single orbits over
-their full angle widths (see below). The fiducial model I propose in
-this paper allows for a straightforward replacement of orbit fitting,
-at the expense of adding two extra parameters, $\sigv$ and $t_d$, in
-addition to the six-dimensional position of the progenitor. The orbit
-in orbit fitting then gets replaced by the stream track, calculated as
-in \sectionname~\ref{sec:track}. To constrain $\sigv$ and $t_d$ it is
+The forward model of this paper is superior to other stream-fitting
+methods in that it allows easy marginalization over missing or noisily
+measured phase--space coordinates. The obvious exception to this is
+orbit fitting, which as a purely one-dimensional model is easy to
+integrate over. However, orbit fitting likely produces biased results
+as streams do not delineate single orbits over their full angle widths
+(see below). The fiducial model I propose in this paper allows for a
+straightforward replacement of orbit fitting, at the expense of adding
+two extra parameters, $\sigv$ and $t_d$, in addition to the
+six-dimensional position of the progenitor. The orbit in orbit fitting
+then gets replaced by the stream track, calculated as in
+\sectionname~\ref{sec:track}. To constrain $\sigv$ and $t_d$ it is
 necessary to also use the observed width and length of the
 stream. While cold streams are typically too narrow to be resolved in
 $D$ or any of the velocity components, the observed width of the
@@ -1464,14 +1466,14 @@ stream backward to the progenitor position. Similarly, we can
 extrapolate a leading stream to its trailing counterpart, if this is
 unknown (and vice versa).
 
-While this requires high-quality data, this should be achievable in
-the near future. We can average or ``stack'' noisily measured
-phase--space coordinates in small segments of the stream to determine
-high quality average phase--space positions and use these instead of
-data on individual stream stars. These considerations show that
-further observations of members of the GD-1 and Orphan streams would
-be highly informative for determining the location or fate of their
-progenitors.
+While determining the mean orbit as a function of position along the
+stream requires high-quality data, this should be achievable in the
+near future. We can average or ``stack'' noisily measured phase--space
+coordinates in small segments of the stream to determine high quality
+average phase--space positions and use these instead of data on
+individual stream stars. These considerations show that further
+observations of members of the GD-1 and Orphan streams would be highly
+informative for determining the location or fate of their progenitors.
 
 \subsection{Baseline models for stream-gap finding}
 
