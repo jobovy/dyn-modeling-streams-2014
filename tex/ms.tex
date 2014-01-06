@@ -148,12 +148,12 @@
 Tidal streams hold enormous promise as probes of both the large-scale
 structure of the Milky Way (MW) halo's density distribution
 \citep[\eg,][]{Johnston99a,Koposov10a} and its small-scale
-fluctuations \citep{Carlberg12a}. However, two factors
-have hampered the practical use of tidal streams in obtaining
-constraints on the MW gravitational potential. First, streams do not
-trace a single orbit, which has led to confusion over how to best fit
-streams and over how problematic the single-orbit approximation really
-is \citep{Eyre11a,Sanders13a}. Second, approaches that go beyond the
+fluctuations \citep{Carlberg12a}. However, two factors have hampered
+the practical use of tidal streams in obtaining constraints on the MW
+gravitational potential. First, streams do not trace a single orbit,
+which has led to confusion over how to best fit streams and over how
+problematic the single-orbit approximation really is
+\citep{Eyre11a,Sanders13a}. Second, approaches that go beyond the
 single-orbit assumption encounter practical difficulties of
 computational cost and observational data quality making many of these
 approaches impractical for real, noisy data
@@ -162,9 +162,9 @@ be due to interactions with dark--matter subhalos \citep{Yoon11a}, but
 spurious underdensities could be created by the dynamics of stream
 stars. This hinders our ability to use underdensities in star counts
 along a tidal stream in order to constrain the number of encounters
-with dark satellites and their masses \citep{Ngan14a}. Fast,
-generative models of tidal streams would greatly benefit both of these
-applications.
+with dark satellites and their masses \citep{Ngan14a}. Simple,
+analytic models of how tidal streams are generated---\emph{generative}
+models---would greatly benefit both of these applications.
 
 It has long been clear that the dynamics of tidal streams is most
 simply described in terms of action--angle coordinates
@@ -189,8 +189,9 @@ efficiently. Until now this has required accurate phase--space data
 and specialized algorithms that break down for the eccentric orbits on
 which tidal-stream progenitors are typically found (that is, radial
 and/or vertical actions of similar magnitude as the angular momentum;
-\citealt{Sanders12a}). However, even with Gaia, future stream data
-will typically have large uncertainties compared to the intrinsic
+\citealt{Sanders12a}). However, even with Gaia \citep{Perryman01a},
+all of the phase--space coordinates except for the sky position will
+typically have non-negligible uncertainties compared to the intrinsic
 dispersion of the stream and in particular the line-of-sight
 velocities of the faintest stream members will not be observed for
 many stars. Additionally, streams are superimposed on a non-negligible
@@ -206,14 +207,14 @@ valid, the fiducial stream model in this paper consists of a
 three-dimensional (close to) Gaussian distribution of frequencies in
 the stream, a three-dimensional Gaussian distribution of initial angle
 offsets between stream members and the progenitor, and a uniform
-distribution of stripping times; the frequency and angle distributions
-are independent of stripping time. While this model oversimplifies the
-real stripping process, I argue that at least for constraining the
-gravitational potential with stream data, this simple model is likely
-unbiased. For detailed mock stream data, more elaborate models of the
-stripping process as a function of time might be necessary and I
-discuss how these could easily be incorporated into the proposed
-framework.
+distribution of stripping times; the frequency and angle offset
+distributions are independent of stripping time. While this model
+oversimplifies the real stripping process, I argue that at least for
+constraining the gravitational potential with stream data, this simple
+model is likely unbiased. For detailed mock stream data, more
+elaborate models of the stripping process as a function of time might
+be necessary and I discuss how these could easily be incorporated into
+the proposed framework.
 
 To evaluate the model in position--velocity coordinates, the
 transformation to and from action--angle coordinates is computed using
@@ -249,9 +250,10 @@ stream PDF for individual stream members as well as its
 marginalization and convolution over missing and noisy directions. A
 discussion and outlook is presented in
 \sectionname~\ref{sec:discussion} and I conclude in
-\sectionname~\ref{sec:conclusion}. In \appendixname~\ref{sec:aa} a
-novel method for calculating actions, frequencies, and angles for any
-orbit in any static gravitational potential is presented.
+\sectionname~\ref{sec:conclusion}. In \appendixname~\ref{sec:aa} I
+review the method of Fox \& Binney (2014, in preparation) for
+calculating actions in any static gravitational potential and I show
+how it can be extended to compute frequencies and angles.
 
 
 \section{The dynamics of tidal streams}\label{sec:dynamics}
@@ -263,15 +265,15 @@ here a brief description of the dynamics of tidal streams that is
 relevant for what follows.
 
 In position--velocity space, a tidal stream forms as stars are
-stripped from a progenitor cluster or satellite galaxy some time $\ts$
-in the past and then evolve (largely) independently in a galaxy's host
-potential, moving away both in position and velocity from the
+stripped from a progenitor cluster or satellite galaxy some time $\ts
+> 0$ in the past and then evolve (largely) independently in a galaxy's
+host potential, moving away both in position and velocity from the
 progenitor object as time goes on. Thus, a star was offset by a small
 amount $(\Delta \vecx,\Delta \vecv)$ from the position of the
 progenitor $(\vecx^p,\vecv^p)(-\ts)$ at that time. Then the star
 orbited under the influence of the same gravitational potential $\Phi$
 as the progenitor until the present day $(t=0)$, when it was observed:
-$(\vecx,\vecv)(t=0)$ = $\vech_{\ts}(\vecx^p(-ts)+\Delta
+$(\vecx,\vecv)(t=0)$ = $\vech_{\ts}(\vecx^p(-\ts)+\Delta
 \vecx,\vecv^p(-\ts)+\Delta \vecv)$, where $\vech$ denotes the
 Hamiltonian flow from $t=-\ts$ to $t=0$ (see
 \citealt{binneytremaine}); this is simply the orbit of the star
@@ -334,17 +336,17 @@ $\unitvec \veco$ by flexible modeling of the distribution of $\Delta
 I illustrate the theoretical considerations set forth in this paper by
 using a simulated tidal stream. This stream is set up similarly to
 that used in \citet{Sanders13b}. The stream is constructed by running
-an $N$-body simulation of a King cluster on an orbit similar to that
-of the GD-1 stream \citep{Koposov10a}. Specifically, a King cluster
-with a mass of $2\times10^4\msun$, a tidal radius of $0.07\kpc$, and a
-ratio of the central potential to the velocity dispersion squared of
-$2.0$ is sampled using $10^4$ particles. The cluster is evolved with
-self-gravity in an external logarithmic host potential with $V_c =
-220\kms$ and a flattening $q=0.9$ ($\Phi = V_c^2 \ln [R^2 + z^2/q^2]$)
-using the gyrfalcon code \citep{Dehnen00a,Dehnen02a} with a softening
-of $1.5\pc$ in the NEMO toolkit \citep{Teuben95a}. The cluster is
-evolved for $5.011\Gyr$ ($=5.125\kpc/[\kms]$) from the initial
-condition $(X,Y,Z) =
+an $N$-body simulation of a King cluster \citep{King66a} on an orbit
+similar to that of the GD-1 stream \citep{Koposov10a}. Specifically, a
+King cluster with a mass of $2\times10^4\msun$, a tidal radius of
+$0.07\kpc$, and a ratio of the central potential to the velocity
+dispersion squared of $2.0$ is sampled using $10^4$ particles. The
+cluster is evolved with self-gravity in an external logarithmic host
+potential with $V_c = 220\kms$ and a flattening $q=0.9$ ($\Phi = V_c^2
+\ln [R^2 + z^2/q^2]$) using the gyrfalcon code
+\citep{Dehnen00a,Dehnen02a} with a softening of $1.5\pc$ in the NEMO
+toolkit \citep{Teuben95a}. The cluster is evolved for $5.011\Gyr$
+($=5.125\kpc/[\kms]$) from the initial condition $(X,Y,Z) =
 (-11.63337239,-20.76235661,-10.631736273934635)\kpc$ and
 $(V_X,V_Y,V_Z) = (-128.8281653,42.88727925,79.172383882274971)\kms$,
 chosen such that the cluster ends up at roughly the observed location
@@ -364,9 +366,10 @@ $(\Omega_R,\Omega_\phi,\Omega_Z) = (15.7,-10.8,11.9)\Gyr\inv$.
     current position of the progenitor cluster and the dashed line
     shows its orbit. The solid line gives the stream track, calculated
     using the method described in \sectionname~\ref{sec:track}. The
-    inset shows a zoomed-in version of part of the leading stream that
-    more clearly shows the offset between the stream track and the
-    progenitor orbit.}\label{fig:gd1_xz}
+    inset shows a zoomed-in version of part of the leading stream
+    (stretched in $X$ and $Z$) that more clearly shows the offset
+    between the stream track and the progenitor
+    orbit.}\label{fig:gd1_xz}
 %python plot_stream.py ../tex/gd1_evol_xz.ps
 \end{figure}
 
@@ -507,7 +510,10 @@ a smaller number of particles lost between pericenter
 passages. Realistic models of a stream, especially those that require
 good models of the surface-density structure of the stream as a
 function of stream angle, need to model this non-uniform stripping
-process.
+process. In what follows, we will use a uniform distribution of
+stripping times. This is appropriate for modeling the large-scale
+structure of streams, such as what is used when constraining the
+gravitational potential.
 
 The middle panel of \figurename~\ref{fig:gd1_times} shows the
 frequency offsets between stream particles and the progenitor as a
@@ -528,10 +534,10 @@ been stripped earlier are found at larger angle offsets
 today. Self-sorting---the tendency of particles stripped later with
 larger frequency offsets to overtake particles stripped earlier at
 smaller frequency differences and thus to erase correlations between
-particle position along the stream and stripping time---happens to a
-small extent but the narrow distribution of frequency offsets limits
-the ability of particles removed later to reach large distances from
-the progenitor.
+particle position along the stream and stripping time and sort the
+stream in frequency offset---happens to a small extent but the narrow
+distribution of frequency offsets limits the ability of particles
+removed later to reach large distances from the progenitor.
 
 We can model streams in frequency space because the mapping $\vecj
 \rightarrow \veco$ is of full rank for axisymmetric and triaxial
@@ -539,7 +545,7 @@ potentials. However, for spherical potentials this mapping only has
 rank two, because $\Omega_\phi = \mathrm{sgn}(L_Z)\,\Omega_Z$, such
 that the determinant $|\partial \veco / \partial \vecj|$ is zero. For
 spherical potentials, tidal streams only spread in a five-dimensional
-subspace and in modeling streams in spherical potentials we need to
+subspace and when modeling streams in spherical potentials we need to
 keep the direction perpendicular to this subspace constant.
 
 \subsection{The fiducial stream model}\label{sec:fidmodel}
@@ -591,11 +597,11 @@ nine free parameters. However, we can model it with fewer free
 parameters as follows. First, following \citet{Eyre11a}, we
 approximate the \emph{action} distribution as a Gaussian with standard
 deviations
-\begin{equation}
-  \sigma_{J_R} = \frac{1}{\pi}\,\sigv\,\left(r_{\mathrm{apo}}-r_{\mathrm{peri}}\right)\,,\quad 
-  \sigma_{L_Z} = \sigv\,r_{\mathrm{peri}}\,,\quad 
-  \sigma_{J_Z} = \frac{2}{\pi}\,\sigv\,Z_{\mathrm{max}}\,,
-\end{equation}
+\begin{align}
+  \sigma_{J_R} & = \frac{1}{2\,\pi}\oint\dd r\,p_r \approx \frac{1}{\pi}\,\sigv\,\left(r_{\mathrm{apo}}-r_{\mathrm{peri}}\right)\,,\\
+  \sigma_{L_Z} & \approx  \sigv\,r_{\mathrm{peri}}\,,\\
+  \sigma_{J_Z} & = \frac{1}{\pi}\oint\dd z\,p_z \approx \frac{2}{\pi}\,\sigv\,Z_{\mathrm{max}}\,,
+\end{align}
 where $\sigv$ is the velocity dispersion of the progenitor,
 $r_{\mathrm{apo}}$ and $r_{\mathrm{peri}}$ are the apo- and pericenter
 radii of the progenitor orbit, respectively, and $Z_{\mathrm{max}}$ is
@@ -1795,6 +1801,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Helmi,~A. \& White,~S.~D.~M. 1999, \mnras, 307, 495
 \bibitem[Johnston \etal(1999)]{Johnston99a}
   Johnston,~K.~V., Zhao,~H., Spergel,~D.~N., \& Hernquist,~L. 1999, \apj, 512, L109
+\bibitem[King(1966)]{King66a}
+  King,~I.~R. 1966, \aj, 71, 64
 \bibitem[Koposov \etal(2010)]{Koposov10a}
   Koposov,~S.~E., Rix,~H.-W., \& Hogg,~D.~W. 2010, \apj, 712, 260
 \bibitem[K\"{u}pper \etal(2010)]{Kuepper10a}
@@ -1807,6 +1815,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Ngan,~W.~H.~W. \& Carlberg,~R.~G. 2014, \apj, submitted
 \bibitem[Pe{\~n}arrubia \etal(2012)]{Penarrubia12a}
   Pe{\~n}arrubia, J., Koposov,~S.~E., \& Walker,~M.~G. 2012, \apj, 760, 2
+\bibitem[Perryman \etal(2001)]{Perryman01a}
+  Perryman,~M.~A.~C., \etal\ 2001, \aap, 369, 339
 \bibitem[Price-Whelan \& Johnston(2013)]{PriceWhelan13a}
   Price-Whelan,~A.~M. \& Johnston,~K.~V.~2013, \apj, 778, L12
 \bibitem[Sanders(2012)]{Sanders12a}
