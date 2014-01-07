@@ -1,10 +1,11 @@
 import sys
 import os, os.path
+import copy
 import glob
 import subprocess
 import numpy
 from numpy import linalg
-from galpy.util import bovy_plot, bovy_coords
+from galpy.util import bovy_plot, bovy_coords, bovy_conversion
 from galpy import potential
 from galpy.orbit import Orbit
 def make_sim_movie(proj='xz',comov=False,skippng=False,
@@ -354,10 +355,138 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,
         print "'ffmpeg' failed"
     return None
 
+def make_sim_movie_oparapar(proj='aaarazap',
+                            skippng=True,#False,
+                            aas=False):
+    #Directories
+    if aas:
+        snapaadir= 'snaps_aas/'
+        aastr= 'aas'
+    else:
+        snapaadir= 'snaps_aai/'
+        aastr= 'aai'
+    savedirpng= './movies/gd1_aa/pngs/'
+    basefilename= 'gd1_evol_%s_' % aastr
+    moviefilename= 'gd1_evol_%s' % aastr
+    if True:
+        basefilename+= 'oparapar_'
+        moviefilename+= '_oparapar'
+        xlabel=r'$|\theta_\parallel|$'
+        ylabel=r'$|\Omega_\parallel|$'
+        xrange=[0.,1.3]
+        yrange=[0.1,0.3]
+        zrange=[0.,4.5]
+    if not skippng:
+        nt= len(glob.glob(os.path.join(snapaadir,
+                                       'gd1_evol_hitres_aa_*.dat')))
+        #Load final snapshot first, determine which stars are debris and when they were stripped
+        data= numpy.loadtxt(os.path.join(snapaadir,
+                                         'gd1_evol_hitres_aa_%s.dat' % str(1312).zfill(5)),
+                            delimiter=',')
+        thetar= data[:,6]
+        thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+        debrisIndx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        thetar= thetar[debrisIndx]
+        #Calculate times at which stars were stripped, angles
+        thetap= data[:,7]
+        thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+        thetap= thetap[debrisIndx]
+        thetaz= data[:,8]
+        thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+        thetaz= thetaz[debrisIndx]
+        #center around 0 (instead of pi)
+        thetar-= numpy.pi
+        thetap-= numpy.pi
+        thetaz-= numpy.pi
+        #Frequencies
+        Or= data[:,3]
+        Op= data[:,4]
+        Oz= data[:,5]
+        dOr= Or[debrisIndx]-numpy.median(Or)
+        dOp= Op[debrisIndx]-numpy.median(Op)
+        dOz= Oz[debrisIndx]-numpy.median(Oz)
+        #Times
+        dangle= numpy.vstack((thetar,thetap,thetaz))
+        dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+        dts= numpy.empty(data.shape[0])
+        dts[debrisIndx]= numpy.sum(dO*dangle,axis=0)/numpy.sum(dO**2.,axis=0)
+        #Direction in which the stream spreads
+        dO4dir= copy.copy(dO)
+        try:
+            dO4dir[:,dO4dir[:,0] < 0.]*= -1.
+        except IndexError:
+            pass
+        dOdir= numpy.median(dO4dir,axis=1)
+        dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
+        for ii in range(115,nt):#Skip the first 100, because nothing happens anyway
+            #Read data
+            data= numpy.loadtxt(os.path.join(snapaadir,
+                                       'gd1_evol_hitres_aa_%s.dat' % str(ii).zfill(5)),
+                                delimiter=',')
+            if True:
+                thetar= data[:,6]
+                thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+                indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+                indx*= debrisIndx
+                tdts= dts[indx]
+                if numpy.sum(indx) == 0:
+                    data= -1000.+numpy.random.uniform(size=(2,9))*50.
+            if True:
+                thetar= data[:,6]
+                thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+                thetar= thetar[indx]
+                thetap= data[:,7]
+                thetap= (numpy.pi+(thetap-numpy.median(thetap))) % (2.*numpy.pi)
+                thetap= thetap[indx]
+                thetaz= data[:,8]
+                thetaz= (numpy.pi+(thetaz-numpy.median(thetaz))) % (2.*numpy.pi)
+                thetaz= thetaz[indx]
+                #center around 0 (instead of pi)
+                thetar-= numpy.pi
+                thetap-= numpy.pi
+                thetaz-= numpy.pi
+                #Frequencies
+                Or= data[:,3]
+                Op= data[:,4]
+                Oz= data[:,5]
+                dOr= Or[indx]-numpy.median(Or)
+                dOp= Op[indx]-numpy.median(Op)
+                dOz= Oz[indx]-numpy.median(Oz)
+                dO= numpy.vstack((dOr,dOp,dOz))*bovy_conversion.freq_in_Gyr(220.,8.)
+                #Direction in which the stream spreads, taken from final snapshot
+                #Times
+                dangle= numpy.vstack((thetar,thetap,thetaz))
+                plotx= numpy.fabs(numpy.dot(dangle.T,dOdir))
+                ploty= numpy.fabs(numpy.dot(dO.T,dOdir))
+                plotz= tdts
+            bovy_plot.bovy_print()
+            bovy_plot.bovy_plot(plotx,ploty,c=plotz,scatter=True,
+                                edgecolor='none',s=9.5,
+                                xlabel=xlabel,
+                                ylabel=ylabel,
+                                xrange=xrange,
+                                yrange=yrange,
+                                crange=zrange,
+                                vmin=zrange[0],vmax=zrange[1],zorder=2)
+            bovy_plot.bovy_end_print(os.path.join(savedirpng,basefilename+'%s.png' % str(ii-115).zfill(5)))
+    #Turn into movie
+    framerate= 25
+    bitrate= 1000000
+    try:
+        subprocess.check_call(['ffmpeg',
+                               '-i',
+                               os.path.join(savedirpng,basefilename+'%05d.png'),
+                               '-y',
+                               '-r',str(framerate),
+                               '-b', str(bitrate),
+                               moviefilename+'.mpg'])
+    except subprocess.CalledProcessError:
+        print "'ffmpeg' failed"
+    return None
+
 if __name__ == '__main__':
     if 'oparapar' in sys.argv[1].lower():
-        make_sim_movie_oparapar(proj=sys.argv[1],comov=len(sys.argv) > 2,
-                                debris=len(sys.argv) > 3)
+        make_sim_movie_oparapar(proj=sys.argv[1])
     elif 'aa' in sys.argv[1].lower():
         make_sim_movie_aa(proj=sys.argv[1],comov=len(sys.argv) > 2,
                           debris=len(sys.argv) > 3)
