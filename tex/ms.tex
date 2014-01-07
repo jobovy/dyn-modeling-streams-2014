@@ -97,11 +97,11 @@
 \altaffiltext{\theaddress}{\label{Hubble}\stepcounter{address} Hubble fellow}
 
 \begin{abstract} 
-  I present a new framework for modeling the dynamics of cold tidal
+  I present a new framework for modeling the dynamics of tidal
   streams. The framework consists of simple models for the initial
   action--angle distribution of tidal debris, which can be
   straightforwardly evolved forward in time. Taking advantage of the
-  essentially one-dimensional nature of cold tidal streams, the
+  essentially one-dimensional nature of tidal streams, the
   transformation to position--velocity coordinates can be linearized
   and interpolated near a small number of points along the progenitor
   orbit, thus allowing for efficient computations of a stream's
@@ -199,8 +199,8 @@ background of field stars and background contamination cannot be
 easily taken into account in any of the current stream-fitting
 methods.
 
-In this paper, I present a new method for modeling cold tidal streams
-that fundamentally lives in frequency--angle space, because the stream
+In this paper, I present a new method for modeling tidal streams that
+fundamentally lives in frequency--angle space, because the stream
 distribution function is essentially one-dimensional in this
 space. While many of the results of this paper are more generally
 valid, the fiducial stream model in this paper consists of a
@@ -221,20 +221,21 @@ transformation to and from action--angle coordinates is computed using
 a novel method for calculating action--angle coordinates presented in
 Appendix~\ref{sec:aa}. This transformation is linearized at a small
 number of points along the progenitor orbit that span the length of
-the stream. For cold streams, the separation between the stream track
-and the progenitor orbit as well as the internal differences within
-the stream are small, such that this linear approximation is accurate
-enough. The linear approximation allows for fast evaluation of the
-average stream location (the stream ``track'') in position--velocity
-coordinates and efficient mock data generation. For a uniform
-distribution of stripping times, an observed stream member's
-phase--space probability distribution function (PDF) can be
-analytically marginalized over stripping time, such that using the
-linear approximation any evaluation---including marginalization and
-uncertainty convolution---of the PDF is extremely rapid. This clears
-the way for proper probabilistic inference of the Milky Way halo's
-gravitational potential and progenitor properties using stream data
-for individual stars.
+the stream. For streams originating from progenitors with masses
+$\lesssim 10^8\msun$, the separation between the stream track and the
+progenitor orbit as well as the internal differences within the stream
+are small, such that this linear approximation is accurate enough. The
+linear approximation allows for fast evaluation of the average stream
+location (the stream ``track'') in position--velocity coordinates and
+efficient mock data generation. For a uniform distribution of
+stripping times, an observed stream member's phase--space probability
+distribution function (PDF) can be analytically marginalized over
+stripping time, such that using the linear approximation any
+evaluation---including marginalization and uncertainty
+convolution---of the PDF is extremely rapid. This clears the way for
+proper probabilistic inference of the Milky Way halo's gravitational
+potential and progenitor properties using stream data for individual
+stars.
 
 The framework presented in this paper differs from other approaches
 that model streams in action--angle coordinates in a few respects. As
@@ -656,7 +657,7 @@ the misalignment would be $1.28^\circ$, much larger than the measured
 value.
 
 \begin{figure}[t!]
-  \includegraphics[width=0.48\textwidth,clip=]{gd1_evol_aadohist.eps}
+  \includegraphics[width=0.44\textwidth,clip=]{gd1_evol_aadohist.eps}
   \caption{Distribution of the magnitude of frequency offsets between
     stream particles and the progenitor along the direction of the
     mean frequency offset. The dashed line is a Gaussian fit to this
@@ -696,11 +697,11 @@ projection of $V_\veco$ onto this space.
 
 Because we expect the typical $\Delta\veco$ to scale with the velocity
 dispersion of the progenitor, I conjecture that a constant
-$\mu_\Omega$ can be used for modeling cold tidal streams of any
-(small-ish) velocity dispersion. Further modeling of simulated
-streams, however, is necessary to check this and to find the optimal
-value of $\mu_\Omega$. In particular, if the progenitor has internal
-rotation the action distribution of the debris and $\mu_\Omega$ may be
+$\mu_\Omega$ can be used for modeling tidal streams of any (small-ish)
+velocity dispersion. Further modeling of simulated streams, however,
+is necessary to check this and to find the optimal value of
+$\mu_\Omega$. In particular, if the progenitor has internal rotation
+the action distribution of the debris and $\mu_\Omega$ may be
 significantly different. Fixing $\mu_\Omega$ leaves a single free
 parameter \sigv\ for modeling the frequency offset distribution of a
 tidal stream. In modeling to observed data, this parameter needs to be
@@ -727,29 +728,12 @@ parameters here have been fixed ``by-eye'', and better fits might be
 possible using more quantitative fit procedures.
 
 
-\section{The track of a tidal stream}\label{sec:track}
-
-In this Section, I discuss how to calculate the track of a model tidal
-stream in the generative model described in
-\sectionname~\ref{sec:generative}. The track consists of the mean
-location of the stream as a function of angle along the stream. I also
-describe how to estimate the dispersion of the stream along this
-track. In \sectionname~\ref{sec:trackaa}, I explain how to calculate
-the track of the stream in frequency--angle coordinates as well as how
-to estimate the spread around this track. In
-\sectionname~\ref{sec:trackxv} I discuss how to efficiently project
-the stream track and dispersion into position--velocity coordinates
-$(\vecx,\vecv)$ or observable coordinates $(l,b,D,\vlos,\pmll,\pmbb)$.
-
-
-\subsection{In frequency--angle coordinates}\label{sec:trackaa}
-
 \begin{figure*}[t!]
 \begin{center}
-  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaaparopar.ps}
-  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaaparoperp.ps}\\
-  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaaparaperp.ps}
-  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaapartime.ps}
+  \includegraphics[width=0.34\textwidth,clip=]{gd1_evol_aaaparopar.eps}
+  \includegraphics[width=0.34\textwidth,clip=]{gd1_evol_aaaparoperp.eps}\\
+  \includegraphics[width=0.34\textwidth,clip=]{gd1_evol_aaaparaperp.eps}
+  \includegraphics[width=0.34\textwidth,clip=]{gd1_evol_aaapartime.eps}
   \caption{Stream properties as a function of angle along the
     stream. The top, left panel shows the magnitude of frequency
     offsets along the stream. The gray line shows the mean predicted
@@ -779,6 +763,41 @@ $(\vecx,\vecv)$ or observable coordinates $(l,b,D,\vlos,\pmll,\pmbb)$.
 %python plot_stream.py ../tex/gd1_evol_aaapartime.ps
 \end{center}
 \end{figure*}
+
+\section{The track of a tidal stream}\label{sec:track}
+
+In this Section, I discuss how to calculate the track of a model tidal
+stream in the generative model described in
+\sectionname~\ref{sec:generative}. The track consists of the mean
+location of the stream as a function of angle along the stream. I also
+describe how to estimate the dispersion of the stream along this
+track. In \sectionname~\ref{sec:trackaa}, I explain how to calculate
+the track of the stream in frequency--angle coordinates as well as how
+to estimate the spread around this track. In
+\sectionname~\ref{sec:trackxv} I discuss how to efficiently project
+the stream track and dispersion into position--velocity coordinates
+$(\vecx,\vecv)$ or observable coordinates $(l,b,D,\vlos,\pmll,\pmbb)$.
+
+
+\begin{figure*}[t!p]
+\begin{center}
+  \includegraphics[width=0.8\textwidth,clip=]{track_aa.eps}\\
+  \includegraphics[width=0.8\textwidth,clip=]{track_xz.eps}\\
+  \includegraphics[width=0.8\textwidth,clip=]{track_ld.eps}
+  \caption{Illustration of the determination of the average stream
+    track described in \sectionname~\ref{sec:track}. The small black
+    dots in each panel are the points along the progenitor track at
+    which the Jacobian $\partial (\veco,\veca) / \partial
+    (\vecx,\vecv)$ is calculated. The large black dots are the
+    corresponding points on the stream where the track is
+    calculated. The dashed line in each panel is the progenitor's
+    orbit, while the solid line and dash-dotted lines are the mean
+    track and $2\sigma$ dispersion.}\label{fig:track}
+%python illustrate_track.py ../tex/track_aa.ps ../tex/track_xz.ps ../tex/track_ld.ps
+\end{center}
+\end{figure*}
+
+\subsection{In frequency--angle coordinates}\label{sec:trackaa}
 
 In the generative model described above, the direction of the angle
 along the stream lies along the principal eigenvector of $V_\veco$,
@@ -908,21 +927,20 @@ the approximate estimate obtained using the mean stripping time rather
 than integrating over it. This simple estimate agrees well with the
 exact calculation.
 
-\begin{figure*}
+\begin{figure*}[t!]
 \begin{center}
-  \includegraphics[width=0.8\textwidth,clip=]{track_aa.eps}\\
-  \includegraphics[width=0.8\textwidth,clip=]{track_xz.eps}\\
-  \includegraphics[width=0.8\textwidth,clip=]{track_ld.eps}
-  \caption{Illustration of the determination of the average stream
-    track described in \sectionname~\ref{sec:track}. The small black
-    dots in each panel are the points along the progenitor track at
-    which the Jacobian $\partial (\veco,\veca) / \partial
-    (\vecx,\vecv)$ is calculated. The large black dots are the
-    corresponding points on the stream where the track is
-    calculated. The dashed line in each panel is the progenitor's
-    orbit, while the solid line and dash-dotted lines are the mean
-    track and $2\sigma$ dispersion.}\label{fig:track}
-%python illustrate_track.py ../tex/track_aa.ps ../tex/track_xz.ps ../tex/track_ld.ps
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lb.eps}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_ld.eps}
+  \caption{Simulated stream after $5.011\Gyr$ as a function of
+    Galactic longitude. The top panel shows the stream in Galactic
+    latitude and the bottom panel shows it in the distance from the
+    Sun. The progenitor is shown as the large gray dot and its orbit
+    as the dashed lines. The predicted track of the stream is shown as
+    the solid line. Insets show various zoomed-in parts of the stream
+    to show the stream, progenitor orbit, and predicted stream track
+    up close.}\label{fig:gd1_lbd}
+%python plot_stream.py ../tex/gd1_evol_lb.ps
+%python plot_stream.py ../tex/gd1_evol_ld.ps
 \end{center}
 \end{figure*}
 
@@ -948,39 +966,22 @@ starting point for more precise calculations of the dispersion in
 
 \subsection{In position--velocity coordinates}\label{sec:trackxv}
 
-\begin{figure*}[th!!]
-\begin{center}
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lb.eps}
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_ld.eps}
-  \caption{Simulated stream after $5.011\Gyr$ as a function of
-    Galactic longitude. The top panel shows the stream in Galactic
-    latitude and the bottom panel shows it in the distance from the
-    Sun. The progenitor is shown as the large gray dot and its orbit
-    as the dashed lines. The predicted track of the stream is shown as
-    the solid line. Insets show various zoomed-in parts of the stream
-    to show the stream, progenitor orbit, and predicted stream track
-    up close.}\label{fig:gd1_lbd}
-%python plot_stream.py ../tex/gd1_evol_lb.ps
-%python plot_stream.py ../tex/gd1_evol_ld.ps
-\end{center}
-\end{figure*}
-
-
 Having estimated the track of the stream and the dispersion around
 this in frequency--angle space, we can propagate the track to
 position--velocity coordinates by inverting the transformation
 $(\vecx,\vecv) \rightarrow (\veco,\veca)$. I do this by linearizing
 the transformation along the orbit of the progenitor in the vicinity
 of the stream and inverting this linearized transformation. That this
-works relies on the stream being cold for a few different
-reasons. First, the track of a cold stream, while in general offset
-from the orbit of the progenitor, does not stray too far from it, such
-that the transformation to frequency--angle coordinates can be
-linearized over the range of the stream--orbit offset. Second, cold
-streams are essentially one-dimensional, that is, they only spread
-significantly over a single direction. This means that non-linearity
-in the $(\vecx,\vecv) \rightarrow (\veco,\veca)$ transformation only
-affects a single direction, which roughly follows the orbit of the
+works relies on the stream being relatively cold (in that $\sigv/V_c
+\ll 1$) for a few different reasons. First, the track of a cold
+stream, while in general offset from the orbit of the progenitor, does
+not stray too far from it, such that the transformation to
+frequency--angle coordinates can be linearized over the range of the
+stream--orbit offset. Second, cold streams are essentially
+one-dimensional, that is, they only spread significantly over a single
+direction. This means that non-linearity in the $(\vecx,\vecv)
+\rightarrow (\veco,\veca)$ transformation only affects a single
+direction, which roughly follows the orbit of the
 progenitor. Therefore, we can linearize the $(\vecx,\vecv) \rightarrow
 (\veco,\veca)$ transformation along a one-dimensional grid of points
 on the progenitor's orbit, rather than on a full six-dimensional

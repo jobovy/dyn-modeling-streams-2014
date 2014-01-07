@@ -15,7 +15,11 @@ FIGS= gd1_evol_lvlos.eps \
 	gd1_pdf_xz_1.eps \
 	gd1_pdf_xz_2.eps \
 	aAI_jr.eps \
-	aAI_araz.eps
+	aAI_araz.eps \
+	gd1_evol_aaaparopar.eps \
+	gd1_evol_aaaparoperp.eps \
+	gd1_evol_aaaparaperp.eps \
+	gd1_evol_aaapartime.eps
 
 .SECONDARY:$(FIGS)
 
@@ -38,6 +42,42 @@ ms.dvi: ms.tex $(FIGS)
 	latex $<
 	- bash -c " ( grep Rerun $*.log && latex $< ) || echo noRerun "
 	- bash -c " ( grep Rerun $*.log && latex $< ) || echo noRerun "
+
+gd1_evol_aaaparopar.eps: gd1_evol_aaaparopar.ps Makefile
+	cp $< tmp.ps
+	echo "1,\$$s/%%BoundingBox: 124 215 486 576/%%BoundingBox: 118 214 454 547/g" > edcmd
+	echo "w" >> edcmd
+	ed $< < edcmd
+	cp $< $@
+	cp tmp.ps $< 
+	rm edcmd tmp.ps
+
+gd1_evol_aaaparoperp.eps: gd1_evol_aaaparoperp.ps Makefile
+	cp $< tmp.ps
+	echo "1,\$$s/%%BoundingBox: 121 215 486 576/%%BoundingBox: 118 214 454 547/g" > edcmd
+	echo "w" >> edcmd
+	ed $< < edcmd
+	cp $< $@
+	cp tmp.ps $< 
+	rm edcmd tmp.ps
+
+gd1_evol_aaaparaperp.eps: gd1_evol_aaaparaperp.ps Makefile
+	cp $< tmp.ps
+	echo "1,\$$s/%%BoundingBox: 123 215 486 576/%%BoundingBox: 118 214 454 547/g" > edcmd
+	echo "w" >> edcmd
+	ed $< < edcmd
+	cp $< $@
+	cp tmp.ps $< 
+	rm edcmd tmp.ps
+
+gd1_evol_aaapartime.eps: gd1_evol_aaapartime.ps Makefile
+	cp $< tmp.ps
+	echo "1,\$$s/%%BoundingBox: 125 215 486 576/%%BoundingBox: 118 214 454 547/g" > edcmd
+	echo "w" >> edcmd
+	ed $< < edcmd
+	cp $< $@
+	cp tmp.ps $< 
+	rm edcmd tmp.ps
 
 aAI_%.eps: aAI_%.ps Makefile
 	cp $< tmp.ps
