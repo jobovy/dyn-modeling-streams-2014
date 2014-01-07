@@ -889,6 +889,8 @@ def plot_stream_aa(plotfilename):
                             (sas),
                             color='0.6',zorder=1)
         pyplot.plot(das,sass,'--',color='w',zorder=7,lw=2.)
+    #ax= pyplot.gca()
+    #ax.set_rasterized(True)
     bovy_plot.bovy_end_print(plotfilename)
 
 def plot_stream_times(plotfilename):
