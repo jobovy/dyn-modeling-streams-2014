@@ -108,6 +108,12 @@ def plot_stream_lb(plotfilename):
     #Read stream
     data= numpy.loadtxt(os.path.join(_STREAMSNAPDIR,'gd1_evol_hitres_01312.dat'),
                         delimiter=',')
+    aadata= numpy.loadtxt(os.path.join(_STREAMSNAPAADIR,
+                                       'gd1_evol_hitres_aa_01312.dat'),
+                          delimiter=',')
+    thetar= aadata[:,6]
+    thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
+    sindx= numpy.fabs(thetar-numpy.pi) > (1.5*numpy.median(numpy.fabs(thetar-numpy.median(thetar)))) #stars in the stream
     #Transform to (l,b)
     XYZ= bovy_coords.galcenrect_to_XYZ(data[:,1],data[:,3],data[:,2],Xsun=8.)
     lbd= bovy_coords.XYZ_to_lbd(XYZ[0],XYZ[1],XYZ[2],degree=True)
@@ -198,17 +204,26 @@ def plot_stream_lb(plotfilename):
         yrange=[-10.,60.]
         ylabel=r'$\mathrm{Galactic\ latitude}\,(\mathrm{deg})$'
     if 'vlos' in plotfilename or 'pm' in plotfilename:
-        bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
+        #Stream
+        bovy_plot.bovy_plot(lbd[sindx,0],vlbd[sindx,lbindx],'k,',
                             xlabel=r'$\mathrm{Galactic\ longitude}\,(\mathrm{deg})$',
                             ylabel=ylabel,
                             xrange=[0.,290.],
                             yrange=yrange)
+        #Progenitor
+        pindx= copy.copy(True-sindx)
+        pindx[0:9900]= False
+        bovy_plot.bovy_plot(lbd[pindx,0],vlbd[pindx,lbindx],'k,',overplot=True)
     else:
-        bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
+        bovy_plot.bovy_plot(lbd[sindx,0],lbd[sindx,lbindx],'k,',
                             xlabel=r'$\mathrm{Galactic\ longitude}\,(\mathrm{deg})$',
                             ylabel=ylabel,
                             xrange=[0.,290.],
                             yrange=yrange)
+        #Progenitor
+        pindx= copy.copy(True-sindx)
+        pindx[0:9900]= False
+        bovy_plot.bovy_plot(lbd[pindx,0],lbd[pindx,lbindx],'k,',overplot=True)
     if includeorbit:
         if 'vlos' in plotfilename or 'pm' in plotfilename:
             bovy_plot.bovy_plot(plbd[npts,0],pvlbd[npts,lbindx],
@@ -273,7 +288,9 @@ def plot_stream_lb(plotfilename):
             pyplot.plot([xmax,227.],[ymin,6.1],'k:')
             insetAxes= pyplot.axes([0.43,0.12,0.3,0.4])
             pyplot.sca(insetAxes)
-            bovy_plot.bovy_plot(lbd[:,0],vlbd[:,lbindx],'k,',
+            bovy_plot.bovy_plot(lbd[sindx,0],vlbd[sindx,lbindx],'k,',
+                                overplot=True)
+            bovy_plot.bovy_plot(lbd[pindx,0],vlbd[pindx,lbindx],'k,',
                                 overplot=True)
             sdf.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
                                 overplot=True)
@@ -371,7 +388,9 @@ def plot_stream_lb(plotfilename):
             pyplot.plot([xmin2,66.5],[ymin2,0.5],'k:')
             insetAxes= pyplot.axes([0.31,0.6,0.48,0.27])
             pyplot.sca(insetAxes)
-            bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
+            bovy_plot.bovy_plot(lbd[sindx,0],lbd[sindx,lbindx],'k,',
+                                overplot=True)
+            bovy_plot.bovy_plot(lbd[pindx,0],lbd[pindx,lbindx],'k,',
                                 overplot=True)
             sdf.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
                                 overplot=True)
@@ -424,7 +443,9 @@ def plot_stream_lb(plotfilename):
             pyplot.plot([xmax,213.],[ymin,31.],'k:')
             insetAxes= pyplot.axes([0.31,0.12,0.38,0.45])
             pyplot.sca(insetAxes)
-            bovy_plot.bovy_plot(lbd[:,0],lbd[:,lbindx],'k,',
+            bovy_plot.bovy_plot(lbd[sindx,0],lbd[sindx,lbindx],'k,',
+                                overplot=True)
+            bovy_plot.bovy_plot(lbd[pindx,0],lbd[pindx,lbindx],'k,',
                                 overplot=True)
             sdft.plotProgenitor(d1=d1,d2=d2,color='k',ls='--',
                                 overplot=True)
