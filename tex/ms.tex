@@ -236,6 +236,33 @@ the way for proper probabilistic inference of the Milky Way halo's
 gravitational potential and progenitor properties using stream data
 for individual stars.
 
+The framework presented in this paper differs from other approaches
+that model streams in action--angle coordinates in a few respects. As
+in \citet{Helmi99a}, the model is a generative one in that it gives an
+analytic prescription for the initial action--angle distribution of
+tidal debris that is then evolved in time to generate a tidal
+stream. The difference between these two generative models is that I
+propose simple, few-parameter models for the initial action--angle
+distributions, that I work out the properties of streams in observable
+coordinates in more detail, and that I present and use a general
+action--angle transformation that allows stream modeling in general
+potentials. The average location of a stream in phase-space can be
+computed in the framework presented here and it could be used to
+replace orbit fitting; \citet{Varghese11a} discussed a similar method
+to model observed streams. The method in this paper differs from that
+of \citet{Varghese11a} in that the model is fundamentally located in
+action--angle space rather than position--velocity space and in that
+the width and length of the stream are related to the offsets between
+the stream, the progenitor's orbit, and the average orbit as a
+function of stream position. Thus, the present framework does not have
+to assume a progenitor velocity dispersion, but can constrain it from
+the stream data as well. Compared to the recent methods of
+\citet{Penarrubia12a}, \citet{Sanders13b}, and \citet{PriceWhelan13a},
+which allow for fitting the Milky Way's gravitational potential using
+observations of the positions and velocities of individual stream
+stars, the method presented here is a generative model and it can be
+used with noisy or entirely missing phase-space dimensions.
+
 This paper is outlined as follows. In \sectionname~\ref{sec:dynamics}
 I briefly summarize the dynamics of tidal streams in terms of
 action--angle coordinates. A generative model of a tidal stream in
@@ -463,6 +490,36 @@ initial angle offsets are independent of both stripping time and
 frequency offset. In what follows, I will model them using a simple
 isotropic Gaussian distribution.
 
+\begin{figure*}[t!]
+  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timeshist.ps}
+  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesdO.ps}
+  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesda.ps}
+  \caption{Properties of the simulated tidal stream of
+    \sectionname~\ref{sec:sim} as a function of time. Stripping times
+    are calculated by linear regression of the angle difference
+    between a stream particle and the progenitor versus the equivalent
+    frequency difference. The distribution of stripping times is shown
+    in the left panel.  While the stripping process happens in bursts
+    with a period of roughly $400\Myr$ (the radial period of the
+    progenitor), it can be approximated as constant (more
+    coarsely-binned solid histogram). The magnitude of the frequency
+    offset between stream particles and the progenitor is shown in the
+    middle panel. While particles stripped at pericenter have larger
+    frequency offsets than those between pericenter passages, there is
+    almost no secular trend and the typical frequency offset (averaged
+    over a radial period) can be considered constant with time. The
+    right panel shows the magnitude of the angle offset between stream
+    particles and the progenitor as a function of stripping
+    time. There is a spread in the angle offset at all stripping times
+    because of the dispersion in frequency offsets, but typically
+    stars that have been stripped earlier reach larger angle
+    offsets. That is, self-sorting happens only to a small
+    degree.}\label{fig:gd1_times}
+%python plot_stream.py ../tex/gd1_evol_timeshist.ps
+%python plot_stream.py ../tex/gd1_evol_timesdO.ps
+%python plot_stream.py ../tex/gd1_evol_timesda.ps
+\end{figure*}
+
 Ingredients (a) and (b) require more careful modeling. The right panel
 of \figurename~\ref{fig:gd1_times} shows the distribution of times at
 which stream particles are stripped from the progenitor. These
@@ -508,36 +565,6 @@ particle position along the stream and stripping time and sort the
 stream in frequency offset---happens to a small extent but the narrow
 distribution of frequency offsets limits the ability of particles
 removed later to reach large distances from the progenitor.
-
-\begin{figure*}[t!]
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timeshist.ps}
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesdO.ps}
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesda.ps}
-  \caption{Properties of the simulated tidal stream of
-    \sectionname~\ref{sec:sim} as a function of time. Stripping times
-    are calculated by linear regression of the angle difference
-    between a stream particle and the progenitor versus the equivalent
-    frequency difference. The distribution of stripping times is shown
-    in the left panel.  While the stripping process happens in bursts
-    with a period of roughly $400\Myr$ (the radial period of the
-    progenitor), it can be approximated as constant (more
-    coarsely-binned solid histogram). The magnitude of the frequency
-    offset between stream particles and the progenitor is shown in the
-    middle panel. While particles stripped at pericenter have larger
-    frequency offsets than those between pericenter passages, there is
-    almost no secular trend and the typical frequency offset (averaged
-    over a radial period) can be considered constant with time. The
-    right panel shows the magnitude of the angle offset between stream
-    particles and the progenitor as a function of stripping
-    time. There is a spread in the angle offset at all stripping times
-    because of the dispersion in frequency offsets, but typically
-    stars that have been stripped earlier reach larger angle
-    offsets. That is, self-sorting happens only to a small
-    degree.}\label{fig:gd1_times}
-%python plot_stream.py ../tex/gd1_evol_timeshist.ps
-%python plot_stream.py ../tex/gd1_evol_timesdO.ps
-%python plot_stream.py ../tex/gd1_evol_timesda.ps
-\end{figure*}
 
 We can model streams in frequency space because the mapping $\vecj
 \rightarrow \veco$ is of full rank for axisymmetric and triaxial
@@ -672,7 +699,9 @@ dispersion of the progenitor, I conjecture that a constant
 $\mu_\Omega$ can be used for modeling cold tidal streams of any
 (small-ish) velocity dispersion. Further modeling of simulated
 streams, however, is necessary to check this and to find the optimal
-value of $\mu_\Omega$. Fixing $\mu_\Omega$ leaves a single free
+value of $\mu_\Omega$. In particular, if the progenitor has internal
+rotation the action distribution of the debris and $\mu_\Omega$ may be
+significantly different. Fixing $\mu_\Omega$ leaves a single free
 parameter \sigv\ for modeling the frequency offset distribution of a
 tidal stream. In modeling to observed data, this parameter needs to be
 fit and we expect it to be proportional to the velocity dispersion of
@@ -879,6 +908,24 @@ the approximate estimate obtained using the mean stripping time rather
 than integrating over it. This simple estimate agrees well with the
 exact calculation.
 
+\begin{figure*}
+\begin{center}
+  \includegraphics[width=0.8\textwidth,clip=]{track_aa.eps}\\
+  \includegraphics[width=0.8\textwidth,clip=]{track_xz.eps}\\
+  \includegraphics[width=0.8\textwidth,clip=]{track_ld.eps}
+  \caption{Illustration of the determination of the average stream
+    track described in \sectionname~\ref{sec:track}. The small black
+    dots in each panel are the points along the progenitor track at
+    which the Jacobian $\partial (\veco,\veca) / \partial
+    (\vecx,\vecv)$ is calculated. The large black dots are the
+    corresponding points on the stream where the track is
+    calculated. The dashed line in each panel is the progenitor's
+    orbit, while the solid line and dash-dotted lines are the mean
+    track and $2\sigma$ dispersion.}\label{fig:track}
+%python illustrate_track.py ../tex/track_aa.ps ../tex/track_xz.ps ../tex/track_ld.ps
+\end{center}
+\end{figure*}
+
 We can then estimate the dispersion around the stream track, which is
 useful for getting a sense of the width of the model stream and to
 find appropriate integration intervals when marginalizing the stream
@@ -900,6 +947,24 @@ starting point for more precise calculations of the dispersion in
 \sectionname~\ref{sec:pdf}.
 
 \subsection{In position--velocity coordinates}\label{sec:trackxv}
+
+\begin{figure*}[th!!]
+\begin{center}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lb.eps}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_ld.eps}
+  \caption{Simulated stream after $5.011\Gyr$ as a function of
+    Galactic longitude. The top panel shows the stream in Galactic
+    latitude and the bottom panel shows it in the distance from the
+    Sun. The progenitor is shown as the large gray dot and its orbit
+    as the dashed lines. The predicted track of the stream is shown as
+    the solid line. Insets show various zoomed-in parts of the stream
+    to show the stream, progenitor orbit, and predicted stream track
+    up close.}\label{fig:gd1_lbd}
+%python plot_stream.py ../tex/gd1_evol_lb.ps
+%python plot_stream.py ../tex/gd1_evol_ld.ps
+\end{center}
+\end{figure*}
+
 
 Having estimated the track of the stream and the dispersion around
 this in frequency--angle space, we can propagate the track to
@@ -924,40 +989,23 @@ mass of the full stream PDF is close enough to the stream track that
 all frequency--angle calculations can be performed using the linear
 approximation along the progenitor orbit.
 
-\begin{figure*}
-\begin{center}
-  \includegraphics[width=0.8\textwidth,clip=]{track_aa.eps}\\
-  \includegraphics[width=0.8\textwidth,clip=]{track_xz.eps}\\
-  \includegraphics[width=0.8\textwidth,clip=]{track_ld.eps}
-  \caption{Illustration of the determination of the average stream
-    track described in \sectionname~\ref{sec:track}. The small black
-    dots in each panel are the points along the progenitor track at
-    which the Jacobian $\partial (\veco,\veca) / \partial
-    (\vecx,\vecv)$ is calculated. The large black dots are the
-    corresponding points on the stream where the track is
-    calculated. The dashed line in each panel is the progenitor's
-    orbit, while the solid line and dash-dotted lines are the mean
-    track and $2\sigma$ dispersion.}\label{fig:track}
-%python illustrate_track.py ../tex/track_aa.ps ../tex/track_xz.ps ../tex/track_ld.ps
-\end{center}
-\end{figure*}
-
-\begin{figure*}[t!]
-\begin{center}
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lb.eps}
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_ld.eps}
-  \caption{Simulated stream after $5.011\Gyr$ as a function of
-    Galactic longitude. The top panel shows the stream in Galactic
-    latitude and the bottom panel shows it in the distance from the
-    Sun. The progenitor is shown as the large gray dot and its orbit
-    as the dashed lines. The predicted track of the stream is shown as
-    the solid line. Insets show various zoomed-in parts of the stream
-    to show the stream, progenitor orbit, and predicted stream track
-    up close.}\label{fig:gd1_lbd}
-%python plot_stream.py ../tex/gd1_evol_lb.ps
-%python plot_stream.py ../tex/gd1_evol_ld.ps
-\end{center}
-\end{figure*}
+\figurename~\ref{fig:track} illustrates how I linearize the
+$(\vecx,\vecv) \rightarrow (\veco,\veca)$ transformation along the
+progenitor orbit and use it to propagate the track of the stream to
+position--velocity coordinates and to observable quantities
+$(l,b,D,\vlos,\pmll,\pmbb)$. The top panel shows the orbit of the
+progenitor and the mean stream track in frequency--angle
+coordinates. Only the parallel direction is shown here; the mean
+stream track coincides with the progenitor orbit in the perpendicular
+direction. At a small number of points along the progenitor orbit,
+chosen here to span $1.5$ radians, we calculate the Jacobian $\partial
+(\veco,\veca) / \partial (\vecx,\vecv)$. In this Figure this is done
+at four points, but for all other figures and calculations in this
+paper eleven points are used. Each Jacobian calculation requires seven
+frequency--angle calculations, such that the total number of such
+computations is less than $100$ to adequately model the stream (each
+computation involves a single orbit integration, see
+\appendixname~\ref{sec:aa}). 
 
 \begin{figure*}[tp!!]
 \begin{center}
@@ -976,24 +1024,6 @@ approximation along the progenitor orbit.
 %python plot_stream.py ../tex/gd1_evol_lpmbb.ps
 \end{center}
 \end{figure*}
-
-\figurename~\ref{fig:track} illustrates how I linearize the
-$(\vecx,\vecv) \rightarrow (\veco,\veca)$ transformation along the
-progenitor orbit and use it to propagate the track of the stream to
-position--velocity coordinates and to observable quantities
-$(l,b,D,\vlos,\pmll,\pmbb)$. The top panel shows the orbit of the
-progenitor and the mean stream track in frequency--angle
-coordinates. Only the parallel direction is shown here; the mean
-stream track coincides with the progenitor orbit in the perpendicular
-direction. At a small number of points along the progenitor orbit,
-chosen here to span $1.5$ radians, we calculate the Jacobian $\partial
-(\veco,\veca) / \partial (\vecx,\vecv)$. In this Figure this is done
-at four points, but for all other figures and calculations in this
-paper eleven points are used. Each Jacobian calculation requires seven
-frequency--angle calculations, such that the total number of such
-computations is less than $100$ to adequately model the stream (each
-computation involves a single orbit integration, see
-\appendixname~\ref{sec:aa}). 
 
 We then calculate the stream track in Galactocentric
 position--velocity coordinates at the parallel angles for which we
@@ -1500,7 +1530,8 @@ and shown in the top left panel of
 \figurename~\ref{fig:gd1_apar}. Thus, the average orbit changes as a
 function of position along the stream, whether expressed as $\Delta
 \apar$, $X$, or $l$, and a single-orbit approximation is necessarily
-wrong over the full length of the stream.
+wrong over the full length of the stream. This is the case regardless
+of the progenitor's orbit.
 
 It is clear from \figurename~\ref{fig:gd1_apar} that a large part of
 the stream near the progenitor, approximately $\Delta \apar < \Delta
