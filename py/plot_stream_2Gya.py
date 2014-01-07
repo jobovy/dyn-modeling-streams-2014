@@ -1,4 +1,5 @@
 import sys
+import copy
 import os, os.path
 import numpy
 from galpy.util import bovy_plot, bovy_coords, bovy_conversion
@@ -75,11 +76,11 @@ def plot_stream_xz(plotfilename):
         sdf= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
                       leading=True,nTrackChunks=_NTRACKCHUNKS,
                       tdisrupt=tdisrupt/bovy_conversion.time_in_Gyr(220.,8.),
-                      deltaAngleTrack=1.5*3./5.)
+                      deltaAngleTrack=1.5*3./5.,multi=_NTRACKCHUNKS)
         sdft= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
                        leading=False,nTrackChunks=_NTRACKCHUNKS,
                        tdisrupt=tdisrupt/bovy_conversion.time_in_Gyr(220.,8.),
-                       deltaAngleTrack=1.5*3./5.)
+                       deltaAngleTrack=1.5*3./5.,multi=_NTRACKCHUNKS)
     if 'sim' in plotfilename:
         #Replace data with simulated data
         forwardXY= sdf.sample(int(round(numpy.sum(sindx)/2.)),
@@ -99,14 +100,20 @@ def plot_stream_xz(plotfilename):
         data[forwardXY.shape[1]:,4]= backwardXY[3]*220.
         data[forwardXY.shape[1]:,5]= backwardXY[5]*220.
         data[forwardXY.shape[1]:,6]= backwardXY[4]*220.
-        sindx= numpy.ones(data.shape[0],dtype='bool')
+        sindx= numpy.ones(data.shape[0],dtype='bool')      
     #Plot
     bovy_plot.bovy_print()
-    bovy_plot.bovy_plot(data[:,1],data[:,2],'k.',ms=2.,
+    bovy_plot.bovy_plot(data[sindx,1],data[sindx,2],'k,',ms=2.,
                         xlabel=r'$X\,(\mathrm{kpc})$',
                         ylabel=r'$Z\,(\mathrm{kpc})$',
                         xrange=[-12.5,-3.],
                         yrange=[-12.5,-7.])
+    if numpy.sum(True-sindx) > 0:
+        #Also plot progenitor
+        pindx= copy.copy(True-sindx)
+        pindx[0:9900]= False #subsample
+        bovy_plot.bovy_plot(data[pindx,1],data[pindx,2],
+                            'k,',overplot=True)
     if includeorbit:
         bovy_plot.bovy_plot(pox,poz,'o',color='0.5',mec='none',overplot=True,ms=8)
         bovy_plot.bovy_plot(pvec[0,:],pvec[1,:],'k--',overplot=True,lw=1.)
@@ -135,7 +142,9 @@ def plot_stream_xz(plotfilename):
         bovy_plot.bovy_plot(data[sindx,1],data[sindx,2],'k.',ms=2.,zorder=0.,
                             overplot=True)
         if numpy.sum(True-sindx) > 0:
-            bovy_plot.bovy_plot(data[True-sindx,1],data[True-sindx,2],'k,',
+            pindx= copy.copy(True-sindx)
+            pindx[0:9700]= False #subsample
+            bovy_plot.bovy_plot(data[pindx,1],data[pindx,2],'k,',
                                 zorder=0.,
                                 overplot=True)
         bovy_plot.bovy_plot(pvec[0,:],pvec[1,:],'k--',overplot=True,lw=1.,
