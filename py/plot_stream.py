@@ -168,11 +168,13 @@ def plot_stream_lb(plotfilename):
         sdf= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
                       leading=True,nTrackChunks=_NTRACKCHUNKS,
                       vsun=[0.,30.24*8.,0.],
-                      tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.))
+                      tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.),
+                      multi=_NTRACKCHUNKS)
         sdft= streamdf(_SIGV/220.,progenitor=Orbit(obs),pot=lp,aA=aAI,
                        leading=False,nTrackChunks=_NTRACKCHUNKS,
                        vsun=[0.,30.24*8.,0.],
-                       tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.))
+                       tdisrupt=4.5/bovy_conversion.time_in_Gyr(220.,8.),
+                       multi=_NTRACKCHUNKS)
     #Plot
     bovy_plot.bovy_print(fig_width=8.25,fig_height=3.5)
     if 'ld' in plotfilename:
@@ -250,6 +252,11 @@ def plot_stream_lb(plotfilename):
                                 overplot=True)
             sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
                            overplot=True,lw=1.)
+            #Plot approximate scale
+            bovy_plot.bovy_plot([240.,240.],[250.,275.],'k-',lw=2.,
+                                overplot=True)
+            bovy_plot.bovy_text(241.,255.,r'$25\,\mathrm{km\,s}^{-1}$',
+                                size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
             insetAxes.yaxis.set_major_formatter(nullfmt)
@@ -272,6 +279,11 @@ def plot_stream_lb(plotfilename):
                                 overplot=True)
             sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
                            overplot=True,lw=1.)
+            #Plot approximate scale
+            bovy_plot.bovy_plot([168.5,168.5],[10.75,11.25],'k-',lw=2.,
+                                overplot=True)
+            bovy_plot.bovy_text(169.8,10.875,r'$0.5\,\mathrm{mas\,yr}^{-1}$',
+                                size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
             insetAxes.yaxis.set_major_formatter(nullfmt)
@@ -303,6 +315,11 @@ def plot_stream_lb(plotfilename):
                                 overplot=True)
             sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
                            overplot=True,lw=1.)
+            #Plot approximate scale
+            bovy_plot.bovy_plot([200.,200.],[-5.75,-5.25],'k-',lw=2.,
+                                overplot=True)
+            bovy_plot.bovy_text(201.25,-5.675,r'$0.5\,\mathrm{mas\,yr}^{-1}$',
+                                size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
             insetAxes.yaxis.set_major_formatter(nullfmt)
@@ -324,6 +341,11 @@ def plot_stream_lb(plotfilename):
                                 overplot=True)
             sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
                            overplot=True,lw=1.)
+            #Plot approximate scale
+            bovy_plot.bovy_plot([103.,103.],[4.35,4.85],'k-',lw=2.,
+                                overplot=True)
+            bovy_plot.bovy_text(104.,4.5,r'$0.5\,\mathrm{mas\,yr}^{-1}$',
+                                size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
             insetAxes.yaxis.set_major_formatter(nullfmt)
@@ -355,6 +377,11 @@ def plot_stream_lb(plotfilename):
                                 overplot=True)
             sdf.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
                            overplot=True,lw=1.)
+            #Plot approximate scale
+            bovy_plot.bovy_plot([168.,168.],[8.7,9.2],'k-',lw=2.,
+                                overplot=True)
+            bovy_plot.bovy_text(169.7,8.8,r'$0.5\,\mathrm{kpc}$',
+                                size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
             insetAxes.yaxis.set_major_formatter(nullfmt)
@@ -376,6 +403,11 @@ def plot_stream_lb(plotfilename):
                                 overplot=True)
             sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
                            overplot=True,lw=1.)
+            #Plot approximate scale
+            bovy_plot.bovy_plot([74.,74.],[11.95,12.45],'k-',lw=2.,
+                                overplot=True)
+            bovy_plot.bovy_text(76.,11.9,r'$0.5\,\mathrm{kpc}$',
+                                size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
             insetAxes.yaxis.set_major_formatter(nullfmt)
@@ -398,6 +430,11 @@ def plot_stream_lb(plotfilename):
                                 overplot=True)
             sdft.plotTrack(d1=d1,d2=d2,interp=True,color='k',spread=0,
                            overplot=True,lw=1.)
+            #Plot approximate scale
+            bovy_plot.bovy_plot([115.,115.],[48.5,49.5],'k-',lw=2.,
+                                overplot=True)
+            bovy_plot.bovy_text(117.2,48.4,r'$1^\circ$',
+                                size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
             insetAxes.yaxis.set_major_formatter(nullfmt)
