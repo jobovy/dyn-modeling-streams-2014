@@ -356,7 +356,7 @@ def make_sim_movie_aa(proj='aaarazap',comov=False,
     return None
 
 def make_sim_movie_oparapar(proj='aaarazap',
-                            skippng=True,#False,
+                            skippng=False,
                             aas=False):
     #Directories
     if aas:
@@ -371,21 +371,21 @@ def make_sim_movie_oparapar(proj='aaarazap',
     if True:
         basefilename+= 'oparapar_'
         moviefilename+= '_oparapar'
-        xlabel=r'$|\theta_\parallel|$'
-        ylabel=r'$|\Omega_\parallel|$'
+        xlabel=r'$|\Delta\theta_\parallel|$'
+        ylabel=r'$|\Delta\Omega_\parallel|$'
         xrange=[0.,1.3]
         yrange=[0.1,0.3]
         zrange=[0.,4.5]
     if not skippng:
         nt= len(glob.glob(os.path.join(snapaadir,
                                        'gd1_evol_hitres_aa_*.dat')))
-        #Load final snapshot first, determine which stars are debris and when they were stripped
+        #Load one of the final snapshots first, determine which stars are debris and when they were stripped
         data= numpy.loadtxt(os.path.join(snapaadir,
-                                         'gd1_evol_hitres_aa_%s.dat' % str(1312).zfill(5)),
+                                         'gd1_evol_hitres_aa_%s.dat' % str(1287).zfill(5)),
                             delimiter=',')
         thetar= data[:,6]
         thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
-        debrisIndx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+        debrisIndx= numpy.fabs(thetar-numpy.pi) > (6.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
         thetar= thetar[debrisIndx]
         #Calculate times at which stars were stripped, angles
         thetap= data[:,7]
@@ -418,19 +418,19 @@ def make_sim_movie_oparapar(proj='aaarazap',
             pass
         dOdir= numpy.median(dO4dir,axis=1)
         dOdir/= numpy.sqrt(numpy.sum(dOdir**2.))
-        for ii in range(115,nt):#Skip the first 100, because nothing happens anyway
+        for ii in range(80,nt):#Skip the first 100, because nothing happens anyway
             #Read data
             data= numpy.loadtxt(os.path.join(snapaadir,
                                        'gd1_evol_hitres_aa_%s.dat' % str(ii).zfill(5)),
                                 delimiter=',')
             if True:
-                thetar= data[:,6]
-                thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
-                indx= numpy.fabs(thetar-numpy.pi) > (5.*numpy.median(numpy.fabs(thetar-numpy.median(thetar))))
+                indx= dts > (1312-ii)/1312.*5.125/1.0227121655399913
                 indx*= debrisIndx
                 tdts= dts[indx]
                 if numpy.sum(indx) == 0:
-                    data= -1000.+numpy.random.uniform(size=(2,9))*50.
+                    data= -1000.+numpy.random.uniform(size=(20,9))*50.
+                    indx= numpy.ones(20,dtype='bool')
+                    tdts= -1.*numpy.ones(20)
             if True:
                 thetar= data[:,6]
                 thetar= (numpy.pi+(thetar-numpy.median(thetar))) % (2.*numpy.pi)
@@ -468,7 +468,7 @@ def make_sim_movie_oparapar(proj='aaarazap',
                                 yrange=yrange,
                                 crange=zrange,
                                 vmin=zrange[0],vmax=zrange[1],zorder=2)
-            bovy_plot.bovy_end_print(os.path.join(savedirpng,basefilename+'%s.png' % str(ii-115).zfill(5)))
+            bovy_plot.bovy_end_print(os.path.join(savedirpng,basefilename+'%s.png' % str(ii-80).zfill(5)))
     #Turn into movie
     framerate= 25
     bitrate= 1000000
