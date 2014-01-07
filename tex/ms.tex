@@ -463,36 +463,6 @@ initial angle offsets are independent of both stripping time and
 frequency offset. In what follows, I will model them using a simple
 isotropic Gaussian distribution.
 
-\begin{figure*}[t!]
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timeshist.ps}
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesdO.ps}
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesda.ps}
-  \caption{Properties of the simulated tidal stream of
-    \sectionname~\ref{sec:sim} as a function of time. Stripping times
-    are calculated by linear regression of the angle difference
-    between a stream particle and the progenitor versus the equivalent
-    frequency difference. The distribution of stripping times is shown
-    in the left panel.  While the stripping process happens in bursts
-    with a period of roughly $400\Myr$ (the radial period of the
-    progenitor), it can be approximated as constant (more
-    coarsely-binned solid histogram). The magnitude of the frequency
-    offset between stream particles and the progenitor is shown in the
-    middle panel. While particles stripped at pericenter have larger
-    frequency offsets than those between pericenter passages, there is
-    almost no secular trend and the typical frequency offset (averaged
-    over a radial period) can be considered constant with time. The
-    right panel shows the magnitude of the angle offset between stream
-    particles and the progenitor as a function of stripping
-    time. There is a spread in the angle offset at all stripping times
-    because of the dispersion in frequency offsets, but typically
-    stars that have been stripped earlier reach larger angle
-    offsets. That is, self-sorting happens only to a small
-    degree.}\label{fig:gd1_times}
-%python plot_stream.py ../tex/gd1_evol_timeshist.ps
-%python plot_stream.py ../tex/gd1_evol_timesdO.ps
-%python plot_stream.py ../tex/gd1_evol_timesda.ps
-\end{figure*}
-
 Ingredients (a) and (b) require more careful modeling. The right panel
 of \figurename~\ref{fig:gd1_times} shows the distribution of times at
 which stream particles are stripped from the progenitor. These
@@ -538,6 +508,36 @@ particle position along the stream and stripping time and sort the
 stream in frequency offset---happens to a small extent but the narrow
 distribution of frequency offsets limits the ability of particles
 removed later to reach large distances from the progenitor.
+
+\begin{figure*}[t!]
+  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timeshist.ps}
+  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesdO.ps}
+  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesda.ps}
+  \caption{Properties of the simulated tidal stream of
+    \sectionname~\ref{sec:sim} as a function of time. Stripping times
+    are calculated by linear regression of the angle difference
+    between a stream particle and the progenitor versus the equivalent
+    frequency difference. The distribution of stripping times is shown
+    in the left panel.  While the stripping process happens in bursts
+    with a period of roughly $400\Myr$ (the radial period of the
+    progenitor), it can be approximated as constant (more
+    coarsely-binned solid histogram). The magnitude of the frequency
+    offset between stream particles and the progenitor is shown in the
+    middle panel. While particles stripped at pericenter have larger
+    frequency offsets than those between pericenter passages, there is
+    almost no secular trend and the typical frequency offset (averaged
+    over a radial period) can be considered constant with time. The
+    right panel shows the magnitude of the angle offset between stream
+    particles and the progenitor as a function of stripping
+    time. There is a spread in the angle offset at all stripping times
+    because of the dispersion in frequency offsets, but typically
+    stars that have been stripped earlier reach larger angle
+    offsets. That is, self-sorting happens only to a small
+    degree.}\label{fig:gd1_times}
+%python plot_stream.py ../tex/gd1_evol_timeshist.ps
+%python plot_stream.py ../tex/gd1_evol_timesdO.ps
+%python plot_stream.py ../tex/gd1_evol_timesda.ps
+\end{figure*}
 
 We can model streams in frequency space because the mapping $\vecj
 \rightarrow \veco$ is of full rank for axisymmetric and triaxial
@@ -1793,8 +1793,7 @@ will, however, add a non-negligible amount of computation for the
 necessary numerical integrations.
 
 The action--angle method described in this Appendix is implemented in
-the \emph{galpy} Galactic dynamics code\footnote{Available at
-  \protect{\url{http://github.com/jobovy/galpy}}~.}.
+the \emph{galpy} Galactic dynamics code.
 
 %BOVY: reference point
 
