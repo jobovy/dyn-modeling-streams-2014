@@ -7,6 +7,7 @@ FIGS= gd1_evol_lvlos.eps \
 	track_xz.eps \
 	track_ld.eps \
 	gd1_evol_xz.eps \
+	gd1-hisigv_evol_xz.eps \
 	gd1_evol_aadohist.eps \
 	gd1_evol_2Gya_xz.eps \
 	gd1_evol_2Gya_xz_sim.eps \
@@ -59,6 +60,15 @@ gd1_pdf_xz_%.eps: gd1_pdf_xz_%.ps Makefile
 gd1_evol_2Gya_%.eps: gd1_evol_2Gya_%.ps Makefile
 	cp $< tmp.ps
 	echo "1,\$$s/%%BoundingBox: 125 215 486 576/%%BoundingBox: 123 216 454 549/g" > edcmd
+	echo "w" >> edcmd
+	ed $< < edcmd
+	cp $< $@
+	cp tmp.ps $< 
+	rm edcmd tmp.ps
+
+gd1-hisigv_evol_xz.eps: gd1-hisigv_evol_xz.ps Makefile
+	cp $< tmp.ps
+	echo "1,\$$s/%%BoundingBox: 125 215 486 576/%%BoundingBox: 122 216 458 551/g" > edcmd
 	echo "w" >> edcmd
 	ed $< < edcmd
 	cp $< $@
