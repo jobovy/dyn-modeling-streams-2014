@@ -32,6 +32,17 @@ s2a gd1-hisigv_evol.nemo gd1-hisigv_evol.dat
 
 A SIMILAR SIMULATION WITH AN EVEN HIGHER VELOCITY DISPERSION
 
+mkking out=gd1-mhisigv.nemo nbody=10000 W0=2. mass=200000000 r_t=1.48 WD_units=t
+
+snapshift gd1-mhisigv.nemo gd1-mhisigv_shifted.nemo rshift=-11.63337239,-10.631736273934635,-20.76235661 vshift=-128.8281653,79.172383882274971,42.88727925
+
+gyrfalcON in=gd1-mhisigv_shifted.nemo out=gd1-mhisigv_evol.nemo tstop=5.125 eps=0.030 step=0.125 kmax=6 Nlev=10 fac=0.01 accname=LogPot accpars=0,48400.,0.,1.0,0.9
+
+s2a gd1-mhisigv_evol.nemo gd1-mhisigv_evol.dat
+
+
+A SIMILAR SIMULATION WITH A VERY HIGH VELOCITY DISPERSION
+
 mkking out=gd1-vhisigv.nemo nbody=10000 W0=2. mass=2000000000 r_t=3.20 WD_units=t
 
 snapshift gd1-vhisigv.nemo gd1-vhisigv_shifted.nemo rshift=-11.63337239,-10.631736273934635,-20.76235661 vshift=-128.8281653,79.172383882274971,42.88727925
