@@ -1,5 +1,5 @@
-\documentclass[12pt,preprint]{aastex}
-%\documentclass{emulateapj}
+%\documentclass[12pt,preprint]{aastex}
+\documentclass{emulateapj}
 \usepackage{amssymb,amsmath}
 %\usepackage{caption}
 %\DeclareCaptionLabelSeparator{dotemdash}{.--- }
@@ -86,14 +86,14 @@
 \newcommand{\pmll}{\ensuremath{\mu_l}}
 \newcommand{\pmbb}{\ensuremath{\mu_b}}
 
-%\submitted{}
+\submitted{}
 
 \begin{document}
 
 \title{Dynamical modeling of tidal streams}
 \author{Jo~Bovy\altaffilmark{\ref{Hubble}}}
 \affil{Institute for Advanced Study, Einstein Drive, Princeton, NJ 08540, USA}
-\email{bovy@ias.edu}
+\email{Email: bovy@ias.edu}
 \altaffiltext{\theaddress}{\label{Hubble}\stepcounter{address} Hubble fellow}
 
 \begin{abstract} 
@@ -346,9 +346,9 @@ potential with $V_c = 220\kms$ and a flattening $q=0.9$ ($\Phi = V_c^2
 \ln [R^2 + z^2/q^2]$) using the gyrfalcon code
 \citep{Dehnen00a,Dehnen02a} with a softening of $1.5\pc$ in the NEMO
 toolkit \citep{Teuben95a}. The cluster is evolved for $5.011\Gyr$
-($=5.125\kpc/[\kms]$) from the initial condition $(X,Y,Z) =
-(-11.63337239,-20.76235661,-10.631736273934635)\kpc$ and
-$(V_X,V_Y,V_Z) = (-128.8281653,42.88727925,79.172383882274971)\kms$,
+($=5.125\kpc/[\kms]$) from the initial condition $(X,Y,Z) =$
+$(-11.63337239$ $,-20.76235661,$ $-10.631736273934635)\kpc$ and
+$(V_X,V_Y,V_Z) = $ $(-128.8281653$ $,42.88727925,$ $79.172383882274971)\kms$,
 chosen such that the cluster ends up at roughly the observed location
 of the GD-1 stream at the end of the simulation
 \citep{Koposov10a}. The progenitor cluster's orbit has an eccentricity
@@ -373,7 +373,7 @@ $(\Omega_R,\Omega_\phi,\Omega_Z) = (15.7,-10.8,11.9)\Gyr\inv$.
 %python plot_stream.py ../tex/gd1_evol_xz.ps
 \end{figure}
 
-\begin{figure}[t!]
+\begin{figure*}[t!]
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aajrjz.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaoroz.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaaraz.ps}\\
@@ -399,7 +399,7 @@ $(\Omega_R,\Omega_\phi,\Omega_Z) = (15.7,-10.8,11.9)\Gyr\inv$.
 %python plot_stream.py ../tex/gd1_evol_aajrjp.ps
 %python plot_stream.py ../tex/gd1_evol_aaorop.ps
 %python plot_stream.py ../tex/gd1_evol_aaarap.ps
-\end{figure}
+\end{figure*}
 
 The final position of the stream in $(X,Z)$ is shown in
 \figurename~\ref{fig:gd1_xz}. \figurename~\ref{fig:gd1_jt} shows the
@@ -463,7 +463,7 @@ initial angle offsets are independent of both stripping time and
 frequency offset. In what follows, I will model them using a simple
 isotropic Gaussian distribution.
 
-\begin{figure}[t!]
+\begin{figure*}[t!]
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timeshist.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesdO.ps}
   \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_timesda.ps}
@@ -491,7 +491,7 @@ isotropic Gaussian distribution.
 %python plot_stream.py ../tex/gd1_evol_timeshist.ps
 %python plot_stream.py ../tex/gd1_evol_timesdO.ps
 %python plot_stream.py ../tex/gd1_evol_timesda.ps
-\end{figure}
+\end{figure*}
 
 Ingredients (a) and (b) require more careful modeling. The right panel
 of \figurename~\ref{fig:gd1_times} shows the distribution of times at
@@ -629,7 +629,7 @@ the misalignment would be $1.28^\circ$, much larger than the measured
 value.
 
 \begin{figure}[t!]
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aadohist.ps}
+  \includegraphics[width=0.49\textwidth,clip=]{gd1_evol_aadohist.ps}
   \caption{Distribution of the magnitude of frequency offsets between
     stream particles and the progenitor along the direction of the
     mean frequency offset. The dashed line is a Gaussian fit to this
@@ -715,11 +715,12 @@ $(\vecx,\vecv)$ or observable coordinates $(l,b,D,\vlos,\pmll,\pmbb)$.
 
 \subsection{In frequency--angle coordinates}\label{sec:trackaa}
 
-\begin{figure}[t!]
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaaparopar.ps}
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaaparoperp.ps}\\
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaaparaperp.ps}
-  \includegraphics[width=0.32\textwidth,clip=]{gd1_evol_aaapartime.ps}
+\begin{figure*}[t!]
+\begin{center}
+  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaaparopar.ps}
+  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaaparoperp.ps}\\
+  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaaparaperp.ps}
+  \includegraphics[width=0.36\textwidth,clip=]{gd1_evol_aaapartime.ps}
   \caption{Stream properties as a function of angle along the
     stream. The top, left panel shows the magnitude of frequency
     offsets along the stream. The gray line shows the mean predicted
@@ -747,7 +748,8 @@ $(\vecx,\vecv)$ or observable coordinates $(l,b,D,\vlos,\pmll,\pmbb)$.
 %python plot_stream.py ../tex/gd1_evol_aaaparoperp.ps
 %python plot_stream.py ../tex/gd1_evol_aaaparaperp.ps
 %python plot_stream.py ../tex/gd1_evol_aaapartime.ps
-\end{figure}
+\end{center}
+\end{figure*}
 
 In the generative model described above, the direction of the angle
 along the stream lies along the principal eigenvector of $V_\veco$,
@@ -846,13 +848,19 @@ larger than average).
 
 We can now also calculate $p(\Delta \aperp|\Delta \apar)$:
 \begin{equation}
-  p(\Delta \aperpii|\Delta \apar) = \int \dd \ts \,\dd \Delta
-  \operpii \,p(\Delta \aperpii|\Delta \operpii,\ts)\,p(\Delta \operpii|\ts,\Delta \apar)\,p(\ts|\Delta \apar)\,,
+\begin{split}
+  p(\Delta \aperpii|\Delta \apar) & = \int \dd \ts \,\dd \Delta
+  \operpii \,p(\Delta \aperpii|\Delta \operpii,\ts)\\
+  & \qquad \times p(\Delta \operpii|\ts,\Delta \apar)\,p(\ts|\Delta \apar)\,,
+\end{split}
 \end{equation}
 where $ii=2,3$ for the first and second perpendicular direction. For
 the fiducial model, this simplifies to
 \begin{equation}\label{eq:paperpapar}
-  p(\Delta \aperpii|\Delta \apar) = \int \dd \ts \,\mathcal{N}\left(\Delta \aperpii|0,\sigma_{\theta}^2+(\ts\,\sigma_{\Omega,ii})^2\right)\,p(\ts|\Delta \apar)\,,
+\begin{split}
+  p(\Delta \aperpii|\Delta \apar) & = \int \dd \ts \,\mathcal{N}\left(\Delta \aperpii|0,\sigma_{\theta}^2+(\ts\,\sigma_{\Omega,ii})^2\right)\qquad\\
+& \qquad \times p(\ts|\Delta \apar)\,,
+\end{split}
 \end{equation}
 where $\sigma_{\Omega,ii}$ is the model frequency dispersion in the
 perpendicular direction (corresponding to the middle and smallest
@@ -916,7 +924,8 @@ mass of the full stream PDF is close enough to the stream track that
 all frequency--angle calculations can be performed using the linear
 approximation along the progenitor orbit.
 
-\begin{figure}
+\begin{figure*}
+\begin{center}
   \includegraphics[width=0.8\textwidth,clip=]{track_aa.eps}\\
   \includegraphics[width=0.8\textwidth,clip=]{track_xz.eps}\\
   \includegraphics[width=0.8\textwidth,clip=]{track_ld.eps}
@@ -930,7 +939,43 @@ approximation along the progenitor orbit.
     orbit, while the solid line and dash-dotted lines are the mean
     track and $2\sigma$ dispersion.}\label{fig:track}
 %python illustrate_track.py ../tex/track_aa.ps ../tex/track_xz.ps ../tex/track_ld.ps
-\end{figure}
+\end{center}
+\end{figure*}
+
+\begin{figure*}[t!]
+\begin{center}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lb.eps}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_ld.eps}
+  \caption{Simulated stream after $5.011\Gyr$ as a function of
+    Galactic longitude. The top panel shows the stream in Galactic
+    latitude and the bottom panel shows it in the distance from the
+    Sun. The progenitor is shown as the large gray dot and its orbit
+    as the dashed lines. The predicted track of the stream is shown as
+    the solid line. Insets show various zoomed-in parts of the stream
+    to show the stream, progenitor orbit, and predicted stream track
+    up close.}\label{fig:gd1_lbd}
+%python plot_stream.py ../tex/gd1_evol_lb.ps
+%python plot_stream.py ../tex/gd1_evol_ld.ps
+\end{center}
+\end{figure*}
+
+\begin{figure*}[tp!!]
+\begin{center}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lvlos.eps}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lpmll.eps}
+  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lpmbb.eps}
+  \caption{Simulated stream velocities as a function of Galactic
+    longitude. Same as \figurename~\ref{fig:gd1_lbd}, but for the
+    stream in heliocentric line-of-sight velocity $V_{\mathrm{los}}$
+    (top panel), proper motion in the direction of Galactic longitude
+    (middle panel), and in the direction of Galactic latitude (bottom
+    panel). Insets again show various interesting parts of the stream
+    up close.}\label{fig:gd1_lbv}
+%python plot_stream.py ../tex/gd1_evol_lvlos.ps
+%python plot_stream.py ../tex/gd1_evol_lpmll.ps
+%python plot_stream.py ../tex/gd1_evol_lpmbb.ps
+\end{center}
+\end{figure*}
 
 \figurename~\ref{fig:track} illustrates how I linearize the
 $(\vecx,\vecv) \rightarrow (\veco,\veca)$ transformation along the
@@ -983,37 +1028,6 @@ appropriate Jacobians and the six-dimensional dispersion can again be
 interpolated using the eigendecomposition. This is illustrated in the
 bottom panel of \figurename~\ref{fig:track}.
 
-\begin{figure}[t!]
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lb.eps}
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_ld.eps}
-  \caption{Simulated stream after $5.011\Gyr$ as a function of
-    Galactic longitude. The top panel shows the stream in Galactic
-    latitude and the bottom panel shows it in the distance from the
-    Sun. The progenitor is shown as the large gray dot and its orbit
-    as the dashed lines. The predicted track of the stream is shown as
-    the solid line. Insets show various zoomed-in parts of the stream
-    to show the stream, progenitor orbit, and predicted stream track
-    up close.}\label{fig:gd1_lbd}
-%python plot_stream.py ../tex/gd1_evol_lb.ps
-%python plot_stream.py ../tex/gd1_evol_ld.ps
-\end{figure}
-
-\begin{figure}[tp!!]
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lvlos.eps}
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lpmll.eps}
-  \includegraphics[width=0.8\textwidth,clip=]{gd1_evol_lpmbb.eps}
-  \caption{Simulated stream velocities as a function of Galactic
-    longitude. Same as \figurename~\ref{fig:gd1_lbd}, but for the
-    stream in heliocentric line-of-sight velocity $V_{\mathrm{los}}$
-    (top panel), proper motion in the direction of Galactic longitude
-    (middle panel), and in the direction of Galactic latitude (bottom
-    panel). Insets again show various interesting parts of the stream
-    up close.}\label{fig:gd1_lbv}
-%python plot_stream.py ../tex/gd1_evol_lvlos.ps
-%python plot_stream.py ../tex/gd1_evol_lpmll.ps
-%python plot_stream.py ../tex/gd1_evol_lpmbb.ps
-\end{figure}
-
 The average stream location computed in the manner described in this
 section is an approximate track. The mean stream location, for
 example, in distance from the Sun at a given Galactic longitude, can
@@ -1041,7 +1055,7 @@ where the stream is located as a function of Galactic longitude.
 \section{Mock stream data}\label{sec:mock}
 
 \begin{figure}[t!]
- \includegraphics[width=0.48\textwidth,clip=]{gd1_evol_2Gya_xz.ps}
+ \includegraphics[width=0.48\textwidth,clip=]{gd1_evol_2Gya_xz.ps}\\
  \includegraphics[width=0.48\textwidth,clip=]{gd1_evol_2Gya_xz_sim.ps}
   \caption{Mock stream data generated from the model. The left panel
     shows the same $N$-body stream as shown in previous figures, but
@@ -1136,6 +1150,24 @@ The PDF in observable quantities $(l,b,D,\vlos,\pmll,\pmbb)$ can be
 obtained from $p(\vecx,\vecv,t_s)$ by multiplying by the Jacobian
 $\left|\partial(\vecx,\vecv)/\partial(l,b,D,\vlos,\pmll,\pmbb)\right|$. 
 
+\begin{figure*}[t!]
+ \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_0.ps}
+ \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_1.ps}
+ \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_2.ps}
+ \caption{Marginalized, conditional $p(Z|X)$ PDFs. The left panel
+   shows the model leading stream (see \figurename~\ref{fig:gd1_xz}),
+   with the stream track shown as the solid line, the estimated
+   $2\sigma$ width of the stream as the dash-dotted line, and the
+   progenitor orbit as the dashed line. The solid line in the middle
+   and right panels shows $p(Z|X)$ calculated at the $X$ indicated in
+   the left panel by thick vertical lines; the dash-dotted line is a
+   simple Gaussian estimate. The upper branch near $Z \approx 5\kpc$
+   of the stream is chosen for the middle panel. The right panel shows
+   an $X$ close to where the stream turns around in $X$; the PDF has
+   multiple peaks in this case.}\label{fig:gd1_pdf_xz}
+%python plot_pdfs_xz.py ../tex/gd1_pdf_xz_0.ps ../tex/gd1_pdf_xz_1.ps ../tex/gd1_pdf_xz_2.ps
+\end{figure*}
+
 The stripping time $t_s$ cannot be observed and should therefore be
 marginalized over when evaluating the PDF. One of the great advantages
 of modeling a stream in frequency--angle coordinates is that this
@@ -1145,9 +1177,11 @@ fiducial model $p(t_s)$ is uniform up to a maximum disruption time
 $t_d$ (see \equationname~[\ref{eq:pt}]) such that we can write
 \begin{equation}
 \begin{split}
-  p(\veco,\veca) & = \int \dd t_s\,p(\veco,\veca,t_s)\,,\\
+  p(& \veco,\veca)\\
+  & = \int \dd t_s\,p(\veco,\veca,t_s)\,,\\
   & = p(\veco)\,\int_0^{t_d} \dd t_s\,
-  \frac{1}{(2\,\pi)^{3/2}\,\sigma_\theta^3}\,\exp\left(-\frac{1}{2\,\sigma_\theta^2}\left[\sum_{R,\phi,Z}\left(\Delta \veca_i-\Delta \veco_i\,t_s\right)^2\right]\right)\,,
+  \frac{1}{(2\,\pi)^{3/2}\,\sigma_\theta^3}\\
+  & \qquad \qquad \times\exp\left(-\frac{1}{2\,\sigma_\theta^2}\left[\sum_{R,\phi,Z}\left(\Delta \veca_i-\Delta \veco_i\,t_s\right)^2\right]\right)\,,
 \end{split}
 \end{equation}
 where the sum in the argument of the exponential is over the three
@@ -1155,8 +1189,9 @@ components of $\Delta \veca_i$ and $\Delta \veco_i$. This integral can
 be done analytically, resulting in
 \begin{equation}\label{eq:pdf}
 \begin{split}
-  p(\veco,\veca) & = 
-  p(\veco) \,  \frac{\mathrm{erf}(a_0) + \mathrm{erf}(a_d)}{4\,\pi\,\sigma_\theta^2\,|\Delta \veco|}\,\exp\left(-\frac{1}{2\,\sigma_\theta^2}\left[\sum_{R,\phi,Z}\Delta \veca^2_i-\frac{\left(\sum_{R,\phi,Z} \Delta \veco_i\Delta \veca_i\right)^2}{|\Delta \veco|^2}\right]\right)\,.
+  p(& \veco,\veca)  = 
+  p(\veco) \,  \frac{\mathrm{erf}(a_0) + \mathrm{erf}(a_d)}{4\,\pi\,\sigma_\theta^2\,|\Delta \veco|}\\
+  & \ \times \exp\left(-\frac{1}{2\,\sigma_\theta^2}\left[\sum_{R,\phi,Z}\Delta \veca^2_i-\frac{\left(\sum_{R,\phi,Z} \Delta \veco_i\Delta \veca_i\right)^2}{|\Delta \veco|^2}\right]\right)\,.
 \end{split}
 \end{equation}
 In this expression, $\Delta X^2 \equiv (X_1-X_2)^2$. The expression in
@@ -1202,24 +1237,6 @@ integrating their orbits backward in time
 position--velocity space), but cannot be marginalized over unobserved
 or noisy phase--space dimensions as easily.
 
-\begin{figure}[t!]
- \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_0.ps}
- \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_1.ps}
- \includegraphics[width=0.32\textwidth,clip=]{gd1_pdf_xz_2.ps}
- \caption{Marginalized, conditional $p(Z|X)$ PDFs. The left panel
-   shows the model leading stream (see \figurename~\ref{fig:gd1_xz}),
-   with the stream track shown as the solid line, the estimated
-   $2\sigma$ width of the stream as the dash-dotted line, and the
-   progenitor orbit as the dashed line. The solid line in the middle
-   and right panels shows $p(Z|X)$ calculated at the $X$ indicated in
-   the left panel by thick vertical lines; the dash-dotted line is a
-   simple Gaussian estimate. The upper branch near $Z \approx 5\kpc$
-   of the stream is chosen for the middle panel. The right panel shows
-   an $X$ close to where the stream turns around in $X$; the PDF has
-   multiple peaks in this case.}\label{fig:gd1_pdf_xz}
-%python plot_pdfs_xz.py ../tex/gd1_pdf_xz_0.ps ../tex/gd1_pdf_xz_1.ps ../tex/gd1_pdf_xz_2.ps
-\end{figure}
-
 We can marginalize \equationname~(\ref{eq:pxvt}) over $t_s$ and find
 that
 \begin{equation}\label{eq:pxv}
@@ -1262,7 +1279,8 @@ Y\,\dd \vecv\, p(\vecx,\vecv)$ by numerical integration over the, \eg,
 $3\sigma$ range of this Gaussian; this numerical integration can be
 performed efficiently using Gaussian quadrature. 
 
-\begin{figure}[t!]
+\begin{figure*}[t!]
+\begin{center}
  \includegraphics[width=0.8\textwidth,clip=]{gd1_pdf_l.ps}
  \caption{Density distribution as a function of Galactic
    longitude. The smooth solid line shows the fiducial model's
@@ -1271,7 +1289,8 @@ performed efficiently using Gaussian quadrature.
    predict the density distribution along the
    stream.}\label{fig:gd1_pdf_l}
 %python plot_pdfs_l.py ../tex/gd1_pdf_l.ps
-\end{figure}
+\end{center}
+\end{figure*}
 
 \figurename~\ref{fig:gd1_pdf_xz} shows such PDFs of $p(Z|X)$ for a few
 $X$ on the leading arm of the stream as well as the estimated Gaussian
