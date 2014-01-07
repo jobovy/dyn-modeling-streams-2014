@@ -406,7 +406,7 @@ def plot_stream_lb(plotfilename):
             #Plot approximate scale
             bovy_plot.bovy_plot([74.,74.],[11.95,12.45],'k-',lw=2.,
                                 overplot=True)
-            bovy_plot.bovy_text(76.,11.9,r'$0.5\,\mathrm{kpc}$',
+            bovy_plot.bovy_text(76.,12.01,r'$0.5\,\mathrm{kpc}$',
                                 size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
@@ -433,7 +433,7 @@ def plot_stream_lb(plotfilename):
             #Plot approximate scale
             bovy_plot.bovy_plot([115.,115.],[48.5,49.5],'k-',lw=2.,
                                 overplot=True)
-            bovy_plot.bovy_text(117.2,48.4,r'$1^\circ$',
+            bovy_plot.bovy_text(117.2,48.5,r'$1^\circ$',
                                 size=16.)
             nullfmt   = NullFormatter()         # no labels
             insetAxes.xaxis.set_major_formatter(nullfmt)
