@@ -275,10 +275,9 @@ marginalization and convolution over missing and noisy directions. A
 discussion and outlook is presented in
 \sectionname~\ref{sec:discussion} and I conclude in
 \sectionname~\ref{sec:conclusion}. In \appendixname~\ref{sec:aa} I
-review the method of Fox \& Binney (2014, in preparation) for
-calculating actions in any static gravitational potential and I show
-how it can be extended to compute frequencies and angles.
-
+review the method of \citet{Fox12a} for calculating actions in any
+static gravitational potential and I show how it can be simplified and
+extended to compute frequencies and angles.
 
 \section{The dynamics of tidal streams}\label{sec:dynamics}
 
@@ -1751,23 +1750,24 @@ orbits \citep[\eg,][]{Sanders13a}.
 %python plot_aAI.py ../tex/aAI_araz.ps
 \end{figure}
 
-Recently, Fox \& Binney (2014, in preparation) have suggested a new
-method for calculating $\vecj(\vecx,\vecv)$ inspired by torus
-modeling. This method requires only a single orbit integration and
-allows the actions to be calculated accurately and as precisely as
-desired (that is, a convergence criterion can be applied and
-convergence can be attained). I describe the Fox \& Binney method
-briefly here and then show how to extend it to also calculate the
+Recently, \citet{Fox12a} has suggested a new method for calculating
+$\vecj(\vecx,\vecv)$ inspired by torus modeling. This method requires
+only a single orbit integration and allows the actions to be
+calculated accurately and as precisely as desired (that is, a
+convergence criterion can be applied and convergence can be
+attained). I describe the Fox method briefly here, discuss how it can
+be simplified, and then show how to extend it to also calculate the
 frequencies and angles: $(\vecx,\vecv) \rightarrow (\veco,\veca)$.
 
-As in torus modeling, the Fox \& Binney method uses an auxiliary
+As in torus modeling, the method of \citet{Fox12a} uses an auxiliary
 isochrone potential $\Phi^A$ that should be close to the target
 potential $\Phi$ for which the action--angle coordinates should be
 calculated (a precise definition of ``close'' will be given
-below). Actions and angles $(\vecj^A,\veca^A)$ calculated in the
-auxiliary potential can be related to those in the target potential
-$(\vecj,\veca)$ by a generating function that can be written as
-\citep{McGill90a}
+below). The discussion here focuses on loop orbits; for box orbits an
+auxiliary harmonic oscillator potential can be used. Actions and
+angles $(\vecj^A,\veca^A)$ calculated in the auxiliary potential can
+be related to those in the target potential $(\vecj,\veca)$ by a
+generating function that can be written as \citep{McGill90a}
 \begin{equation}
   S(\veca^A,\vecj) = \veca^A\cdot\vecj+2\sum_{\vecn > 0} S_{\vecn}(\vecj)\sin(\vecn\cdot\veca^A)\,,
 \end{equation}
@@ -1787,12 +1787,20 @@ $S_\vecn = 0$ when $n_\phi \neq 0 $ in the above equations. For
 axisymmetric potentials we therefore only need to consider
 $\theta^A_R$ and $\theta^A_Z$.
 
-The Fox \& Binney method consists of averaging \eqnname~(\ref{eq:jjt})
-over the auxiliary angle along the path of the orbit, such that the
+The Fox method consists of averaging \eqnname~(\ref{eq:jjt}) over the
+three-dimensional torus $\veca^a$ covered by the orbit, such that the
 mapping defined by the $S_{\vecn}$ is onto orbital tori of the target
 Hamiltonian, the oscillating cosine behavior cancels, and the target
-action is obtained as the auxiliary-angle-averaged auxiliary
-action. That is,
+actions are obtained as the auxiliary-angles-averaged auxiliary
+actions. Performing these three-dimensional integrals is difficult,
+because it is necessary to approximate the three-dimensional volume
+$\dd \veca^A$ from a one-dimensional set of points along the
+integrated orbit. Here I show that the three-dimensional integrals
+over $\veca^A$ can be simplified for non-resonant orbits to
+one-dimensional integrals over one of the auxiliary angles along the
+path of the orbit. This significantly simplifies the calculations,
+especially of $J_\phi$ and $J_Z$ (see below). That is, we integrate
+over \eqnname~(\ref{eq:jjt}) as
 \begin{equation}\label{eq:jjtint}
   \int \dd \theta_i^A J_i^A = \int \dd \theta_i^A J_i + 2 \sum_{\vecn > 0} \vecn\,S_{\vecn}(J_i)\int \dd \theta_i^A\cos(\vecn\cdot\veca^A)\,,
 \end{equation}
@@ -1825,8 +1833,8 @@ action over the auxiliary angle.
 
 In particular, because for any spherical potential $\Phi^A$ we have
 that $J_Z = L-|L_Z|$, independent of the particular form of $\Phi^A$,
-\equationname~(\ref{eq:aAIJ}) implies that as long as there is a
-spherical auxiliary potential in which the auxiliary angle
+\equationname~(\ref{eq:aAIJ}) implies that as long as there is
+\emph{some} spherical auxiliary potential in which the auxiliary angle
 $\theta^A_Z$ goes through the full range $0$ to $2\pi$ along the orbit
 integrated in a general potential, $J_Z$ can be obtained by averaging
 $L-|L_Z|$ over the orbit. Similarly, as $J_\phi = L_Z$ for any
@@ -1890,7 +1898,7 @@ axisymmetric potentials in regions where the flattening is mild (\ie,
 in the halo). Whether this method works near the plane of the disk
 where the potential is strongly flattened remains to be checked,
 although the fact that disk orbits are close to circular makes the
-details of the auxiliary potential important. Similarly, the method
+details of the auxiliary potential unimportant. Similarly, the method
 should be tested in more detail for triaxial potentials as well. For
 analyzing stream data, the necessity of this trial-and-error
 determination of the auxiliary potential does not pose a practical
@@ -1930,6 +1938,8 @@ Carlberg,~R.~G. 2012, \apj, 748, 20
   Dehnen,~W. 2002, J.~Comput.~Phys., 179, 27
 \bibitem[Eyre \& Binney(2011)]{Eyre11a}
   Eyre,~A. \& Binney,~J. 2011, \mnras, 413, 1852
+\bibitem[Fox(2012)]{Fox12a}
+  Fox,~M. 2012, M.~Phys.~thesis, Univ.~Oxford
 \bibitem[Gilks \& Wild(1992)]{Gilks92a}
   Gilks,~W.~R. \& Wild,~P. 1992, Applied Statistics, 41, 337
 \bibitem[Helmi \& White(1999)]{Helmi99a}
