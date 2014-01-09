@@ -1,22 +1,18 @@
 %\documentclass[12pt,preprint]{aastex}
 \documentclass{emulateapj}
 \usepackage{amssymb,amsmath}
-%\usepackage{caption}
-%\DeclareCaptionLabelSeparator{dotemdash}{.--- }
-%\captionsetup[figure]{labelformat=simple, labelsep=dotemdash}
-%\usepackage{color,hyperref}
+\usepackage{color,hyperref}
 % hypertex insanity
-%\definecolor{linkcolor}{rgb}{0,0,0.25}
-%\hypersetup{
-%  colorlinks=true,        % false: boxed links; true: colored links
-%  linkcolor=linkcolor,    % color of internal links
-%  citecolor=linkcolor,    % color of links to bibliography
-%  filecolor=linkcolor,    % color of file links
-%  urlcolor=linkcolor      % color of external links
-%}
+\definecolor{linkcolor}{rgb}{0,0,0.25}
+\hypersetup{
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=linkcolor,    % color of internal links
+  citecolor=linkcolor,    % color of links to bibliography
+  filecolor=linkcolor,    % color of file links
+  urlcolor=linkcolor      % color of external links
+}
 \newcounter{address}
 \setcounter{address}{1}
-%\usepackage{sidecap}
 \setlength{\emergencystretch}{2em}%No overflowing references
 \newcommand{\ie}{i.e.}
 \newcommand{\etal}{et al.}
@@ -1689,46 +1685,26 @@ The full modeling and action--angle framework presented here is
 available as part of the \emph{galpy} Galactic Dynamics
 code\footnote{Available at
   \protect{\url{http://github.com/jobovy/galpy}}~.}. A tutorial on how
-to use this code is given at
-\[
-\protect{\mathrm{\url{http://jobovy.github.io/galpy/streamdf.html}}}\,.
-\]
+to use this code is given at\footnote{An alternative link is\\ \protect{\url{http://galpy.readthedocs.org/en/latest/streamdf.html}}~.}
+\begin{center}
+\protect{\url{http://jobovy.github.io/galpy/streamdf.html}}\,.
+\end{center}
 
 %BOVY: reference point
 
-\acknowledgements It is a pleasure to thank David W. Hogg, Hans-Walter
-Rix, Jason Sanders, and Scott Tremaine for helpful
-discussions. J.B. was supported by NASA through Hubble Fellowship
-grant HST-HF-51285.01 from the Space Telescope Science Institute,
-which is operated by the Association of Universities for Research in
-Astronomy, Incorporated, under NASA contract NAS5-26555. J.B.
-acknowledges support from SFB 881 (A3) funded by the German Research
-Foundation DFG.
+\acknowledgements It is a pleasure to thank James Binney, David
+W. Hogg, Hans-Walter Rix, Jason Sanders, and Scott Tremaine for
+helpful discussions. J.B. was supported by NASA through Hubble
+Fellowship grant HST-HF-51285.01 from the Space Telescope Science
+Institute, which is operated by the Association of Universities for
+Research in Astronomy, Incorporated, under NASA contract
+NAS5-26555. J.B.  acknowledges support from SFB 881 (A3) funded by the
+German Research Foundation DFG.
 
 
 \appendix
 
 \section{An efficient, general method for calculating action-angle coordinates using orbit integration}\label{sec:aa}
-
-\begin{figure}[t!]
- \includegraphics[width=0.48\textwidth,clip=]{aAI_jr.eps}
- \includegraphics[width=0.48\textwidth,clip=]{aAI_araz.eps}
-  \caption{Action--angle calculations using an orbit-integration-based
-    method. The right panel shows the cumulative mean of the radial
-    actions calculated in an auxiliary isochrone potential calculated
-    along the orbit of the progenitor used in the main body of this
-    paper. The color-coding corresponds to the radial angle
-    (calculated in the isochrone potential) along the orbit. The time
-    is in units of $35.56\Myr$ and the radial action is normalized by
-    its value at $t=200$. The left panel shows the radial and vertical
-    angles calculated in the auxiliary isochrone potential, with
-    color-coding corresponding to the azimuthal angle. The wiggles in
-    the angles are due to the isochrone potential not being the
-    correct potential, but these wiggles are fit and removed to
-    calculate the true angles.}\label{fig:aAI}
-%python plot_aAI.py ../tex/aAI_jr.ps
-%python plot_aAI.py ../tex/aAI_araz.ps
-\end{figure}
 
 The wide-spread use of action--angle coordinates, in many ways the
 natural coordinates for studying the orbital structure of galaxies, in
@@ -1754,6 +1730,26 @@ a volume large enough that the St\"{a}ckel approximation fails. This
 is especially problematic for the orbits of stars in tidal streams, as
 the progenitors of tidal streams are typically on quite eccentric
 orbits \citep[\eg,][]{Sanders13a}.
+
+\begin{figure}[t!]
+ \includegraphics[width=0.48\textwidth,clip=]{aAI_jr.eps}
+ \includegraphics[width=0.48\textwidth,clip=]{aAI_araz.eps}
+  \caption{Action--angle calculations using an orbit-integration-based
+    method. The right panel shows the cumulative mean of the radial
+    actions calculated in an auxiliary isochrone potential calculated
+    along the orbit of the progenitor used in the main body of this
+    paper. The color-coding corresponds to the radial angle
+    (calculated in the isochrone potential) along the orbit. The time
+    is in units of $35.56\Myr$ and the radial action is normalized by
+    its value at $t=200$. The left panel shows the radial and vertical
+    angles calculated in the auxiliary isochrone potential, with
+    color-coding corresponding to the azimuthal angle. The wiggles in
+    the angles are due to the isochrone potential not being the
+    correct potential, but these wiggles are fit and removed to
+    calculate the true angles.}\label{fig:aAI}
+%python plot_aAI.py ../tex/aAI_jr.ps
+%python plot_aAI.py ../tex/aAI_araz.ps
+\end{figure}
 
 Recently, Fox \& Binney (2014, in preparation) have suggested a new
 method for calculating $\vecj(\vecx,\vecv)$ inspired by torus
