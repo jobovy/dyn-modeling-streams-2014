@@ -1,0 +1,7 @@
+Note on submitting to the arXiv:
+
+Some figures are too big for the arxiv, these can be made smaller for the arxiv by running
+
+make -f makefile.arxiv figure_arxiv.eps or .ps
+
+and then the bounding box must be edited again

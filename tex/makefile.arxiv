@@ -1,0 +1,14 @@
+FIGS=$(subst .ps,_arxiv.ps, $(shell ls -d *.ps)) $(subst .eps,_arxiv.eps,$(shell ls -d *.eps)) 
+
+all: $(FIGS)
+
+%_arxiv.ps: %.ps
+	    gs -r300 -dEPSCrop -dTextAlphaBits=4 -sDEVICE=png16m -sOutputFile=fig.png -dBATCH -dNOPAUSE $<
+	    convert fig.png eps3:fig.eps
+	    mv fig.eps $@
+	    rm fig.png
+
+%_arxiv.eps: %.eps
+	    gs -r300 -dEPSCrop -dTextAlphaBits=4 -sDEVICE=png16m -sOutputFile=fig.png -dBATCH -dNOPAUSE $<
+	    convert fig.png eps3:fig.eps
+	    mv fig.eps $@
