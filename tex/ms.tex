@@ -2,6 +2,7 @@
 % - In aA plots, use J^A and theta^A
 % - Binney comment: in limit of vanishing sigma, mean-orbit=constant part vanishes and stream does not follow orbit
 % - Fardal comments
+% - New Fardal comments: procedure fails for potentials with large misalignments; a better way to determine the track and do actionAngle calculations might be to a) calculate the track offset for zero angle offset, b) convert to XV using Jacobian, c) launch orbit at this point, d) calculate transformation wrt this orbit E) this might have to be done iteratively from one point to the next, i.e, launch orbit at first point to use as basis to calculate second point, then launch orbit at second point, ... Might also work to only start doing the latter at the critical angle
 %\documentclass[12pt,preprint]{aastex}
 \documentclass{emulateapj}
 \usepackage{amssymb,amsmath}
