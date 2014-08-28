@@ -584,14 +584,14 @@ def plot_stream_aa(plotfilename):
         print numpy.mean(dO1d), numpy.std(dO1d)
         bovy_plot.bovy_plot(xs,1./numpy.sqrt(2.*numpy.pi)/numpy.std(dO1d)\
                                 *numpy.exp(-(xs-numpy.mean(dO1d))**2./2./numpy.var(dO1d)),
-                            '--',color='k',overplot=True,lw=2.,zorder=0)
+                            '--',color='k',overplot=True,lw=2.,zorder=2)
         bestfit= optimize.fmin_powell(gausstimesvalue,
                                       numpy.array([numpy.log(numpy.mean(dO1d)*2.),
                                                    numpy.log(numpy.std(dO1d))]),
                                       args=(dO1d,))
         print numpy.exp(bestfit)
         bovy_plot.bovy_plot(xs,gausstimesvalue(bestfit,xs,nologsum=True),
-                            '-',color='0.4',overplot=True,lw=2.,zorder=0)
+                            '-',color='0.4',overplot=True,lw=2.,zorder=1)
         bovy_plot.bovy_end_print(plotfilename)
         return None
     elif 'dahist' in plotfilename:
