@@ -51,12 +51,14 @@ def illustrate_track(plotfilename1,plotfilename2,plotfilename3):
     bovy_plot.bovy_text(1.05+progAngle,22.475,r'$\mathrm{progenitor\ orbit}$',size=16.)
     bovy_plot.bovy_text(progAngle+0.05,22.50,r'$\mathrm{current\ progenitor\ position}$',size=16.)
     bovy_plot.bovy_plot([progAngle+0.05,progAngle],[22.50,sdf._progenitor_Omega_along_dOmega*bovy_conversion.freq_in_Gyr(220.,8.)],'k:',overplot=True)
-    bovy_plot.bovy_text(-1.2,22.35,r"$\mathrm{At\ the\ progenitor's}\ \theta_{\parallel}, \mathrm{we\ calculate\ an\ auxiliary\ orbit\ through}$"+'\n'+r"$(\mathbf{x},\mathbf{v}) = (\mathbf{\Omega}_p+\Delta \mathbf{\Omega}^m,\boldsymbol{\theta}_p)\ \mathrm{using\ a\ linearized}\ (\mathbf{\Omega},\boldsymbol{\theta})\ \mathrm{to}\ (\mathbf{x},\mathbf{v}).$",size=16.)
-    bovy_plot.bovy_plot([sdf._thetasTrack[0]+progAngle,-1.15],
-                        [mOs[0]+0.03,22.40],
+    bovy_plot.bovy_text(-1.2,22.35,r"$\mathrm{At\ the\ progenitor's}\ \theta_{\parallel}, \mathrm{we\ calculate\ an\ auxiliary\ orbit\ through}$"+'\n'+r"$(\mathbf{x}_a,\mathbf{v}_a) = (\mathbf{\Omega}_p+\Delta \mathbf{\Omega}^m,\boldsymbol{\theta}_p)\ \mathrm{using\ a\ linearized}\ (\mathbf{\Omega},\boldsymbol{\theta})\ \mathrm{to}\ (\mathbf{x},\mathbf{v}).$",size=16.)
+    yarcs= numpy.linspace(22.30,22.39,101)
+    bovy_plot.bovy_plot(sdf._thetasTrack[0]+progAngle-0.1*numpy.sqrt(1.-(yarcs-22.35)**2./0.05**2.),yarcs,'k:',
+                        overplot=True)
+    bovy_plot.bovy_text(-1.3,22.07,r'$\mathrm{At\ a\ small\ number\ of\ points, we\ calculate}$'+'\n'+r'$\partial(\mathbf{\Omega},\boldsymbol{\theta})/\partial (\mathbf{x},\mathbf{v}), \mathrm{the\ mean\ stream\ track\ in}\ (\mathbf{\Omega},\boldsymbol{\theta})^\dagger,$'+'\n'+r'$\mathrm{and\ estimate\ the\ spread\ around\ the\ track}.$',size=16.)
+    bovy_plot.bovy_plot([-0.9,sdf._thetasTrack[1]+progAngle],
+                        [22.185,mOs[1]+0.03],
                         'k:',overplot=True)
-#    bovy_plot.bovy_text(-0.6,22.33,r'$\mathrm{At\ a\ small\ number\ of\ points\ along\ the}$'+'\n'+r'$\mathrm{progenitor\ orbit, we\ calculate}\ \frac{\partial(\mathbf{\Omega},\boldsymbol{\theta})}{\partial (\mathbf{x},\mathbf{v})}.$',size=16.)
-    bovy_plot.bovy_text(-1.3,22.07,r'$\mathrm{At\ a\ small\ number\ of\ points, we\ calculate}$'+'\n'+r'$(\partial(\mathbf{\Omega},\boldsymbol{\theta})/\partial (\mathbf{x},\mathbf{v})), \mathrm{the\ mean\ stream\ track\ in}\ (\mathbf{\Omega},\boldsymbol{\theta}),$'+'\n'+r'$\mathrm{and\ estimate\ the\ spread\ around\ the\ track}.$',size=16.)
     bovy_plot.bovy_plot([-0.9,progAngle+sdf._thetasTrack[1]],
                         [22.185,mOs[1]],
                         'k:',overplot=True)
@@ -74,7 +76,7 @@ def illustrate_track(plotfilename1,plotfilename2,plotfilename3):
                   overplot=True,ls='none',
                   scaleToPhysical=True)
     sdf.plotProgenitor(d1='z',d2='x',color='k',
-                  overplot=True,ls='--',lw=1.5, 
+                       overplot=True,ls='--',lw=1.5,dashes=(20,10),
                        scaleToPhysical=True)
     pyplot.plot(sdf._progenitor.z(sdf._trackts)*8.,
                 sdf._progenitor.x(sdf._trackts)*8.,marker='o',ms=6.,
@@ -84,14 +86,14 @@ def illustrate_track(plotfilename1,plotfilename2,plotfilename3):
     pyplot.ylim(12.,15.5)
     bovy_plot._add_ticks()
     bovy_plot._add_axislabels(r'$Z\,(\mathrm{kpc})$',r'$X\,(\mathrm{kpc})$')
-    bovy_plot.bovy_text(0.,14.25,r'$\mathrm{progenitor\ orbit}$',
+    bovy_plot.bovy_text(0.,14.25,r'$\mathrm{auxiliary\ orbit}$',
                         size=16.,rotation=-20.)
     bovy_plot.bovy_text(1.,13.78,r'$\mathrm{stream\ track\ +\ spread}$',
                         size=16.,rotation=-25.)
     bovy_plot.bovy_text(7.5,14.2,r"$\mathrm{At\ these\ points, we\ calculate\ the\ stream\ position\ in}\ (\mathbf{x},\mathbf{v})\ \mathrm{from}$"+
-                         '\n'+r"$\mathrm{the\ progenitor's}\ (\mathbf{x}_p,\mathbf{v}_p) = (\mathbf{\Omega_p},\boldsymbol{\theta}_p), \mathrm{the\ mean\ offset} (\Delta \mathbf{\Omega},\Delta \boldsymbol{\theta}),$"+'\n'+
-                         r"$\mathrm{and}\ \left(\frac{\partial(\mathbf{\Omega},\boldsymbol{\theta})}{\partial (\mathbf{x},\mathbf{v})}\right)^{-1}.$",
-size=16.)
+                         '\n'+r"$\mathrm{the\ auxiliary's}\ (\mathbf{x}_a,\mathbf{v}_a) = (\mathbf{\Omega}_a,\boldsymbol{\theta}_a), \mathrm{the\ mean\ offset} (\Delta \mathbf{\Omega},\Delta \boldsymbol{\theta}),$"+'\n'+
+                         r"$\mathrm{and}\ \left(\frac{\partial(\mathbf{\Omega},\boldsymbol{\theta})}{\partial (\mathbf{x},\mathbf{v})}\right)^{-1 \, \dagger}.$",
+                        size=16.)
     bovy_plot.bovy_plot([sdf._progenitor.z(sdf._trackts[1])*8.,4.5],
                         [sdf._progenitor.x(sdf._trackts[1])*8.,14.8],
                         'k:',overplot=True)
@@ -108,7 +110,7 @@ size=16.)
                   color='k',spread=2,overplot=True,lw=1.5)
     sdf.plotTrack(d1='ll',d2='dist',interp=False,marker='o',ms=8.,color='k',
                   overplot=True,ls='none')
-    sdf.plotProgenitor(d1='ll',d2='dist',color='k',
+    sdf.plotProgenitor(d1='ll',d2='dist',color='k',dashes=(20,10),
                        overplot=True,ls='--',lw=1.5)
     pyplot.plot(sdf._progenitor.ll(sdf._trackts,
                                         obs=[sdf._R0,0.,sdf._Zsun],ro=sdf._Rnorm),
