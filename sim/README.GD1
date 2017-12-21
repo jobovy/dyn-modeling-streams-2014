@@ -1,3 +1,5 @@
+**NOTE**: gyrfalcON velocity units are normally (kpc/Gyr); below velocities are interpreted as (km/s) by cleverly (too cleverly?) changing the time unit for the integration to be (s x kpc/km) rather than the standard (Gyr). This allows the amplitude of the logarithmic potential to be specified in units of (km/s)^2 (standard NEMO use would have the amplitude in units of (kpc/Gyr)^2, which is also what galpy's nemo_accpars would give for the logarithmic potential.
+
 Simulated generated using
 
 mkking out=gd1.nemo nbody=10000 W0=2. mass=20000 r_t=0.07 WD_units=t 
